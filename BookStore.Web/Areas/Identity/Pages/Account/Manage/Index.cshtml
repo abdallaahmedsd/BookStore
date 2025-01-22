@@ -1,6 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
+    Layout = "_Layout.cshtml";
     ViewData["Title"] = "Profile";
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
@@ -21,6 +22,8 @@
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+
+            
         </form>
     </div>
 </div>

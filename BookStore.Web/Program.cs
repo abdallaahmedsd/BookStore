@@ -1,3 +1,4 @@
+using BookStore.DataAccess.DbInitializer;
 using BookStore.DataAccess.EntityFrameworkCore.Data;
 using BookStore.Models.Identity;
 using BookStore.Utilties;
@@ -13,19 +14,18 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddRazorPages();
 
-builder.Services.AddDbContext<IdentityDbContext>(options =>
+builder.Services.AddDbContext<AppDbContext>(options =>
 {
-	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+	options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionMery"));
 });
 
-// builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AppDbContext>();
-
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-	.AddEntityFrameworkStores<IdentityDbContext>()
-	.AddDefaultTokenProviders();
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
 
 #region Custom Services
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 #endregion
 
 var app = builder.Build();
@@ -35,6 +35,9 @@ if (!app.Environment.IsDevelopment())
 {
 	app.UseExceptionHandler("/Home/Error");
 }
+
+SeedDatabase();
+
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -48,3 +51,13 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+
+void SeedDatabase()
+{
+    using (IServiceScope Scope = app.Services.CreateScope())
+    {
+        IDbInitializer initializer = Scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+
+        initializer.Initialize();
+    }
+}
