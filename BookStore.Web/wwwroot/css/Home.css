@@ -1,0 +1,41 @@
+html {
+    font-size: 14px;
+    margin: 0;
+    height: 100vh;
+}
+
+
+@media (min-width: 768px) {
+    html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+:root {
+    --main-color: #A1E000;
+    --secondary-color: #110F0F;
+    --text-color: #ffffff;
+    --third-color: #674FCD;
+}
+
+body {
+    margin-bottom:60px;
+    direction: rtl;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    font-family: "Noto Sans Arabic", serif;
+}
+
+a {
+    color: var(--text-color);
+    padding: 5px;
+}
