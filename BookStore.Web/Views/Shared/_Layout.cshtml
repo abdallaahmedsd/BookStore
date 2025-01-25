@@ -24,9 +24,9 @@
     <header>
 
         <nav class="navbar bg-black bg-gradient navbar-expand-sm navbar-toggleable-sm e border-bottom box-shadow mb-3">
-            <div class="container-fluid">
+            <div class="container-fluid row">
 
-                <div>
+                <div class="col-3 justify-content-center align-content-center">
                     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                         <img src="~/images/Logo.png" alt="Home" />
                     </a>
@@ -37,7 +37,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between col-6">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="text-decoration-none" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -61,7 +61,7 @@
                     </ul>
                 </div>
 
-                <div>
+                <div class="col-3 justify-content-center align-content-center">
                     <partial name="_LoginPartial" />
                 </div>
 
