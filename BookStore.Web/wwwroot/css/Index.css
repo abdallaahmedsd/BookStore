@@ -1,0 +1,49 @@
+﻿
+/* Landing Page */
+
+.landing::after {
+    content: "";
+    position: absolute;
+    /* 
+    width: 1800px;
+  height: 750px;
+  bottom: -80%;
+   */
+    width: 120%;
+    height: 100%;
+    bottom: -75%;
+    left: 50%;
+    background-color: white;
+    border-radius: 68%;
+    -webkit-border-radius: 68%;
+    -moz-border-radius: 68%;
+    -ms-border-radius: 68%;
+    -o-border-radius: 68%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    z-index: 0;
+}
+
+.landing .container {
+    z-index: 1;
+}
+
+.landing-img-container {
+    position: absolute;
+    min-width: 450px;
+    max-height: 400px;
+    bottom: -2%;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+}
+
+.search-btn:hover {
+    color: var(--text-color);
+}

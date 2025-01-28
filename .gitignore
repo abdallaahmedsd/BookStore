@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /BookStore.Web/appsettings.json
 /BookStore.Web/appsettings.json
+/BookStore.Web/Views/Shared/_Layout.cshtml

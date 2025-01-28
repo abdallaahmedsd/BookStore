@@ -1,8 +1,49 @@
-﻿@{
+﻿@* @page *@
+@{
+    Layout = "_Layout";
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@section Styles
+{
+    <link rel="stylesheet" href="~/css/Index.css" />
+}
+
+<!-- landing page -->
+<main role="main" id="home"
+         class="landing section-height text-md-end bg-main position-relative overflow-hidden">
+    <div class="container bg-transparent text-center position-relative h-100 mt-5 d-flex flex-column align-items-center">
+        <div class="landing-content h-50 w-90 d-flex flex-column justify-content-md-center justify-content-center gap-5 gap-md-4 color-text">
+            <h1 class="m-0">إستكشف العالم من خلال الكتب</h1>
+
+            <div class="row m-0 gap-2">
+                <button class="col btn shadow-none search-btn d-inline rounded bg-second"
+                        type="button">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <input type="text"
+                       class="col-10 rounded outline-none border-0 px-2"
+                       placeholder="البحث عن كتاب" />
+            </div>
+
+            <div class="row m-0">
+                <div class="col-4">
+                    <h4>100 الف</h4>
+                    <p>كتاب</p>
+                </div>
+                <div class="col-4">
+                    <h4>مليون</h4>
+                    <p>عملية شراء</p>
+                </div>
+                <div class="col-4">
+                    <h4>10 الأف</h4>
+                    <p>مستخدم</p>
+                </div>
+            </div>
+        </div>
+        <div class="landing-img-container position-absolute">
+            <img src="~/images/Landing-Girl-Image.svg" alt="" class="w-100 h-100" />
+        </div>
+    </div>
+</main>
+

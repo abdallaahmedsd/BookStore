@@ -5,6 +5,7 @@
     --text-color: #ffffff;
     --third-color: #674FCD;
 }
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -19,7 +20,7 @@ body {
     font-family: "Noto Sans Arabic", serif;
 }
 
-body > div:first-of-type {
+body main {
     height: 100vh;
     display: flex;
     align-content: center;
@@ -27,7 +28,7 @@ body > div:first-of-type {
 }
 
 /*the container*/
-body > div > div:first-of-type {
+body  main .container {
     height: 100vh;
     display: grid;
     grid-template-rows: auto 1fr;
@@ -36,7 +37,7 @@ body > div > div:first-of-type {
 }
 
 .register-container {
-/*    max-width: 450px;*/
+    /*    max-width: 450px;*/
 }
 
 /* Register Form Inputs */
@@ -44,10 +45,10 @@ body > div > div:first-of-type {
     font-weight: 300px;
 }
 
-.link-login a {
-    color: var(--main-color);
-    cursor: pointer;
-}
+    .link-login a {
+        color: var(--main-color);
+        cursor: pointer;
+    }
 
 .register-input,
 .button-submit {
@@ -62,22 +63,22 @@ body > div > div:first-of-type {
     border: 3px solid var(--main-color);
 }
 
-.form-control:focus,
-.roles-select:focus {
-    background-color: var(--secondary-color);
-    color: var(--text-color);
-    border-color: var(--third-color);
-}
+    .form-control:focus,
+    .roles-select:focus {
+        background-color: var(--secondary-color);
+        color: var(--text-color);
+        border-color: var(--third-color);
+    }
 
-.roles-select option:checked {
-    background-color: var(--secondary-color);
-    color: var(--main-color);
-}
+    .roles-select option:checked {
+        background-color: var(--secondary-color);
+        color: var(--main-color);
+    }
 
-.roles-select option {
-    background-color: var(--secondary-color);
-    color: var(--text-color);
-}
+    .roles-select option {
+        background-color: var(--secondary-color);
+        color: var(--text-color);
+    }
 
 .form-control::placeholder {
     color: var(--text-color);
@@ -134,6 +135,28 @@ body > div > div:first-of-type {
 }
 
 /* External Logins */
+.divider-with-text {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.divider-with-text::before,
+.divider-with-text::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #ccc;
+}
+
+.divider-with-text span {
+    margin: 0 10px; 
+    color: #333; 
+    font-weight: bold; 
+}
+
+
 .external-login-buttons button {
     background-color: var(--main-color);
     color: var(--secondary-color);
@@ -142,11 +165,10 @@ body > div > div:first-of-type {
     border: none;
 }
 
-/* Hover buttons */
-.button-submit:hover,
-.external-login-buttons button:hover {
-    background-color: var(--main-color);
-    color: var(--secondary-color);
-    border: 1px solid var(--text-color);
-}
-
+    /* Hover buttons */
+    .button-submit:hover,
+    .external-login-buttons button:hover {
+        background-color: var(--main-color);
+        color: var(--secondary-color);
+        border: 1px solid var(--text-color);
+    }
