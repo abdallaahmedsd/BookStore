@@ -28,6 +28,7 @@
     <Folder Include="Areas\Admin\" />
     <Folder Include="Areas\Customer\" />
     <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\Icons-svg\" />
   </ItemGroup>
 
 </Project>

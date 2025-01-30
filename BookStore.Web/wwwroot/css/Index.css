@@ -1,49 +1,109 @@
 ﻿
 /* Landing Page */
 
-.landing::after {
-    content: "";
-    position: absolute;
-    /* 
-    width: 1800px;
-  height: 750px;
-  bottom: -80%;
-   */
-    width: 120%;
-    height: 100%;
-    bottom: -75%;
-    left: 50%;
-    background-color: white;
-    border-radius: 68%;
-    -webkit-border-radius: 68%;
-    -moz-border-radius: 68%;
-    -ms-border-radius: 68%;
-    -o-border-radius: 68%;
-    transform: translateX(-50%);
-    -webkit-transform: translateX(-50%);
-    -moz-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    -o-transform: translateX(-50%);
-    z-index: 0;
+.landing {
+    margin-bottom: 5rem;
+    height: 100dvh;
 }
 
-.landing .container {
+.search-box i {
+    left: 15px;
+     top: 35%;
+}
+
+.search-box input:focus,
+.search-box input:focus + i {
+    color: var(--main-color);
+}
+
+
+/*Middle image*/
+.middle-image {
+    width: 100%;
     z-index: 1;
+    background-color: white;
 }
 
-.landing-img-container {
+    .middle-image::before {
+        content: "";
+        position: absolute;
+        width: 130%;
+        left: 50%;
+        top: -45%;
+        background-color: var(--text-color);
+        border-top: 200px solid var(--text-color);
+        border-radius: 50% 50% 0% 0%;
+        -webkit-border-radius: 50% 50% 0% 0%;
+        -moz-border-radius: 50% 50% 0% 0%;
+        -ms-border-radius: 50% 50% 0% 0%;
+        -o-border-radius: 50% 50% 0% 0%;
+        transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        -moz-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        -o-transform: translateX(-50%);
+        z-index: 2;
+    }
+
+.middle-image .container {
+    z-index: 4;
+    padding: 0;
+    height: 200px;
+      
+}
+
+.middle-img-container {
     position: absolute;
-    min-width: 450px;
+    min-width: 400px;
+    max-width: 400px;
     max-height: 400px;
-    bottom: -2%;
-    left: 50%;
-    transform: translateX(-50%);
-    -webkit-transform: translateX(-50%);
-    -moz-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    -o-transform: translateX(-50%);
+    z-index: 3;
+    transform: translate(0%,-30%);
+    -webkit-transform: translate(0%,-30%);
+    -moz-transform: translate(0%,-30%);
+    -ms-transform: translate(0%,-30%);
+    -o-transform: translate(0%,-30%);
 }
 
-.search-btn:hover {
+
+/* Books Section*/
+.books {
+    z-index: 100;
+}
+
+.image-container {
+    height: 150px;
+    overflow: hidden;
+    border-radius:1.5rem;
+}
+
+    .image-container img {
+        object-fit: cover;
+        border-radius: 1.5rem;
+    }
+
+.card {
+    border-radius: 1.5rem;
+    -webkit-border-radius: 1.5rem;
+    -moz-border-radius: 1.5rem;
+    -ms-border-radius: 1.5rem;
+    -o-border-radius: 1.5rem;
+
+    position:relative;
+}
+
+.most-recent-books .card::after {
+    content: attr(data-state);
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: var(--main-color);
     color: var(--text-color);
+    top: -5%;
+    left: -5%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
 }
