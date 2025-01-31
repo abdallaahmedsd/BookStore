@@ -6,13 +6,15 @@
     <title>@ViewBag.Title</title>
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
     <link rel="stylesheet" href="~/BookStore.Web.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Shared.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Layouts/Identity.css" asp-append-version="true" />
 
     <!-- Googole Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@100..900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
           rel="stylesheet" />
 
     <!-- Font Awesome -->
@@ -22,10 +24,23 @@
    
     @await RenderSectionAsync("Styles",required:false)
 </head>
-<body>
-    <main>
-        @RenderBody()
-    </main>
+<body dir="rtl">
+    <div class="row m-0 h-100 w-100">
+        <div class="container col col-md-6 m-0 h-100 bg-text position-relative d-flex justify-content-center align-content-center">
+            <div class="logo-container position-absolute">
+                <img class="position-absolute" src="/images/Logo-2.svg" alt="" />
+            </div>
+
+            @RenderBody()
+
+        </div>
+
+        <div class="col-md-6 d-none d-md-flex flex-column justify-content-center align-items-center gap-4 bg-main">
+            @await RenderSectionAsync("HeroSide", required: false)
+
+        </div>
+    </div>
+        
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
     <link rel="stylesheet" href="~/BookStore.Web.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/Home.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Shared.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Layouts/Home.css" asp-append-version="true" />
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="/lib/fontawesome-free-6.2.0-web/css/all.min.css" />
@@ -29,55 +30,57 @@
         <nav class="navbar navbar-expand-lg fixed-top bg-main text-black border-bottom">
             <div class="container">
                 <a class="navbar-brand m-0" href="#">
-                    <img src="~/Icons-svg/Logo-1.svg" alt="كتبي" />
+                    <img src="~/images/Logo-1.svg" alt="كتبي" />
                 </a>
-                <button class="navbar-toggler fs-6"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#main"
-                        aria-controls="main"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
+              
+                <button class="navbar-toggler fs-6" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNav" aria-controls="offcanvasNav" aria-expanded="false" aria-label="Toggle navigation">
                     <svg width="30" height="30" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M4 17.0308H20M4 12.0308H20M4 7.03077H20" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </button>
-                <div class="collapse navbar-collapse" id="main">
-                    <ul class="navbar-nav me-auto mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active p-2 p-lg-3"
-                               aria-current="page"
-                               asp-area="" asp-controller="Home" asp-action="Index"
-                               >الرئيسية</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link p-2 p-lg-3" href="#">ادارة المشتريات</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link p-2 p-lg-3" 
-                               asp-area="" asp-controller="Home" asp-action="Privacy">سياسة الخصوصية</a>
-                        </li>
-                        
-                        @if (User.IsInRole(AppUserRoles.RoleAdmin))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link p-2 p-lg-3" asp-action="" asp-controller="Admin" >ادارة التطبيق</a>
-                            </li>
-                        }
-                    </ul>
-                    <ul class="navbar-nav me-auto mb-lg-0 align-items-lg-center">
-                        <li class="nav-item shopping-card-box">
-                            <a data-shopping-card-count="3" class="nav-link p-2 p-lg-3 d-flex align-items-center position-relative" href="#">
-                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M4.78571 5H18.2251C19.5903 5 20.5542 6.33739 20.1225 7.63246L18.4558 12.6325C18.1836 13.4491 17.4193 14 16.5585 14H6.07142M4.78571 5L4.74531 4.71716C4.60455 3.73186 3.76071 3 2.76541 3H2M4.78571 5L6.07142 14M6.07142 14L6.25469 15.2828C6.39545 16.2681 7.23929 17 8.23459 17H17M17 17C15.8954 17 15 17.8954 15 19C15 20.1046 15.8954 21 17 21C18.1046 21 19 20.1046 19 19C19 17.8954 18.1046 17 17 17ZM11 19C11 20.1046 10.1046 21 9 21C7.89543 21 7 20.1046 7 19C7 17.8954 7.89543 17 9 17C10.1046 17 11 17.8954 11 19Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </a>
-                        </li>
-                        
-                        <partial name="_LoginPartial" />
 
-                    </ul>
+                <div class="offcanvas offcanvas-start w-50" tabindex="-1" id="offcanvasNav" aria-labelledby="offcanvasNavLabel">
+                    <div class="offcanvas-header bg-text color-main">
+                        <h5 class="offcanvas-title" id="offcanvasNavLabel">Menu</h5>
+                        <button type="button" class="btn-close border-0 color-second" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body bg-main">
+                        <ul class="navbar-nav me-auto mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active p-2 p-lg-3"
+                                   aria-current="page"
+                                   asp-area="" asp-controller="Home" asp-action="Index">الرئيسية</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link p-2 p-lg-3" href="#">ادارة المشتريات</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link p-2 p-lg-3"
+                                   asp-area="" asp-controller="Home" asp-action="Privacy">سياسة الخصوصية</a>
+                            </li>
+
+                            @if (User.IsInRole(AppUserRoles.RoleAdmin))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link p-2 p-lg-3" asp-action="AdminDashboard" asp-controller="Home">ادارة التطبيق</a>
+                                </li>
+                            }
+                        </ul>
+                        <ul class="navbar-nav me-auto mb-lg-0 align-items-lg-center">
+                            <li class="nav-item shopping-card-box">
+                                <a data-shopping-card-count="3" class="nav-link p-2 p-lg-3 d-flex align-items-center position-relative" href="#">
+                                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4.78571 5H18.2251C19.5903 5 20.5542 6.33739 20.1225 7.63246L18.4558 12.6325C18.1836 13.4491 17.4193 14 16.5585 14H6.07142M4.78571 5L4.74531 4.71716C4.60455 3.73186 3.76071 3 2.76541 3H2M4.78571 5L6.07142 14M6.07142 14L6.25469 15.2828C6.39545 16.2681 7.23929 17 8.23459 17H17M17 17C15.8954 17 15 17.8954 15 19C15 20.1046 15.8954 21 17 21C18.1046 21 19 20.1046 19 19C19 17.8954 18.1046 17 17 17ZM11 19C11 20.1046 10.1046 21 9 21C7.89543 21 7 20.1046 7 19C7 17.8954 7.89543 17 9 17C10.1046 17 11 17.8954 11 19Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </a>
+                            </li>
+
+                            <partial name="_LoginPartial" />
+
+                        </ul>
+                    </div>
                 </div>
+           
             </div>
         </nav>
 

@@ -11,6 +11,179 @@
 	<link rel="stylesheet" href="~/css/Register.css" />
 }
 
+<!-- Register Form --!>
+<div class="register-form mx-4 text-center d-flex flex-column justify-content-center align-content-center gap-3 gap-md-4">
+	<div>
+		<h1 class="fw-bold">إنشاء حساب جديد</h1>
+		<div>
+			<span>لديك حساب ؟ <a asp-page="./Login"  class ="color-second">سجل دخول الان!</a></span>
+		</div>
+	</div>
+	<form class="d-flex flex-column gap-4" method="post" asp-route-returnUrl="@Model.ReturnUrl" >
+		<div class="row m-0 px-1">
+
+			<div class="col-6 pe-0 ps-1">
+				 <div class="input-box email-box w-100 position-relative">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M19.7055 6.29452C18.2618 4.99044 15.8298 4.5 12 4.5C8.1702 4.5 5.73816 4.99044 4.29452 6.29452M19.7055 6.29452C21.0003 7.46413 21.5 9.28823 21.5 12C21.5 17.7353 19.2647 19.5 12 19.5C4.73529 19.5 2.5 17.7353 2.5 12C2.5 9.28823 2.99972 7.46413 4.29452 6.29452M19.7055 6.29452L13.4142 12.5858C12.6331 13.3668 11.3668 13.3668 10.5858 12.5858L4.29452 6.29452" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+				<input asp-for="Input.FirstName" class="form-control rounded-second p-2 pe-5" type="text" placeholder="الاسم الاول"  aria-label="default input example">
+			 </div>
+
+			   <span
+				asp-validation-for="Input.FirstName"
+				 class="text-danger mt-1"
+			   ></span>
+			</div>
+
+			<div class="col-6 ps-0 pe-1" >
+				 <div class="input-box email-box w-100 position-relative">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M19.7055 6.29452C18.2618 4.99044 15.8298 4.5 12 4.5C8.1702 4.5 5.73816 4.99044 4.29452 6.29452M19.7055 6.29452C21.0003 7.46413 21.5 9.28823 21.5 12C21.5 17.7353 19.2647 19.5 12 19.5C4.73529 19.5 2.5 17.7353 2.5 12C2.5 9.28823 2.99972 7.46413 4.29452 6.29452M19.7055 6.29452L13.4142 12.5858C12.6331 13.3668 11.3668 13.3668 10.5858 12.5858L4.29452 6.29452" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+				<input asp-for="Input.LastName" class="form-control rounded-second p-2 pe-5" type="text" placeholder="الاسم الاخير"  aria-label="default input example">
+			 </div>
+
+			   <span
+				asp-validation-for="Input.LastName"
+				 class="text-danger mt-1"
+			   ></span>
+			</div>
+
+
+		</div>
+
+		<div class="px-1">
+			 <div class="input-box email-box w-100 position-relative">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M19.7055 6.29452C18.2618 4.99044 15.8298 4.5 12 4.5C8.1702 4.5 5.73816 4.99044 4.29452 6.29452M19.7055 6.29452C21.0003 7.46413 21.5 9.28823 21.5 12C21.5 17.7353 19.2647 19.5 12 19.5C4.73529 19.5 2.5 17.7353 2.5 12C2.5 9.28823 2.99972 7.46413 4.29452 6.29452M19.7055 6.29452L13.4142 12.5858C12.6331 13.3668 11.3668 13.3668 10.5858 12.5858L4.29452 6.29452" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+
+				<input asp-for="Input.Email" class="form-control rounded-second p-2 pe-5" type="text" placeholder="البريد الإلكتروني"  aria-label="default input example">
+			 </div>
+
+			   <span
+				asp-validation-for="Input.Email"
+				 class="text-danger mt-1"
+			   ></span>
+		</div>
+		<div class="px-1">
+			 <div class="input-box password-box w-100 position-relative">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M19.7055 6.29452C18.2618 4.99044 15.8298 4.5 12 4.5C8.1702 4.5 5.73816 4.99044 4.29452 6.29452M19.7055 6.29452C21.0003 7.46413 21.5 9.28823 21.5 12C21.5 17.7353 19.2647 19.5 12 19.5C4.73529 19.5 2.5 17.7353 2.5 12C2.5 9.28823 2.99972 7.46413 4.29452 6.29452M19.7055 6.29452L13.4142 12.5858C12.6331 13.3668 11.3668 13.3668 10.5858 12.5858L4.29452 6.29452" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+
+				<input asp-for="Input.Password" class="form-control rounded-second p-2 px-5" type="password" placeholder="كلمة المرور"  aria-label="default input example">
+				<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M8.95035 4.85392C9.59419 4.68164 10.2779 4.58333 11 4.58333C14.4442 4.58333 17.0169 6.82037 18.5465 8.65273C19.6944 10.0277 19.6942 11.9725 18.5464 13.3475C18.3705 13.5582 18.1808 13.7742 17.9776 13.9915M11.4583 8.28802C12.6099 8.48122 13.5188 9.3901 13.712 10.5417M2.74998 2.75L19.25 19.25M10.5417 13.712C9.54783 13.5452 8.73475 12.8455 8.40647 11.9167M3.98669 8.0467C3.79693 8.25113 3.61917 8.45418 3.45363 8.65248C2.30578 10.0275 2.3056 11.9723 3.45342 13.3473C4.98302 15.1796 7.55573 17.4167 11 17.4167C11.7352 17.4167 12.4308 17.3147 13.0849 17.1366" stroke="#C2C3CB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+			 </div>
+
+			 <span
+				asp-validation-for="Input.Password"
+				 class="text-danger mt-1"
+			   ></span>
+		</div>
+
+		<div class="px-1">
+			 <div class="input-box password-box w-100 position-relative">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M19.7055 6.29452C18.2618 4.99044 15.8298 4.5 12 4.5C8.1702 4.5 5.73816 4.99044 4.29452 6.29452M19.7055 6.29452C21.0003 7.46413 21.5 9.28823 21.5 12C21.5 17.7353 19.2647 19.5 12 19.5C4.73529 19.5 2.5 17.7353 2.5 12C2.5 9.28823 2.99972 7.46413 4.29452 6.29452M19.7055 6.29452L13.4142 12.5858C12.6331 13.3668 11.3668 13.3668 10.5858 12.5858L4.29452 6.29452" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+
+				<input asp-for="Input.ConfirmPassword" class="form-control rounded-second p-2 px-5" type="password" placeholder="تأكيد كلمة المرور"  aria-label="default input example">
+				<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M8.95035 4.85392C9.59419 4.68164 10.2779 4.58333 11 4.58333C14.4442 4.58333 17.0169 6.82037 18.5465 8.65273C19.6944 10.0277 19.6942 11.9725 18.5464 13.3475C18.3705 13.5582 18.1808 13.7742 17.9776 13.9915M11.4583 8.28802C12.6099 8.48122 13.5188 9.3901 13.712 10.5417M2.74998 2.75L19.25 19.25M10.5417 13.712C9.54783 13.5452 8.73475 12.8455 8.40647 11.9167M3.98669 8.0467C3.79693 8.25113 3.61917 8.45418 3.45363 8.65248C2.30578 10.0275 2.3056 11.9723 3.45342 13.3473C4.98302 15.1796 7.55573 17.4167 11 17.4167C11.7352 17.4167 12.4308 17.3147 13.0849 17.1366" stroke="#C2C3CB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+			 </div>
+
+			 <span
+				asp-validation-for="Input.ConfirmPassword"
+				 class="text-danger mt-1"
+			   ></span>
+		</div>
+
+	  <div class="px-1">
+			<div class="terms-box d-flex align-items-center px-1">
+					<input class="ms-2 position-relative" asp-for="Input.AgreedToTerms" type="checkbox"/>
+					<label asp-for="Input.AgreedToTerms" class="fs-6 "> <a href="#" class="color-gray">الشروط والاحكام</a> </label>
+			</div>
+
+			 <span
+				asp-validation-for="Input.AgreedToTerms"
+				 class="text-danger mt-1"
+			   ></span>
+	   </div>
+
+	   <button type="submit" class="btn login-button w-100 fs-5 fw-bold p-2 rounded-second bg-main color-text">إنشاء حساب جديد</button>
+	</form>
+
+	<div>
+		<div class="divider-with-text flex-center text-center mb-3">
+			 <span class ="mx-3 color-gray fw-bold">أو</span>
+		</div>
+		<div class="row-col-2 m-0 justify-content-center align-items-center  mt-2" >
+		<!-- Google Button -->
+<a class="btn p-0 external-login-button" href="#">
+	<svg width="45" height="44" viewBox="0 0 45 44" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+		<rect x="0.5" width="44" height="44" rx="5" fill="#CFD0D6" />
+		<rect x="10.5" y="10" width="24" height="24" fill="url(#pattern0_6_380)" />
+		<defs>
+			<pattern id="pattern0_6_380" patternContentUnits="objectBoundingBox" width="1" height="1">
+				<use xlink:href="#image0_6_380" transform="scale(0.0111111)" />
+			</pattern>
+			<image id="image0_6_380" width="90" height="90" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEuElEQVR4nO2dXYhVVRTHf9OdnGpmMpWI7CEwq8e+xpSIKIvqraAPyoooC3oItVCIFKR6MK0HrSjtoZ76ICpN6MsXwRcfIiIryKQMCk2bydGHaKzcsWM9DHIH795n73PWPrN+sGCGuffM2v85d++11l5nDxiGYRiGYRiGYRg90wFGgKXAemAbsAf4EfgDmACOy9c/A9/Ka14EHgOukmsYXbgAWA5sB8YBV9GOAZ/INecyzTkDeADYAfybQNypzF97J/AgMMA0YhhYBRzMKO5UdgB4GphFizkdWAmMNSDwyTYm04r3qVVcJ4uWU2Z7gcW0AD8nvgKcUCDqVOZ92wicSaHMB75UIKTr0b4DLqYwbgKOKhDPRczdN1IIdwN/KRDNRdrvwEyU82jmmNhltiPAApRzO/CPArFcpPmM9GoKmJNTTxcHgbeAZcDNsrjOkti3X76+SH7mX/OuJCStvZPnJ1z4RoFNUlSKoQ+4Rq4x3iaRBxKFcL9IpnZW4lR/BXC4dJGRZKSKwMeBdcBgRh/PBl7osn4cqfDJqT2trpLxfQ9cVqO/C4F9pYnsF6RvKoj8PjDUgN/nAO+UIjJShYsV+TXbAemNQcmeYkTenPkGaBWrKkwXnaadL2n7KSYp2Cerv9Ej90eIPFFzdNEKdkQIva5pp0tsCQgtGv2aORlpJcsj7mb/HiOQ7REFopS1i2lBR9LWEKF9Bc0IZCRi2igmzdXE0kCRD0ht2AhkQ6DQfmckJ06J+SJVUrYFOuC3lnLilFjyTYOvAx3w+3g5cUrs3tQD2x/owDzy4pRY8jwhtAN0NnlxSmxN6oFNBDowg7w4JeaDhKSY0NQjtE0ddBX62aYXQ99BlBOnxFY3Hd7dQl6cEns89cAsYaGr0L6xMynrA//Sb5MXp8T8w6NJeTiiE7Sv0HLwaMA4z9VQJi2iebBLm1vINp2Kwv9LlMfrAePz61YWPgoUerSwjdlheYa81/GtzeXIsojpw/cnl8JTgWO7Ppcjc1vcbjAzsJ/waO7Hmz+PuKufRz8bI/oIs3JfZFf/FehlEfB34Jj8kRQqmxz3ymKjDb/n91PgWI7V1UQf24T+obK23f7IqXBLXQ4OBWZPrgknT8FpwJuRY6g1EXsy0kknYncavpPfiPR9ZxPO7qkg9taG5uxhOdQq1u9rG/D5/19a5fG3H2qORhZMevwtxj6jQTZVcNxJ6Lch8yo+JGfihYZwk82/93IafkT5i4piOwkZn0icRQ7KWvJbAv+eQwHzIip7bgrz0czL8pRrX2Q0sVCukeKgQidrUe72iZ65IcMxEofkaAhfmLoVuFQac2ZIncEfI3GJ7E+ukNemuHsn25/AlSjjtsIPRnEnmV/ol6CUR1ok9mqUc2fhh1c54FUKYXHCxcjVbCoijBAuBHYrEM4FzMk+HCySAUlqTigQ8lQ7Qbmb52thJFFik8PeA+bQIvol3o096yO1+YL/HbSYQZkLY8+oq2r7pTlRTbZXx7bYEuDTGmJvf/2PgbvkkzVtOV/usq3y3yhSiOunqA+kb/C8pgeokY7UFx6SVgW/1/iV/HuQsUmPeYzL9/5Yt11y+tczwD1SAzEMwzAMwzAMwzDogf8Av87oovpCjIAAAAAASUVORK5CYII=" />
+		</defs>
+	</svg>
+</a>
+
+<!-- Facebook Button -->
+<a class="btn p-0 external-login-button" href="#">
+	<svg width="45" height="44" viewBox="0 0 45 44" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+		<rect x="0.5" width="44" height="44" rx="5" fill="#CFD0D6" />
+		<rect x="10.5" y="10" width="24" height="24" fill="url(#pattern0_6_379)" />
+		<defs>
+			<pattern id="pattern0_6_379" patternContentUnits="objectBoundingBox" width="1" height="1">
+				<use xlink:href="#image0_6_379" transform="scale(0.0111111)" />
+			</pattern>
+			<image id="image0_6_379" width="90" height="90" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEfUlEQVR4nO2cTYhWVRiAH2bU0TAlSC0Ky0zCjRkp/VAkIkWbtIX2Z0KYJWE4UmbQohYFJbQocPktalEoVOYPDopSG2vhmI79uNGsTGwc/xbiaKNHTrwDMfgx9/u+95z33DvngXczzHe/9zxz5tz3nHvugUwmk8lkMplMJpPJFKYdmAssB9YDm4Ee4AhwBrgkcUZ+1iO/85F8Zo5cI3Mdbgc6ga3AecC1GOeALcBq4DZGOOOAF4FdwBUFufViANgJLAXGMoIYLz3t74By60Uv8B4wkQozGlgLnDYQPDR8Dm9ITpXiUeBQAoKHxmFgARXAj4kbgKsJSK0XPrdPgQ5Kyp3AjwmIdAWjG7ibkrFAqUxzkcOXhfMpCU8DFxOQ5poMPxl6hsR5JXBN7CKFb8MKEmWRTA6sJTlF2UtIDD+u9ScgxwUYRh4nEWaU9MbnGrhBTk+hTt6fgAwHXAZOAr8C+yQvv7r3x/9W/Zq99j7rOnuD8Ri6DXgduBdoK5DvLcDLTX6fn9SY8JjRjO8q8Bkws4X7SbPf+wiR8YsxPxtIPgs80WLuzYp28pBhFBFZayD5PHCfQu6tiPaxhkjcaLTUuVAp/1ZFn5I19eC8ZSB5o2L+rYp2spYd/PHTSYPq4p7ERJ8I/VhsmUFv3q3cBg3RPp4nILsMRHc2mKOvCp4C3gY+vE58qZRXV8gtARYrcw80kKNfuP8tUl5+Ae3WEKI7DSRfBMYUzK/DoLZfFUL0VgPRhxrI7yWD/L7Rltwus7LYDfm+gRx3GOR3Vnv72VyDRjjZ1lWU2GXnYNyvKXq5USM+L5hfu+HTHT9kqbHeqBG1gvlNMcrPScmoxreJi55mKPprTdEHs2jqif5JU/SxLJp6oo9qirbaAVorwdDhl03VaOXBpqu46P7URe8EbhombiiYX1uBaw3Gm8rt8G7UCDEr3I4Nnyi3o08zub8qJLpLuR2+UFCjp0Kif1duxwHN5DZXRPS4AGvqX2km+HFFRM8O0A7/Iqkar1ZE9JIA7ViRek/YTnzeDdCOWZoJtsn21bKL/kK5DedCvHfeFeAdv3XDxJMFc5tY4FrrAlQcQTrLawH+7VzJp+ArQ4ieYvAUo5awaO9iMoH4LotmUPQeAuK3QeUezX8Ong29AT3Euocr2dBxPMbJCO9k0fgKJjjjI+6hqCXYo/8BJhCJVSNY9EoiMjrSrs1aYqJ/if2ykOfBCHV1LSHRVyxefwu5fOoSFa26I6mZhfTuESC6O4Wj3KbKMWdVFd0n10+CeYGOkagZi74kr2InhX/h8t8KiR5I+cifpcqVSM1ItG/DcySO79kXSiy6P+WePJSH5SZSNtG9wEOUjDuAvSUSvVcORSwlo6TQH0hYtJ/xfWAxtQ7BbOCHBEXvL+NQMRztsvJ1PAHRJ2RTUJFzmEpLhyyz/mkg+pg8zTefTsekTQ6L3SRHqYUSPSCnMiyu4sHcjXIz8ILsJOpTEN0r1/Lni0wKnHupuUt6oD93o+gf6n35zIyqj72ZTCaTyWQymUwmgybXAGVplzvT5YViAAAAAElFTkSuQmCC" />
+		</defs>
+	</svg>
+</a>
+		 </div>
+	</div>
+</div>
+
+
+
+@section HeroSide
+{
+	<div class="image-container  h-50">
+		<img class="w-100 h-100" src="/images/Registration-Hero.svg" alt="" />
+	</div>
+	<div class="text-center w-75 color-text">
+		<h3 class="mb-4 fw-bold">بدا رحلتك لاستكشاف المعرفةا</h3>
+		<p class="fs-6 lh-sm">
+			هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا
+			النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد
+			من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.
+		</p>
+	</div>
+}
+
+
+
+
+
+@section Scripts {
+
+	<partial name="_ValidationScriptsPartial" />
+}
+
+
+
+<!--
+
 <div class="container m-0 p-4">
 	<div class="d-flex justify-content-center justify-content-lg-start">
 		<a href="/">
@@ -28,7 +201,7 @@
 			</div>
 
 			<form method="post" asp-route-returnUrl="@Model.ReturnUrl">
-				@* <div asp-validation-summary="All" class="row mb-3 text-danger" role="alert"></div> *@
+@* <div asp-validation-summary="All" class="row mb-3 text-danger" role="alert"></div> *@
 				<div class="row mb-2">
 					<div class="col-lg">
 						<label asp-for="Input.FirstName" class="form-label mb-2 fs-6">الاسم الاول</label>
@@ -72,14 +245,14 @@
 					<span class="text-danger mt-1"></span>
 				</div>
 
-				@if (User.IsInRole(AppUserRoles.RoleAdmin))
-				{
-					<div class="mb-3">
-						<select asp-for="Input.Role" asp-items="@Model.Input.RolesList" class="form-select roles-select ">
-							<option disabled selected>Select Role</option>
-						</select>
-					</div>
-				}
+@* @if (User.IsInRole(AppUserRoles.RoleAdmin)) *@
+@* { *@
+@* 						<div class="mb-3"> *@
+@* 							<select asp-for="Input.Role" asp-items="@Model.Input.RolesList" class="form-select roles-select "> *@
+@* 								<option disabled selected>Select Role</option> *@
+@* 							</select> *@
+@* 						</div> *@
+@* } *@
 
 				<div class="mb-3 terms-container d-flex justify-content-start">
 					<input class="ms-2 position-relative"
@@ -97,18 +270,16 @@
 			</form>
 
 			<div>
-				@* <div class="d-flex justify-content-center align-items-center mt-4"> *@
-				@* 	<span>----------- أو -----------</span> *@
-				@* </div> *@
 				<div class="divider-with-text">
 					<span>أو</span>
 				</div>
+
 				<div class="row justify-content-center align-items-center external-login-buttons mt-2">
-					<!-- Google Button -->
+
 					<button class="btn rounded-circle mx-2 external-login-btn p-3 d-flex justify-content-center align-items-center">
 						<i class="fab fa-google"></i>
 					</button>
-					<!-- Facebook Button -->
+
 					<button class="btn rounded-circle mx-2 external-login-btn p-3 d-flex justify-content-center align-items-center">
 						<i class="fab fa-facebook"></i>
 					</button>
@@ -116,20 +287,4 @@
 			</div>
 		</div>
 	</div>
-</div>
-
-@section Scripts {
-
-	<script>
-		 document.addEventListener("DOMContentLoaded", function () {
-			const inputs = document.querySelectorAll('.register-input');
-			inputs.forEach(input => {
-					input.style.backgroundColor = 'transparent';
-					input.style.color = 'var(--text-color)';
-			});
-		});
-	</script>
-
-	<partial name="_ValidationScriptsPartial" />
-}
-
+</div>-->
