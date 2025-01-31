@@ -4,5 +4,5 @@
 
 For initial setup, the application includes a default admin user:
 
-- **Username**: `admin@gmail.com`
-- **Password**: `Admin123@`
+- **Username**: `admin@aramm.com`
+- **Password**: `Aramm123@`
