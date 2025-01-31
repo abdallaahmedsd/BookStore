@@ -16,10 +16,10 @@
 	<div>
 		<h1 class="fw-bold">إنشاء حساب جديد</h1>
 		<div>
-			<span>لديك حساب ؟ <a href="#" class ="color-second">سجل دخول الان!</a></span>
+			<span>لديك حساب ؟ <a asp-page="./Login"  class ="color-second">سجل دخول الان!</a></span>
 		</div>
 	</div>
-	<form class="d-flex flex-column gap-4" >
+	<form class="d-flex flex-column gap-4" method="post" asp-route-returnUrl="@Model.ReturnUrl" >
 		<div class="row m-0 px-1">
 
 			<div class="col-6 pe-0 ps-1">
