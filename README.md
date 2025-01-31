@@ -1,5 +1,8 @@
 # BookStore
 
-The Default user's (Admin) Info:
-Username : admin@aramm.com
-Password : Aramm123@
+## Default User Credentials
+
+For initial setup, the application includes a default admin user:
+
+- **Username**: `admin@gmail.com`
+- **Password**: `Admin123@`
