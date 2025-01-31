@@ -1,108 +1,23 @@
-﻿:root {
-    /*    font-size: 62.5%;*/
-    --main-color: #A1E000;
-    --secondary-color: #110F0F;
-    --text-color: #ffffff;
-    --third-color: #674FCD;
-}
+﻿
+.register-form {
+    width: 500px;
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    /*    font-size: 1.6rem;*/
-    direction: rtl;
-    background-color: var(--secondary-color);
-    color: var(--text-color);
-    font-family: "Noto Sans Arabic", serif;
-}
-
-body main {
-    height: 100vh;
-    display: flex;
-    align-content: center;
-    justify-content: center;
-}
-
-/*the container*/
-body  main .container {
-    height: 100vh;
-    display: grid;
-    grid-template-rows: auto 1fr;
-    align-content: center;
-    gap: 0;
-}
-
-.register-container {
-    /*    max-width: 450px;*/
-}
-
-/* Register Form Inputs */
-.link-login {
-    font-weight: 300px;
-}
-
-    .link-login a {
-        color: var(--main-color);
-        cursor: pointer;
-    }
-
-.register-input,
-.button-submit {
-    font-weight: 500;
-    height: 40px;
-}
-
-.register-input,
-.roles-select {
-    background-color: transparent;
-    color: var(--text-color);
-    border: 3px solid var(--main-color);
-}
-
-    .form-control:focus,
-    .roles-select:focus {
-        background-color: var(--secondary-color);
-        color: var(--text-color);
-        border-color: var(--third-color);
-    }
-
-    .roles-select option:checked {
-        background-color: var(--secondary-color);
-        color: var(--main-color);
-    }
-
-    .roles-select option {
-        background-color: var(--secondary-color);
-        color: var(--text-color);
-    }
-
-.form-control::placeholder {
-    color: var(--text-color);
-    font-size: 14px;
-    font-weight: 300;
-    text-align: right;
 }
 
 /* Terms */
-.terms-container {
-    font-weight: 300;
+.terms-box a {
+    text-decoration:underline;
 }
-
-.terms-container a {
-    color: var(--third-color);
+.terms-box a:hover {
+    color:var(--main-color);
 }
-
-.terms-container input {
+.terms-box input {
     appearance: none;
     width: 20px;
     height: 20px;
     outline: none;
     cursor: pointer;
-    border: 2px solid var(--third-color);
+    border: 2px solid var(--gray-color);
     border-radius: 4px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
@@ -110,65 +25,20 @@ body  main .container {
     -o-border-radius: 4px;
 }
 
-.terms-container input:checked {
+.terms-box input:checked {
     color: var(--main-color);
-    border-color: var(--third-color);
+    border-color: var(--second-color);
 }
 
-.terms-container input:checked::after {
+.terms-box input:checked::after {
     content: "✔";
     position: absolute;
     color: var(--main-color);
     font-size: 14px;
-    top: -1px;
+    top: -2px;
     right: 0;
     width: 100%;
     height: 100%;
     text-align: center;
 }
 
-/* Register Submit Button*/
-.button-submit {
-    background-color: var(--main-color);
-    color: var(--secondary-color);
-    height: 40px;
-}
-
-/* External Logins */
-.divider-with-text {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    margin: 20px 0;
-}
-
-.divider-with-text::before,
-.divider-with-text::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: #ccc;
-}
-
-.divider-with-text span {
-    margin: 0 10px; 
-    color: #333; 
-    font-weight: bold; 
-}
-
-
-.external-login-buttons button {
-    background-color: var(--main-color);
-    color: var(--secondary-color);
-    width: 30px;
-    height: 30px;
-    border: none;
-}
-
-    /* Hover buttons */
-    .button-submit:hover,
-    .external-login-buttons button:hover {
-        background-color: var(--main-color);
-        color: var(--secondary-color);
-        border: 1px solid var(--text-color);
-    }

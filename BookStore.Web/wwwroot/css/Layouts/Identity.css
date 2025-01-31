@@ -8,3 +8,55 @@
     right: 20%;
     top: 4%;
 }
+
+form button.login-button:hover {
+    color: var(--gray-color);
+}
+
+.input-box svg:first-of-type {
+    position: absolute;
+    right: 10px;
+    top: 18%;
+}
+
+.password-box svg:nth-of-type(2) {
+    position: absolute;
+    left: 10px;
+    top: 18%;
+}
+
+.input-box input {
+    background-color: var(--opacity-color);
+    color: var(--gray-color);
+}
+
+.input-box input:focus {
+    color: var(--main-color);
+    box-shadow: 0 0 3px var(--main-color);
+}
+
+.input-box:has(input:focus) svg path {
+    stroke: var(--main-color);
+}
+
+
+.image-container {
+    width: 80%;
+    min-width: 300px;
+}
+
+.divider-with-text::before,
+.divider-with-text::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--gray-color);
+}
+
+.external-login-button {
+    transition: .25s;
+}
+
+    .external-login-button:hover {
+        transform: translateY(-1px);
+    }
