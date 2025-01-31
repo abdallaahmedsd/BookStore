@@ -19,14 +19,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BookStore.BusinessLogic\BookStore.BusinessLogic.csproj" />
     <ProjectReference Include="..\BookStore.DataAccess\BookStore.DataAccess.csproj" />
     <ProjectReference Include="..\BookStore.Models\BookStore.Models.csproj" />
     <ProjectReference Include="..\BookStore.Utilties\BookStore.Utilties.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\" />
-    <Folder Include="Areas\Customer\" />
     <Folder Include="wwwroot\Icons-svg\" />
   </ItemGroup>
 
