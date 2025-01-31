@@ -1,0 +1,160 @@
+﻿
+:root {
+    --main-color: #674FCD;
+    --second-color: #A3B12B;
+    --text-color: #FFFFFF;
+    --opacity-color: #F5F5F5;
+    --black-color: #000000;
+    --gray-color: #C2C3CB;
+}
+
+/* Utility Classes */
+.color-main {
+    color: var(--main-color);
+}
+
+.color-second {
+    color: var(--second-color);
+}
+
+.color-text {
+    color: var(--text-color);
+}
+
+.color-opacity {
+    color: var(--opacity-color);
+}
+
+.color-gray {
+    color: var(--gray-color);
+}
+
+.bg-main {
+    background-color: var(--main-color);
+}
+
+.bg-second {
+    background-color: var(--second-color);
+}
+
+.bg-text {
+    background-color: var(--text-color);
+}
+
+.bg-opacity {
+    background-color: var(--opacity-color);
+}
+
+.bg-gray {
+    background-color: var(--gray-color);
+}
+
+.rounded-main {
+    border-radius: 1.5rem;
+}
+
+.page-heihgt {
+    height: 100vh;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-x: hidden;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+
+body {
+    font-family: "Rubik", serif;
+    background-color: var(--text-color);
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+::-webkit-scrollbar {
+    width: .75rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--second-color);
+    border-radius: .5rem;
+    -webkit-border-radius: .5rem;
+    -moz-border-radius: .5rem;
+    -ms-border-radius: .5rem;
+    -o-border-radius: .5rem;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--main-color);
+}
+
+a {
+    text-decoration: none;
+}
+
+input {
+    border: none;
+    outline: none;
+}
+
+
+/*Start Dashboard*/
+
+.dashboard {
+/*    height:100vh;*/
+}
+
+
+/* Start sidebar */
+.sidebar {
+    border-left: 1px solid var(--gray-color);
+}
+.logo-box {
+    border-bottom: 1px solid var(--gray-color);
+}
+
+
+.navbar .navbar-nav .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0 .75rem;
+    border-radius: .75rem;
+}
+
+.navbar .navbar-nav .nav-item .nav-link {
+    color: var(--gray-color);
+    color: var(--black-color);
+    width: 100%;
+    padding: .5rem .75rem;
+}
+
+
+.active,
+.navbar .navbar-nav .nav-link:active,
+.navbar .navbar-nav .nav-link:focus,
+.navbar .navbar-nav .nav-link:hover {
+    color: var(--text-color) !important;
+    background-color: var(--main-color);
+}
+
+.active > svg path,
+.navbar .navbar-nav .nav-link:active svg path,
+.navbar .navbar-nav .nav-link:focus svg path,
+.navbar .navbar-nav .nav-link:hover svg path {
+    stroke: var(--text-color);
+}
+
