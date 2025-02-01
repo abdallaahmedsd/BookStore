@@ -183,3 +183,7 @@ input {
 .hover-black:hover {
     color: var(--black-color) !important;
 }
+
+.hover-gray:hover {
+    color: var(--gray-color) !important;
+}
