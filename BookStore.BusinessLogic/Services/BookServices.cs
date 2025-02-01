@@ -337,6 +337,7 @@ namespace BookstoreBackend.BLL.Services
         /// <returns>True if the book was deleted; otherwise, false.</returns>
         public static async Task<bool> Delete(int Id)
         {
+            if(Id <= 0) return false;
             return await _bookRepository.Delete(Id);
         }
 
@@ -359,7 +360,8 @@ namespace BookstoreBackend.BLL.Services
                 AuthorID = this.AuthorID,
                 UpdatedByUserID = null
             });
-            return book?.Id > 0;
+            this.Id = book?.Id ?? 0;
+            return this.Id > 0;
         }
 
         /// <summary>
