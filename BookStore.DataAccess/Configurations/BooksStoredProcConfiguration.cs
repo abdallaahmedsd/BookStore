@@ -25,8 +25,14 @@ namespace BookStore.DataAccess.Configurations
         /// </summary>
         public static BooksStoredProcConfiguration Instance => _instance;
 
+        /// <summary>
+        /// Gets the name of the ID parameter.
+        /// </summary>
         public string IdParameterName => "Id";
 
+        /// <summary>
+        /// Gets the name of the output parameter for the new ID.
+        /// </summary>
         public string Id_Output_ParameterName => "NewId_output";
 
         /// <summary>
