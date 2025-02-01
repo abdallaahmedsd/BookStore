@@ -18,8 +18,4 @@
     <ProjectReference Include="..\BookStore.Utilties\BookStore.Utilties.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CoreReop\" />
-  </ItemGroup>
-
 </Project>
