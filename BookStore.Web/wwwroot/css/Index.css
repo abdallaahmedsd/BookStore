@@ -1,14 +1,20 @@
 ﻿
 /* Landing Page */
+body {
+    background-color:var(--main-color);
+}
 
 .landing {
-    margin-bottom: 5rem;
     height: 100dvh;
+}
+
+.landing-content {
+    margin-top:5rem;
 }
 
 .search-box i {
     left: 15px;
-     top: 35%;
+    top: 35%;
 }
 
 .search-box input:focus,
@@ -19,85 +25,47 @@
 
 /*Middle image*/
 .middle-image {
-    width: 100%;
-    z-index: 1;
-    background-color: white;
-}
-
-    .middle-image::before {
-        content: "";
-        position: absolute;
-        width: 130%;
-        left: 50%;
-        top: -45%;
-        background-color: var(--text-color);
-        border-top: 200px solid var(--text-color);
-        border-radius: 50% 50% 0% 0%;
-        -webkit-border-radius: 50% 50% 0% 0%;
-        -moz-border-radius: 50% 50% 0% 0%;
-        -ms-border-radius: 50% 50% 0% 0%;
-        -o-border-radius: 50% 50% 0% 0%;
-        transform: translateX(-50%);
-        -webkit-transform: translateX(-50%);
-        -moz-transform: translateX(-50%);
-        -ms-transform: translateX(-50%);
-        -o-transform: translateX(-50%);
-        z-index: 2;
-    }
-
-.middle-image .container {
-    z-index: 4;
-    padding: 0;
-    height: 200px;
-      
+    height: 400px;
+    border-radius: 50% 50% 0% 0%;
+    -webkit-border-radius: 50% 50% 0% 0%;
+    -moz-border-radius: 50% 50% 0% 0%;
+    -ms-border-radius: 50% 50% 0% 0%;
+    -o-border-radius: 50% 50% 0% 0%;
 }
 
 .middle-img-container {
-    position: absolute;
-    min-width: 400px;
-    max-width: 400px;
-    max-height: 400px;
-    z-index: 3;
-    transform: translate(0%,-30%);
-    -webkit-transform: translate(0%,-30%);
-    -moz-transform: translate(0%,-30%);
-    -ms-transform: translate(0%,-30%);
-    -o-transform: translate(0%,-30%);
+    max-width: 450px;
 }
-
 
 /* Books Section*/
-.books {
-    z-index: 100;
-}
-
-.image-container {
-    height: 150px;
-    overflow: hidden;
-    border-radius:1.5rem;
-}
-
-    .image-container img {
-        object-fit: cover;
-        border-radius: 1.5rem;
-    }
-
 .card {
     border-radius: 1.5rem;
     -webkit-border-radius: 1.5rem;
     -moz-border-radius: 1.5rem;
     -ms-border-radius: 1.5rem;
     -o-border-radius: 1.5rem;
+    position: relative;
+}
 
-    position:relative;
+.card .image-container {
+    height: 150px;
+    overflow: hidden;
+    border-radius: 1.5rem;
+}
+
+.card .image-container img {
+    object-fit: cover;
+    border-radius: 1.5rem;
 }
 
 .most-recent-books .card::after {
     content: attr(data-state);
     position: absolute;
-    width: 40px;
-    height: 40px;
-    background-color: var(--main-color);
+    width: 35px;
+    height: 35px;
+    font-size:.75rem;
+    font-weight:bold;
+    background-color: var(--red-color);
     color: var(--text-color);
     top: -5%;
     left: -5%;

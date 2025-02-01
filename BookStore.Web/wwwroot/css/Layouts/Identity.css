@@ -5,7 +5,7 @@
 }
 
 .logo-container {
-    right: 20%;
+    right: 15%;
     top: 4%;
 }
 
@@ -54,7 +54,7 @@ form button.login-button:hover {
 }
 
 .external-login-button {
-    transition: .25s;
+    transition: .25s ease-in-out;
 }
 
     .external-login-button:hover {

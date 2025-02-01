@@ -1,13 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace BookStore.Web.Controllers
+namespace BookStore.Web.Areas.Admin.Controllers
 {
-    public class AdminDashboardController : Controller
+    [Area("Admin")]
+    public class DashboardController : Controller
     {
         public IActionResult Index()
         {
             return View();
         }
 
+
+        
     }
 }

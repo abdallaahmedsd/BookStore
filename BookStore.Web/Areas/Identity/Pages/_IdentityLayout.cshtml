@@ -28,7 +28,9 @@
     <div class="row m-0 h-100 w-100">
         <div class="container col col-md-6 m-0 h-100 bg-text position-relative d-flex justify-content-center align-content-center">
             <div class="logo-container position-absolute">
-                <img class="position-absolute" src="/images/Logo-2.svg" alt="" />
+                <a asp-area="Customer" asp-controller="Home" asp-action="Index">
+                    <img src="/images/Logo-2.svg" alt="" />
+                </a>
             </div>
 
             @RenderBody()
