@@ -5,65 +5,7 @@
     --opacity-color: #F5F5F5;
     --black-color: #000000;
     --gray-color: #C2C3CB;
-}
-
-/* Utility Classes */
-.color-main {
-    color: var(--main-color);
-}
-
-.color-second {
-    color: var(--second-color);
-}
-
-.color-text {
-    color: var(--text-color);
-}
-
-.color-opacity {
-    color: var(--opacity-color);
-}
-
-.color-gray {
-    color: var(--gray-color);
-}
-
-.bg-main {
-    background-color: var(--main-color);
-}
-
-.bg-second {
-    background-color: var(--second-color);
-}
-
-.bg-text {
-    background-color: var(--text-color);
-}
-
-.bg-opacity {
-    background-color: var(--opacity-color);
-}
-
-.bg-gray {
-    background-color: var(--gray-color);
-}
-
-.rounded-main {
-    border-radius: 1.5rem;
-}
-.rounded-second {
-    border-radius: .75rem;
-}
-
-.btn-main {
-    border-radius: 20px;
-    padding: 1rem;
-}
-.flex-center {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
+    --red-color: #DC143C;
 }
 
 * {
@@ -111,9 +53,108 @@ body {
 
 a {
     text-decoration: none;
+    transition: .25s ease-in-out;
+}
+
+button {
+    transition: .25s ease-in-out;
+}
+
+a.color-second:hover {
+    color: var(--main-color) ;
 }
 
 input {
     border: none;
     outline: none;
+}
+
+
+/* Utility Classes */
+.color-main {
+    color: var(--main-color);
+}
+
+.color-second {
+    color: var(--second-color) !important;
+}
+
+.color-text {
+    color: var(--text-color);
+}
+
+.color-opacity {
+    color: var(--opacity-color);
+}
+
+.color-gray {
+    color: var(--gray-color);
+}
+
+.bg-main {
+    background-color: var(--main-color);
+}
+
+.bg-second {
+    background-color: var(--second-color);
+}
+
+.bg-text {
+    background-color: var(--text-color);
+}
+
+.bg-opacity {
+    background-color: var(--opacity-color);
+}
+
+.bg-gray {
+    background-color: var(--gray-color);
+}
+
+.shadow-main:focus {
+    box-shadow: 0 0 3px var(--main-color);
+}
+
+.rounded-main {
+    border-radius: 1.5rem;
+}
+
+.rounded-second {
+    border-radius: .75rem;
+}
+
+.btn-main {
+    border-radius: 20px;
+    padding: 1rem;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.trs {
+    transition: .25s ease-in-out;
+}
+
+.hover-main:hover {
+    color: var(--main-color) !important;
+}
+
+.hover-second:hover {
+    color: var(--second-color) !important;
+}
+
+.hover-text:hover {
+    color: var(--text-color) !important;
+}
+
+.hover-black:hover {
+    color: var(--black-color) !important;
 }

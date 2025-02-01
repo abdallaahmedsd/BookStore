@@ -49,20 +49,20 @@
                             <li class="nav-item">
                                 <a class="nav-link active p-2 p-lg-3"
                                    aria-current="page"
-                                   asp-area="" asp-controller="Home" asp-action="Index">الرئيسية</a>
+                                   asp-area="Customer" asp-controller="Home" asp-action="Index">الرئيسية</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link p-2 p-lg-3" href="#">ادارة المشتريات</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link p-2 p-lg-3"
-                                   asp-area="" asp-controller="Home" asp-action="Privacy">سياسة الخصوصية</a>
+                                   asp-area="Customer" asp-controller="Home" asp-action="Privacy">سياسة الخصوصية</a>
                             </li>
 
                             @if (User.IsInRole(AppUserRoles.RoleAdmin))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link p-2 p-lg-3" asp-action="AdminDashboard" asp-controller="Home">ادارة التطبيق</a>
+                                    <a class="nav-link p-2 p-lg-3" asp-area="Admin" asp-action="AdminDashboard" asp-controller="Home">ادارة التطبيق</a>
                                 </li>
                             }
                         </ul>
@@ -89,18 +89,17 @@
              
     @RenderBody() 
 
-     @* <partial name="_FooterPartial" />  *@
 
     <footer class="border-top footer text-muted bg-main m-0">
         <div class="container color-text">
             <div class="row flex-wrap justify-content-center">
                 <div class="col-6 text-center">
                     جميع الحقوق محفوظة لدى
-                    <span class="color-second"> كتبي</span>
+                    <a class="color-second pointer hover-black" href="#"> كتبي</a>
                 </div>
                 <div class="col-6 text-center">
                     &copy; 2025 -
-                    <span class="color-second">ARAMM</span>
+                    <a class="color-second pointer hover-black" href="#">ARAMM</a>
                 </div>
             </div>
         </div>
