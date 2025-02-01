@@ -60,9 +60,7 @@ namespace BookStore.BusinessLogic.Services
         /// <param name="mode">The mode (Add or Update).</param>
         public CategoryServices()
         {
-            Id = -1;
             Name = "";
-            CreatedBy = -1;
             Mode = enMode.Add;
         }
 
@@ -73,8 +71,6 @@ namespace BookStore.BusinessLogic.Services
             CreatedBy = category.CreatedBy;
             Mode = enMode.Update;
         }
-
-
 
 
         /// <summary>
@@ -154,8 +150,8 @@ namespace BookStore.BusinessLogic.Services
         private async Task<bool> _AddAsync()
         {
             Category? category = await _categoryRepository.InsertAsync(new Category { Name = Name, CreatedBy = CreatedBy });
-            Id = category?.Id ?? 0;
-            return Id > 0;
+            this.Id = category?.Id ?? 0;
+            return this.Id > 0;
         }
 
         /// <summary>
