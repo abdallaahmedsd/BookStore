@@ -1,12 +1,3 @@
-
-/*html {
-    position: relative;
-}
-body {
-    position: relative;
-}*/
-
-
 body {
     background-color: var(--text-color);
 }
@@ -19,20 +10,24 @@ body {
 .navbar .navbar-nav .nav-link {
     color: var(--text-color);
 }
-    .active,
-    .navbar .navbar-nav .nav-link:active,
-    .navbar .navbar-nav .nav-link:focus,
-    .navbar .navbar-nav .nav-link:hover {
-        color: var(--second-color) !important;
-    }
-
-.navbar .navbar-toggler {
-    transition: .25s;
-    -webkit-transition: .25s;
-    -moz-transition: .25s;
-    -ms-transition: .25s;
-    -o-transition: .25s;
+.active,
+.navbar .navbar-nav .nav-link:hover {
+    color: var(--second-color) !important;
 }
+
+.active:hover svg path,
+.navbar .navbar-nav .nav-link:hover svg path {
+    stroke: var(--second-color);
+}
+
+
+    .navbar .navbar-toggler {
+        transition: .25s;
+        -webkit-transition: .25s;
+        -moz-transition: .25s;
+        -ms-transition: .25s;
+        -o-transition: .25s;
+    }
 
     .navbar .navbar-toggler svg:hover path,
     .navbar .navbar-toggler svg:focus path {

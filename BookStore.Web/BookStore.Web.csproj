@@ -26,7 +26,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\css\Admin\" />
+    <Folder Include="wwwroot\css\Identity\" />
+    <Folder Include="wwwroot\css\Customer\" />
     <Folder Include="wwwroot\Icons-svg\" />
+    <Folder Include="wwwroot\js\Admin\" />
   </ItemGroup>
 
 </Project>
