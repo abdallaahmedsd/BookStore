@@ -1,5 +1,4 @@
 ﻿using BookStore.BusinessLogic.Interfaces;
-using BookStore.BusinessLogic.Services;
 using BookStore.DataAccess.Repositories;
 using BookStore.Models.Entities;
 using BookStore.Models.ViewModels;
@@ -10,18 +9,18 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
-namespace BookstoreBackend.BLL.Services
+namespace BookStore.BusinessLogic.Services
 {
 
     /// <summary>
     /// Provides services for managing books.
     /// </summary>
-    public class BookServices: IServices
+    public class BookServices : IServices
     {
         /// <summary>
         /// Enumeration for mode (Add or Update).
         /// </summary>
-        private enum enMode { Add, Update}
+        private enum enMode { Add, Update }
 
         /// <summary>
         /// Current mode of the service (Add or Update).
@@ -123,18 +122,18 @@ namespace BookstoreBackend.BLL.Services
         /// <param name="mode">The mode (Add or Update).</param>
         private BookServices(Book book, enMode mode = enMode.Update)
         {
-            this.Id = book.Id;
-            this.Title = book.Title;
-            this.ISBN = book.ISBA;
-            this.LanguageID = book.LanguageID;
-            this.Price = book.Price;
-            this.CategoryID = book.CategoryID;
-            this.PublishedDate = book.PublicationDate;
-            this.Description = book.Description;
-            this.ImagePath = book.CoverImage;
-            this.AuthorID = book.AuthorID;
-            this.UpdatedByUserID = book.UpdatedByUserID;
-            this.Mode = mode;
+            Id = book.Id;
+            Title = book.Title;
+            ISBN = book.ISBA;
+            LanguageID = book.LanguageID;
+            Price = book.Price;
+            CategoryID = book.CategoryID;
+            PublishedDate = book.PublicationDate;
+            Description = book.Description;
+            ImagePath = book.CoverImage;
+            AuthorID = book.AuthorID;
+            UpdatedByUserID = book.UpdatedByUserID;
+            Mode = mode;
         }
 
         /// <summary>
@@ -158,7 +157,7 @@ namespace BookstoreBackend.BLL.Services
         /// </summary>
         /// <param name="topN">The number of top best-selling books to retrieve.</param>
         /// <returns>A task representing the asynchronous operation. The task result contains a list of best-selling books.</returns>
-        public static async Task<IEnumerable<BestSellingBookDTO>> GetTopBestSellingBooksAsync(int topN)
+        public static async Task<IEnumerable<BestSellingBookDTO>?> GetTopBestSellingBooksAsync(int topN)
         {
             if (topN <= 0)
             {
@@ -173,7 +172,7 @@ namespace BookstoreBackend.BLL.Services
         /// </summary>
         /// <param name="topN">The number of top recently published books to retrieve.</param>
         /// <returns>A task representing the asynchronous operation. The task result contains a list of recently published books.</returns>
-        public static async Task<IEnumerable<RecentlyPublishedBookDTO>> GetTopRecentlyPublishedBooksAsync(int topN)
+        public static async Task<IEnumerable<RecentlyPublishedBookDTO>?> GetTopRecentlyPublishedBooksAsync(int topN)
         {
             if (topN <= 0)
             {
@@ -285,7 +284,7 @@ namespace BookstoreBackend.BLL.Services
         /// <returns>A task representing the asynchronous operation. The task result is the author name.</returns>
         private static async Task<string?> GetAuthorNameAsync(int authorId)
         {
-            if (authorId <= 0) return "";
+            if (authorId <= 0) return null;
             // Simulate async retrieval from database or other service
             return await Task.FromResult("Author Name");
         }
@@ -295,8 +294,9 @@ namespace BookstoreBackend.BLL.Services
         /// </summary>
         /// <param name="id">The category ID.</param>
         /// <returns>A task representing the asynchronous operation. The task result is an enumerable collection of <see cref="BookDTO"/> objects.</returns>
-        public static async Task<IEnumerable<BookDTO>> GetAllByCategoryID(int id)
+        public static async Task<IEnumerable<BookDTO>?> GetAllByCategoryID(int id)
         {
+            if (id <= 0) return null;
             IEnumerable<Book> books = await _bookRepository.GetAllByCategoryAsync(id);
             var bookDTOs = await Task.WhenAll(books.Select(async book => new BookDTO(book.Id, book.Title, await GetAuthorNameAsync(book.AuthorID), book.ISBA, await GetCategoryNameAsync(book.CategoryID), book.Price)
             ));
@@ -308,8 +308,10 @@ namespace BookstoreBackend.BLL.Services
         /// </summary>
         /// <param name="id">The author ID.</param>
         /// <returns>A collection of book DTOs.</returns>
-        public static async Task<IEnumerable<BookDTO>> GetAllByAuthorID(int id)
+        public static async Task<IEnumerable<BookDTO>?> GetAllByAuthorID(int id)
         {
+            if (id <= 0) return null;
+
             IEnumerable<Book> books = await _bookRepository.GetAllByAuthorAsync(id);
             var bookDTOs = await Task.WhenAll(books.Select(async book =>
                 new BookDTO(book.Id, book.Title, await GetAuthorNameAsync(book.AuthorID), book.ISBA, await GetCategoryNameAsync(book.CategoryID), book.Price)
@@ -335,7 +337,7 @@ namespace BookstoreBackend.BLL.Services
         /// </summary>
         /// <param name="Id">The book ID.</param>
         /// <returns>True if the book was deleted; otherwise, false.</returns>
-        public static async Task<bool> Delete(int Id)
+        public static async Task<bool> DeleteAsync(int Id)
         {
             if(Id <= 0) return false;
             return await _bookRepository.Delete(Id);
@@ -356,7 +358,7 @@ namespace BookstoreBackend.BLL.Services
                 CategoryID = this.CategoryID,
                 PublicationDate = this.PublishedDate,
                 Description = this.Description,
-                CoverImage = this.ImagePath,
+                CoverImage =this.ImagePath,
                 AuthorID = this.AuthorID,
                 UpdatedByUserID = null
             });
@@ -370,7 +372,7 @@ namespace BookstoreBackend.BLL.Services
         /// <returns>True if the book was updated; otherwise, false.</returns>
         private async Task<bool> _UpdateAsync()
         {
-            if (this.UpdatedByUserID == null)
+            if (UpdatedByUserID == null)
             {
                 // Handle the error, return false, or throw an exception based on your needs
                 throw new Exception("UpdatedByUserID is required.");
