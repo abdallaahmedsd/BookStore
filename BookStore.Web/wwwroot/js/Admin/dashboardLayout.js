@@ -1,23 +1,4 @@
-﻿//Side bar active classes
-
-let navLinks = document.querySelectorAll(".sidebar .nav-link");
-
-navLinks.forEach(link => {
-
-    link.addEventListener("click", e => {
-
-        let activeLink = document.querySelector(".nav-link.active");
-        activeLink?.classList.remove("active");
-
-        link.classList.add("active");
-    })
-
-
-})
-
-
-
-//Table
+﻿ //Table
 
 
 //$(document).ready(function () {
@@ -65,7 +46,6 @@ $(document).ready(function () {
     $('#edit-button').on('click', function () {
         // Get data for the row.
         let id = $(this).data('id');
-        alert('Edit button clicked for id: ' + id);
 
         let data = table.row($(this).parents('tr')).data();
         alert('Edit button clicked for ' + data[1] +'with id '+ id); // Assuming the second column is the title.
@@ -73,7 +53,6 @@ $(document).ready(function () {
 
     $('#delete-button').on('click', function () {
         let id = $(this).data('id');
-        alert('Edit button clicked for id: ' + id);
 
         let data = table.row($(this).parents('tr')).data();
         alert('Delete button clicked for ' + data[1] + 'with id ' + id);
