@@ -43,7 +43,7 @@
                             </a>
                             </li>
                         <li class="nav-item">
-                            <a asp-area="Admin" asp-controller="Book" asp-action="Index" class="nav-link @Html.IsActive("Admin/Book/Index")">
+                            <a asp-area="Admin" asp-controller="Book" asp-action="Index" class="nav-link @Html.IsActive("Admin","Book")">
                                 <svg class="ms-2" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M20.1666 15.345V4.28084C20.1666 3.18084 19.2683 2.36501 18.1774 2.45668H18.1224C16.1974 2.62168 13.2733 3.60251 11.6416 4.62918L11.4858 4.73001C11.2199 4.89501 10.7799 4.89501 10.5141 4.73001L10.2849 4.59251C8.65325 3.57501 5.73825 2.60334 3.81325 2.44751C2.72242 2.35584 1.83325 3.18084 1.83325 4.27168V15.345C1.83325 16.225 2.54825 17.05 3.42825 17.16L3.69409 17.1967C5.68325 17.4625 8.75409 18.4708 10.5141 19.4333L10.5508 19.4517C10.7983 19.5892 11.1924 19.5892 11.4308 19.4517C13.1908 18.48 16.2708 17.4625 18.2691 17.1967L18.5716 17.16C19.4516 17.05 20.1666 16.225 20.1666 15.345Z" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 <path d="M11 5.0325V18.7825" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -53,7 +53,7 @@
                             الكتب</a>
                             </li>
                         <li class="nav-item">
-                            <a asp-area="Admin" asp-controller="User" asp-action="Index" class="nav-link @Html.IsActive("Admin/User/Index")">
+                            <a asp-area="Admin" asp-controller="User" asp-action="Index" class="nav-link @Html.IsActive("Admin","User")">
                                 <svg class="ms-2" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M8.3966 9.96418C8.30493 9.95501 8.19493 9.95501 8.0941 9.96418C5.91243 9.89084 4.17993 8.10334 4.17993 5.90334C4.17993 3.65751 5.99493 1.83334 8.24993 1.83334C10.4958 1.83334 12.3199 3.65751 12.3199 5.90334C12.3108 8.10334 10.5783 9.89084 8.3966 9.96418Z" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 <path d="M15.0425 3.66666C16.8208 3.66666 18.2508 5.10582 18.2508 6.87499C18.2508 8.60749 16.8758 10.0192 15.1617 10.0833C15.0883 10.0742 15.0058 10.0742 14.9233 10.0833" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -63,7 +63,7 @@
                             المستخدمين</a>
                             </li>
                         <li class="nav-item">
-                            <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="nav-link @Html.IsActive("Admin/Order/Index")">
+                            <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="nav-link @Html.IsActive("Admin","Order")">
                                 <svg class="ms-2" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M2.90576 6.82001L10.9999 11.5042L19.0391 6.84751" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 <path d="M11 19.8092V11.495" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -72,7 +72,7 @@
                             الطلبات</a>
                             </li>
                         <li class="nav-item">
-                            <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="nav-link @Html.IsActive("Admin/Category/Index")">
+                            <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="nav-link @Html.IsActive("Admin","Category")">
                                 <svg class="ms-2" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8.24992 20.1667H13.7499C18.3333 20.1667 20.1666 18.3333 20.1666 13.75V8.25001C20.1666 3.66668 18.3333 1.83334 13.7499 1.83334H8.24992C3.66659 1.83334 1.83325 3.66668 1.83325 8.25001V13.75C1.83325 18.3333 3.66659 20.1667 8.24992 20.1667Z" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                     <path d="M15.5834 2.23666V11.385C15.5834 13.1908 14.2909 13.8967 12.7051 12.9433L11.4951 12.2192C11.2201 12.0542 10.7801 12.0542 10.5051 12.2192L9.29508 12.9433C7.70925 13.8875 6.41675 13.1908 6.41675 11.385V2.23666" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -93,7 +93,7 @@
                             المساعدة</a>
                             </li>
                         <li class="nav-item">
-                            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Setting" class="nav-link @Html.IsActive("Admin/Dashboard/Setting")">
+                            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Settings" class="nav-link @Html.IsActive("Admin/Dashboard/Settings")">
                                 <svg class="ms-2" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M10.9999 20.1666C16.0416 20.1666 20.1666 16.0416 20.1666 11C20.1666 5.95831 16.0416 1.83331 10.9999 1.83331C5.95825 1.83331 1.83325 5.95831 1.83325 11C1.83325 16.0416 5.95825 20.1666 10.9999 20.1666Z" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                     <path d="M11 7.33331V11.9166" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -153,11 +153,8 @@
             </nav>
 
             <main class="container col-10 d-flex flex-column h-100 p-0">
-
                
                     @RenderBody()
-                   
-
                  
             </main>
         </div>

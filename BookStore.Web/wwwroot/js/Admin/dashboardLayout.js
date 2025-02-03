@@ -1,15 +1,4 @@
 ﻿ //Table
-
-
-//$(document).ready(function () {
-//    $('#example').DataTable({
-//        dom: 'Bfrtip', // Adds buttons
-//        buttons: ['copy', 'excel', 'pdf', 'print'],
-//        //responsive: true, // Makes it responsive
-//    });
-//});
-
-
 $(document).ready(function () {
     let table = $('#example').DataTable({
 
@@ -31,31 +20,46 @@ $(document).ready(function () {
     });
 
 
-    // Bind custom search input functionality
     $('.table-search-box input').on('keyup', function () {
         table.search($(this).val()).draw();
     });
 
-    // Optional: Attach an event to the "إضافة" (add) button
+
     $('#add-button').on('click', function () {
-        // Add your functionality here (e.g., show a modal, navigate, etc.)
-        alert("Add button clicked!");
+        window.location.href = `/Admin/Book/Create`;
     });
 
-    // Optionally, bind events to the dynamically created buttons:
+
     $('#edit-button').on('click', function () {
-        // Get data for the row.
-        let id = $(this).data('id');
+        let id = $(this).closest("tr").data("id");
 
         let data = table.row($(this).parents('tr')).data();
-        alert('Edit button clicked for ' + data[1] +'with id '+ id); // Assuming the second column is the title.
+        alert('Edit button clicked for ' + data[1] + 'with id ' + id); 
+
+        if (id) {
+            window.location.href = `/Admin/Book/Edit/${id}`;
+        }
     });
 
     $('#delete-button').on('click', function () {
-        let id = $(this).data('id');
+        let id = $(this).closest("tr").data("id");
 
         let data = table.row($(this).parents('tr')).data();
         alert('Delete button clicked for ' + data[1] + 'with id ' + id);
+
+        if (id) {
+            window.location.href = `/Admin/Book/Delete/${id}`;
+        }
+    });
+
+
+    $("#example tbody").on("dblclick", "tr", function () {
+        let id = $(this).data("id"); 
+
+        if (id) {
+            window.location.href = `/Admin/Book/Details/${id}`;
+        }
     });
 
 });
+
