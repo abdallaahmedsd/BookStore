@@ -1,6 +1,7 @@
 ﻿using BookStore.BusinessLogic.Interfaces;
 using BookStore.DataAccess.Repositories;
 using BookStore.Models.Entities;
+using BookStore.Utilties.BusinessHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace BookStore.BusinessLogic.Services
         /// </summary>
         private enMode Mode = enMode.Add;
 
-        private static readonly string _connectionString = "Server=.;Database=BookStoreDb;Trusted_Connection=True;TrustServerCertificate=True;";
+       // private static readonly string _connectionString = "Server=.;Database=BookStoreDb;Trusted_Connection=True;TrustServerCertificate=True;";
 
         private static readonly ShoppingCardRepository _shoppingCardRepository;
 
@@ -51,14 +52,14 @@ namespace BookStore.BusinessLogic.Services
         /// <summary>
         /// Gets or sets the subtotal amount for the shopping card.
         /// </summary>
-        public decimal SubTotal { get; internal set; }
+        public decimal SubTotal { get; private set; }
 
         /// <summary>
         /// Initializes the <see cref="ShoppingCardServices"/> class.
         /// </summary>
         static ShoppingCardServices()
         {
-            _shoppingCardRepository = new ShoppingCardRepository(_connectionString);
+            _shoppingCardRepository = new ShoppingCardRepository(ConnectionConfig._connectionString);
         }
 
         /// <summary>
@@ -89,10 +90,12 @@ namespace BookStore.BusinessLogic.Services
         /// </summary>
         /// <param name="id">The ID of the shopping card entity.</param>
         /// <returns>The shopping card entity if found; otherwise, null.</returns>
-        public static async Task<ShoppingCard?> FindAsync(int id)
+        public static async Task<ShoppingCardServices?> FindAsync(int id)
         {
             if (id <= 0) return null;
-            return await _shoppingCardRepository.GetByIdAsync(id);
+            ShoppingCard? shoppingCard = await _shoppingCardRepository.GetByIdAsync(id);
+            if(shoppingCard == null) return null;
+            return new ShoppingCardServices(shoppingCard, enMode.Update);
         }
 
         /// <summary>
