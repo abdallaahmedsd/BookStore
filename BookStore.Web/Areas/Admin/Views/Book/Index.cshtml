@@ -1,7 +1,72 @@
-﻿
+﻿@using BookStore.Models.ViewModels
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<BookDTO>
+
 @{
-    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+    ViewData["Title"] = "Dashboard";
+    ViewData["Section"] = "الكتب";
+
 }
 
-<h1>Index</h1>
+<div class="row-col-2 gap-5 flex-grow-6 flex-between mx-0 px-3">
 
+    <partial name="_SerachPartial" />
+    
+    <button id="add-button" class="btn col bg-text rounded-second color-main p-2">
+        <svg class="ms-2" width="24" height="24" viewBox="0 0 24 24" fill="none"
+             xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 12H16" stroke="#674FCD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 16V8" stroke="#674FCD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z"
+                  stroke="#674FCD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        إضافة
+    </button>
+</div>
+<div class="row mx-0 flex-grow-1 bg-text pt-2">
+    <!-- DataTable -->
+    <table id="example" class="table table-striped table-hover text-end">
+        <thead>
+            <tr>
+                <th class="image">صورة الكتاب</th>
+                <th class="ps-5">عنوان الكتاب</th>
+                <th>اسم المؤلف</th>
+                <th>السعر</th>
+                <th>الفئة</th>
+                <th>الإجراءات</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (BookDTO bookDTO in Model)
+            {
+                <tr>
+                    <td><img src="~/images/Logo-1.svg" alt="Book 1"></td>
+                    <td>@bookDTO.Title</td>
+                    <td>@bookDTO.Author</td>
+                    <td>@bookDTO.Price $</td>
+                    <td>@bookDTO.Category</td>
+                    <td class="flex-between">
+                        <button id="edit-button" data-id="@bookDTO.Id" class="btn bg-second">
+                            <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8.19345 1.72583H6.83862C3.45152 1.72583 2.09668 3.08067 2.09668 6.46777V10.5323C2.09668 13.9194 3.45152 15.2742 6.83862 15.2742H10.9031C14.2902 15.2742 15.6451 13.9194 15.6451 10.5323V9.17744" stroke="#F9F9F9" stroke-width="1.01613" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M11.6077 2.41682L6.26961 7.75488C6.06639 7.95811 5.86316 8.35779 5.82252 8.64908L5.53123 10.6881C5.42284 11.4265 5.94445 11.9413 6.68284 11.8397L8.72187 11.5484C9.00639 11.5078 9.40607 11.3046 9.61607 11.1013L14.9541 5.76327C15.8754 4.84198 16.309 3.77166 14.9541 2.41682C13.5993 1.06198 12.529 1.49553 11.6077 2.41682Z" stroke="#F9F9F9" stroke-width="1.01613" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M10.8422 3.18213C11.296 4.80116 12.5628 6.06794 14.1886 6.52858" stroke="#F9F9F9" stroke-width="1.01613" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                        <button id="delete-button" data-id="@bookDTO.Id" class="btn bg-red">
+                            <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14.387 4.42172C12.1312 4.19817 9.86187 4.08301 7.59929 4.08301C6.258 4.08301 4.91671 4.15075 3.57542 4.28623L2.19348 4.42172" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M5.91931 3.73752L6.06834 2.8501C6.17673 2.20655 6.25802 1.72559 7.40286 1.72559H9.1777C10.3225 1.72559 10.4106 2.23365 10.5122 2.85688L10.6612 3.73752" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M12.9307 6.5625L12.4903 13.3841C12.4158 14.4477 12.3549 15.2741 10.4649 15.2741H6.11583C4.22583 15.2741 4.16486 14.4477 4.09035 13.3841L3.65002 6.5625" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M7.15894 11.5483H9.41474" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M6.59668 8.83862H9.98378" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,4 +1,5 @@
 using BookStore.Models;
+using BookStore.Utilties.BusinessHelpers;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -14,7 +15,10 @@ namespace BookStore.Web.Areas.Customer.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index() => View();
+        public IActionResult Index()
+        {
+            return View();
+        }
         //public IActionResult Main()
         //{
         //    return View();

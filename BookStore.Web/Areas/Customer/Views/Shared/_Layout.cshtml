@@ -22,7 +22,6 @@
           rel="stylesheet" />
 
     @await RenderSectionAsync("Styles", required: false)
-
 </head>
 <body dir="rtl">
     <header>
@@ -62,7 +61,7 @@
                             @if (User.IsInRole(AppUserRoles.RoleAdmin))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link p-2 p-lg-3" asp-area="Admin" asp-action="Dashboard" asp-controller="Index">ادارة التطبيق</a>
+                                    <a class="nav-link p-2 p-lg-3" asp-area="Admin" asp-action="Index" asp-controller="Dashboard">ادارة التطبيق</a>
                                 </li>
                             }
                         </ul>

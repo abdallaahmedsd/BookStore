@@ -5,6 +5,7 @@
     --opacity-color: #F5F5F5;
     --black-color: #000000;
     --gray-color: #C2C3CB;
+    --strok-color: #C2C3CB;
     --red-color: #DC143C;
 }
 
@@ -69,9 +70,6 @@ input {
     border: none;
     outline: none;
 }
-.row{
-    margin: 0 !important;
-}
 
 
 /* Utility Classes */
@@ -84,41 +82,41 @@ input {
 }
 
 .color-text {
-    color: var(--text-color);
+    color: var(--text-color) !important;
 }
 
 .color-opacity {
-    color: var(--opacity-color);
+    color: var(--opacity-color) !important;
 }
 
 .color-gray {
-    color: var(--gray-color);
+    color: var(--gray-color) !important;
 }
 .color-red {
-    color: var(--gray-red);
+    color: var(--gray-red) !important;
 }
 
 .bg-main {
-    background-color: var(--main-color);
+    background-color: var(--main-color) !important;
 }
 
 .bg-second {
-    background-color: var(--second-color);
+    background-color: var(--second-color) !important;
 }
 
 .bg-text {
-    background-color: var(--text-color);
+    background-color: var(--text-color) !important;
 }
 
 .bg-opacity {
-    background-color: var(--opacity-color);
+    background-color: var(--opacity-color) !important;
 }
 
 .bg-gray {
-    background-color: var(--gray-color);
+    background-color: var(--gray-color) !important;
 }
 .bg-red {
-    background-color: var(--red-color);
+    background-color: var(--red-color) !important;
 }
 
 .shadow-main:focus {

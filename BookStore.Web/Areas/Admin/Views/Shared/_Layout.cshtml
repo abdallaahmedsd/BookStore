@@ -1,4 +1,8 @@
-﻿@using BookStore.Utilties
+﻿@using BookStore.Models.Identity
+@using BookStore.Utilties
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,9 +10,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BookStore.Web</title>
     <!--  Bootstrap Css -->
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> 
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    @* <!-- Bootstrap 5 CSS --> *@
+    @* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"> *@
+    @* <!-- DataTables Bootstrap 5 CSS --> *@
+    @* <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"> *@
+
+
 
     <link rel="stylesheet" href="~/BookStore.Web.styles.css" asp-append-version="true" />
+
+
 
     <link rel="stylesheet" href="~/css/Shared.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/Layouts/DashboardMain.css" asp-append-version="true" />
@@ -21,14 +34,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
           rel="stylesheet" />
 
+
+    <!-- Bootstrap Data Tables -->
+    <link rel="stylesheet" href="~/css/datatables.min.css" asp-append-version="true" />
+
+
+
+
     @await RenderSectionAsync("Styles", required: false)
 
 </head>
 
 
 <body dir="rtl">
-    <div class="dashboard row m-0 page-heihgt w-100">
-        <div class="sidebar col-2 h-100 bg-opacity">
+    <div class="dashboard row m-0 page-heihgt w-100 ">
+
+        <aside class="sidebar col-2 h-100 bg-opacity">
             <div class="container d-flex flex-column align-items-start h-100">
                 <div class="logo-box py-3 w-100">
                     <svg width="96" height="43" viewBox="0 0 96 43" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,7 +61,7 @@
                 <nav class="navbar d-flex flex-column h-100 w-100">
                     <ul class="navbar-nav w-100 px-1 gap-1">
                         <li class="nav-item">
-                            <a  asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="nav-link active">
+                            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Dashboard" ? "active" : "")">
                                 <svg class="ms-2" width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8.26837 3.19556L3.32754 7.04556C2.50254 7.68723 1.83337 9.05306 1.83337 10.0889V16.8814C1.83337 19.0081 3.56587 20.7497 5.69254 20.7497H16.3075C18.4342 20.7497 20.1667 19.0081 20.1667 16.8906V10.2172C20.1667 9.10806 19.4242 7.68723 18.5167 7.05473L12.8517 3.08556C11.5684 2.18723 9.50587 2.23306 8.26837 3.19556Z" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                     <path d="M11 17.0831V14.3331" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -49,7 +70,7 @@
                             </a>
                             </li>
                         <li class="nav-item">
-                            <a asp-area="Admin" asp-controller="Book" asp-action="Index" class="nav-link" >
+                            <a asp-area="Admin" asp-controller="Book" asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Book" ? "active" : "")">
                                 <svg class="ms-2" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M20.1666 15.345V4.28084C20.1666 3.18084 19.2683 2.36501 18.1774 2.45668H18.1224C16.1974 2.62168 13.2733 3.60251 11.6416 4.62918L11.4858 4.73001C11.2199 4.89501 10.7799 4.89501 10.5141 4.73001L10.2849 4.59251C8.65325 3.57501 5.73825 2.60334 3.81325 2.44751C2.72242 2.35584 1.83325 3.18084 1.83325 4.27168V15.345C1.83325 16.225 2.54825 17.05 3.42825 17.16L3.69409 17.1967C5.68325 17.4625 8.75409 18.4708 10.5141 19.4333L10.5508 19.4517C10.7983 19.5892 11.1924 19.5892 11.4308 19.4517C13.1908 18.48 16.2708 17.4625 18.2691 17.1967L18.5716 17.16C19.4516 17.05 20.1666 16.225 20.1666 15.345Z" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 <path d="M11 5.0325V18.7825" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -59,7 +80,7 @@
                             الكتب</a>
                             </li>
                         <li class="nav-item">
-                            <a asp-area="Admin" asp-controller="User" asp-action="Index"  class="nav-link" >
+                            <a asp-area="Admin" asp-controller="User" asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "User" ? "active" : "")">
                                 <svg class="ms-2" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M8.3966 9.96418C8.30493 9.95501 8.19493 9.95501 8.0941 9.96418C5.91243 9.89084 4.17993 8.10334 4.17993 5.90334C4.17993 3.65751 5.99493 1.83334 8.24993 1.83334C10.4958 1.83334 12.3199 3.65751 12.3199 5.90334C12.3108 8.10334 10.5783 9.89084 8.3966 9.96418Z" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 <path d="M15.0425 3.66666C16.8208 3.66666 18.2508 5.10582 18.2508 6.87499C18.2508 8.60749 16.8758 10.0192 15.1617 10.0833C15.0883 10.0742 15.0058 10.0742 14.9233 10.0833" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -69,7 +90,7 @@
                             المستخدمين</a>
                             </li>
                         <li class="nav-item">
-                            <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="nav-link">
+                            <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Order" ? "active" : "")">
                                 <svg class="ms-2" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M2.90576 6.82001L10.9999 11.5042L19.0391 6.84751" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 <path d="M11 19.8092V11.495" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -78,7 +99,7 @@
                             الطلبات</a>
                             </li>
                         <li class="nav-item">
-                            <a asp-area="Admin" asp-controller="" asp-action="Index" class="nav-link">
+                            <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Category" ? "active" : "")">
                                 <svg class="ms-2" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8.24992 20.1667H13.7499C18.3333 20.1667 20.1666 18.3333 20.1666 13.75V8.25001C20.1666 3.66668 18.3333 1.83334 13.7499 1.83334H8.24992C3.66659 1.83334 1.83325 3.66668 1.83325 8.25001V13.75C1.83325 18.3333 3.66659 20.1667 8.24992 20.1667Z" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                     <path d="M15.5834 2.23666V11.385C15.5834 13.1908 14.2909 13.8967 12.7051 12.9433L11.4951 12.2192C11.2201 12.0542 10.7801 12.0542 10.5051 12.2192L9.29508 12.9433C7.70925 13.8875 6.41675 13.1908 6.41675 11.385V2.23666" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -91,15 +112,15 @@
                     </ul>
                     <ul class="navbar-nav w-100 px-1 gap-1">
                         <li class="nav-item">
-                            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Help" class="nav-link">
+                            <a asp-area="Admin" asp-controller="Help" asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Help" ? "active" : "")">
                                 <svg class="ms-2" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M11 13.75C12.5188 13.75 13.75 12.5188 13.75 11C13.75 9.48122 12.5188 8.25 11 8.25C9.48122 8.25 8.25 9.48122 8.25 11C8.25 12.5188 9.48122 13.75 11 13.75Z" stroke="#CFD0D6" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
                                     <path d="M1.83325 11.8066V10.1933C1.83325 9.23998 2.61242 8.45165 3.57492 8.45165C5.23408 8.45165 5.91242 7.27832 5.07825 5.83915C4.60158 5.01415 4.88575 3.94165 5.71992 3.46498L7.30575 2.55748C8.02992 2.12665 8.96492 2.38332 9.39575 3.10748L9.49658 3.28165C10.3216 4.72082 11.6783 4.72082 12.5124 3.28165L12.6133 3.10748C13.0441 2.38332 13.9791 2.12665 14.7033 2.55748L16.2891 3.46498C17.1233 3.94165 17.4074 5.01415 16.9307 5.83915C16.0966 7.27832 16.7749 8.45165 18.4341 8.45165C19.3874 8.45165 20.1758 9.23082 20.1758 10.1933V11.8066C20.1758 12.76 19.3966 13.5483 18.4341 13.5483C16.7749 13.5483 16.0966 14.7216 16.9307 16.1608C17.4074 16.995 17.1233 18.0583 16.2891 18.535L14.7033 19.4425C13.9791 19.8733 13.0441 19.6166 12.6133 18.8925L12.5124 18.7183C11.6874 17.2791 10.3308 17.2791 9.49658 18.7183L9.39575 18.8925C8.96492 19.6166 8.02992 19.8733 7.30575 19.4425L5.71992 18.535C4.88575 18.0583 4.60158 16.9858 5.07825 16.1608C5.91242 14.7216 5.23408 13.5483 3.57492 13.5483C2.61242 13.5483 1.83325 12.76 1.83325 11.8066Z" stroke="#CFD0D6" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             المساعدة</a>
                             </li>
-                        <li class="nav-item"><a class="nav-link" href="#">
-                                <a asp-area="Admin" asp-controller="Dashboard" asp-action="Settings" class="nav-link">
+                        <li class="nav-item">
+                            <a asp-area="Admin" asp-controller="Setting" asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Setting" ? "active" : "")">
                                 <svg class="ms-2" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M10.9999 20.1666C16.0416 20.1666 20.1666 16.0416 20.1666 11C20.1666 5.95831 16.0416 1.83331 10.9999 1.83331C5.95825 1.83331 1.83325 5.95831 1.83325 11C1.83325 16.0416 5.95825 20.1666 10.9999 20.1666Z" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                     <path d="M11 7.33331V11.9166" stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -111,20 +132,79 @@
                     </ul>
                 </nav>
             </div>
+        </aside>
+
+        <div class="content-container col-10 h-100 my-auto bg-text p-0">
+
+            <nav class="navbar header-nav navbar-expand-lg bg-opacity ">
+                <h3 class="navbar-nav p-2 fw-bold">@ViewData["Section"]</h3>
+                <ul class="navbar-nav me-auto mb-0">
+                    <li class="nav-item">
+                        <a class="nav-link active p-2 color-black"
+                            aria-current="page"
+                            asp-area="Customer" asp-controller="Home" asp-action="Index">
+                            <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11.9166 21.6666C17.3014 21.6666 21.6666 17.3014 21.6666 11.9166C21.6666 6.53185 17.3014 2.16663 11.9166 2.16663C6.53185 2.16663 2.16663 6.53185 2.16663 11.9166C2.16663 17.3014 6.53185 21.6666 11.9166 21.6666Z" stroke="#110F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M20.5074 22.4139C21.0815 24.1473 22.3924 24.3206 23.3999 22.8039C24.3207 21.4173 23.714 20.2798 22.0457 20.2798C20.8107 20.2689 20.1174 21.2331 20.5074 22.4139Z" stroke="#110F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link p-2 color-black" href="#">
+                            <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M13.0216 3.15247C9.43581 3.15247 6.52164 6.06663 6.52164 9.65247V12.7833C6.52164 13.4441 6.23997 14.4516 5.90414 15.015L4.65831 17.0841C3.88914 18.3625 4.41997 19.7816 5.82831 20.2583C10.4975 21.8183 15.535 21.8183 20.2041 20.2583C21.515 19.825 22.0891 18.2758 21.3741 17.0841L20.1283 15.015C19.8033 14.4516 19.5216 13.4441 19.5216 12.7833V9.65247C19.5216 6.07747 16.5966 3.15247 13.0216 3.15247Z" stroke="#110F0F" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" />
+                                <path d="M15.0258 3.46668C14.69 3.36918 14.3433 3.29335 13.9858 3.25002C12.9458 3.12002 11.9491 3.19585 11.0175 3.46668C11.3316 2.66502 12.1116 2.10168 13.0216 2.10168C13.9316 2.10168 14.7116 2.66502 15.0258 3.46668Z" stroke="#110F0F" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M16.2717 20.6483C16.2717 22.4358 14.8092 23.8983 13.0217 23.8983C12.1334 23.8983 11.3101 23.53 10.7251 22.945C10.1401 22.36 9.77173 21.5366 9.77173 20.6483" stroke="#110F0F" stroke-width="1.5" stroke-miterlimit="10" />
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a id="manageDropdown" class="nav-link dropdown-toggle p-2 text-black pointer" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                            <svg class="ms-1" width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 18.7023C18 15.6706 14.5 15 12 15C9.5 15 6 15.6706 6 18.7023M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12ZM15 9C15 10.6569 13.6569 12 12 12C10.3431 12 9 10.6569 9 9C9 7.34315 10.3431 6 12 6C13.6569 6 15 7.34315 15 9Z" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            @(UserManager.GetUserName(User).Split('@')[0])
+                        </a>
+                        <ul class="dropdown-menu p-2 text-end">
+                            <li>
+                                <a id="manageProfile" class="dropdown-item nav-link p-2" style="color:var(--main-color);" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">تعديل ملفك الشخصي</a>
+                            </li>
+                            <li class="nav-item">
+                                <form id="logoutForm" class="dropdown-item p-0" asp-area="Customer" asp-controller="Home" asp-action="Index">
+                                    <button id="logout" type="submit" class="nav-link p-2 bg-transparent border-0" style="color:var(--main-color);">الخروج</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <main class="container col-10 d-flex flex-column h-100 p-0">
+
+               
+                    @RenderBody()
+                   
+
+                 
+            </main>
         </div>
-        <main class="container col-10 h-100 my-auto mx-auto bg-text">
-            @RenderBody()
-        </main>
     </div>
 
 
 
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/Admin/man.js" asp-append-version="true"></script>
+
+
+    <script src="~/js/datatables.min.js" asp-append-version="true"></script>
+    <script src="~/js/pdfmake.min.js asp-append-version="true"></script>
+    <script src="~/js/vfs_fonts.js asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)
 
 </body>
 </html>
+
+
+
