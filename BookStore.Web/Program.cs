@@ -28,7 +28,7 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 
-builder.Services.AddScoped<BookServices, BookServices>();
+builder.Services.AddScoped<BookServices>();
 
 #endregion
 

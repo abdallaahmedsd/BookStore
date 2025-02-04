@@ -185,6 +185,19 @@ input {
 }
 
 
+.flex-end {
+    display: flex;
+    justify-content: flex-end;
+    align-content: center;
+    align-items: center;
+}
+
+.flex-start {
+    display: flex;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
+}
 
 /* Input Box */
 .input-box {
@@ -193,14 +206,12 @@ input {
 }
 
 .input-box-sm {
-    position: relative;
-    width: 135.5px;
+    width: 135.5px !important;
 }
 
 .input-box input,
 .input-box input:focus {
     height: 50px;
-    width: 282px;
     color: #C2C3CB;
     background-color: var(--opacity-color);
     font-size: .875rem;
@@ -288,7 +299,7 @@ input {
 .btn-main-open {
     background-color: var(--text-color) !important;
     color: var(--main-color) !important;
-    border: 1px var(--main-color) !important;
+    border: 2px solid var(--main-color) !important;
 }
 
     .btn-main-open:hover {
@@ -304,13 +315,13 @@ input {
     .btn-second:hover {
         background-color: var(--text-color) !important;
         color: var(--second-color) !important;
-        border: 1px var(--second-color) !important;
+        border: 2px solid var(--second-color) !important;
     }
 
 .btn-second-open {
     background-color: var(--text-color) !important;
     color: var(--second-color) !important;
-    border: 1px var(--second-color) !important;
+    border: 2px solid var(--second-color) !important;
 }
 
     .btn-second-open:hover {
@@ -321,18 +332,18 @@ input {
 .btn-red-open {
     background-color: var(--text-color) !important;
     color: red !important;
-    border: 1px red !important;
+    border: 2px solid var(--red-color) !important;
 }
 
     .btn-red-open:hover {
-        background-color: red !important;
+        background-color: var(--red-color) !important;
         color: var(--text-color) !important;
     }
 
 .btn-strok {
     background-color: var(--text-color) !important;
     color: var(--strok-color) !important;
-    border: 1px var(--strok-color) !important;
+    border: 2px solid var(--strok-color) !important;
 }
 
     .btn-strok:hover {
@@ -348,7 +359,7 @@ input {
     .btn-strok-open:hover {
         background-color: var(--text-color) !important;
         color: var(--strok-color) !important;
-        border: 1px var(--strok-color) !important;
+        border: 2px solid var(--strok-color) !important;
     }
 
 
