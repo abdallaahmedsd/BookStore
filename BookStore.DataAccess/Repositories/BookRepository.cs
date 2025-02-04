@@ -20,10 +20,10 @@ namespace BookStore.DataAccess.Repositories
         /// Initializes a new instance of the <see cref="BookRepository"/> class.
         /// </summary>
         /// <param name="connectionString">The connection string to the database.</param>
-        public BookRepository(string connectionString) : base(connectionString, new BooksStoredProcConfiguration())
+        public BookRepository(string connectionString) : base(connectionString, BooksStoredProcConfiguration.Instance)
         {
             _connectionString = connectionString;
-            _config = new BooksStoredProcConfiguration();
+            _config = BooksStoredProcConfiguration.Instance;
         }
 
         /// <summary>

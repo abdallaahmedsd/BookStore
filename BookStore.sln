@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookStore.Models", "BookSto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{3AABA7D8-13EE-4FD7-8CCC-D66293E0CBF4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{4FCACB05-5D8D-4BD4-B5DB-D790E41229A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,10 +43,17 @@ Global
 		{93DD5371-1A5D-46A0-BAD8-3AB07457F0C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93DD5371-1A5D-46A0-BAD8-3AB07457F0C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93DD5371-1A5D-46A0-BAD8-3AB07457F0C7}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< HEAD
 		{3AABA7D8-13EE-4FD7-8CCC-D66293E0CBF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3AABA7D8-13EE-4FD7-8CCC-D66293E0CBF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AABA7D8-13EE-4FD7-8CCC-D66293E0CBF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AABA7D8-13EE-4FD7-8CCC-D66293E0CBF4}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+		{4FCACB05-5D8D-4BD4-B5DB-D790E41229A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FCACB05-5D8D-4BD4-B5DB-D790E41229A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FCACB05-5D8D-4BD4-B5DB-D790E41229A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FCACB05-5D8D-4BD4-B5DB-D790E41229A7}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> 0103c33b0fec260f1d253fb84b7d3afc7dc963bf
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

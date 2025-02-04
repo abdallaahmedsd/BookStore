@@ -23,12 +23,25 @@ namespace BookStore.DataAccess.Repositories
             _config = OrderItemsStoredProcConfiguration.Instance;
         }
 
+        /// <summary>
+        /// Get All a Order Item entity. This method is not supported in this repository and will always throw a <see cref="NotSupportedException"/>.
+        /// </summary>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        /// <exception cref="NotSupportedException">Thrown always to indicate that this method is not supported.</exception>
+        [Obsolete("This method is not supported in this repository.", error: true)]
         public override Task<IEnumerable<OrderItem>> GetAllAsync()
         {
             
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Update a Order Item entity. This method is not supported in this repository and will always throw a <see cref="NotSupportedException"/>.
+        /// </summary>
+        /// <param name="entity">The Entity of the Order Item entity to Update.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        /// <exception cref="NotSupportedException">Thrown always to indicate that this method is not supported.</exception>
+        [Obsolete("This method is not supported in this repository.", error: true)]
         public override Task<bool> UpdateAsync(OrderItem entity)
         {
             throw new NotImplementedException();

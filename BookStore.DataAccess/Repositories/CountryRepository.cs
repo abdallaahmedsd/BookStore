@@ -21,7 +21,7 @@ namespace BookStore.DataAccess.Repositories
             _config = CountriesStoredProcConfiguration.Instance;
         }
 
-        public async Task<Country> GetCountryByNameAsync(string Name)
+        public async Task<Country?> GetCountryByNameAsync(string Name)
         {
             try
             {
@@ -49,5 +49,43 @@ namespace BookStore.DataAccess.Repositories
             }
             return null;
         }
+
+        /// <summary>
+        /// Deletes a Country entity. This method is not supported in this repository and will always throw a <see cref="NotSupportedException"/>.
+        /// </summary>
+        /// <param name="id">The ID of the Country entity to delete.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        /// <exception cref="NotSupportedException">Thrown always to indicate that this method is not supported.</exception>
+        [Obsolete("This method is not supported in this repository.", error: true)]
+        public override async Task<bool> Delete(int id)
+        {
+            throw new NotSupportedException("This method is not supported in this repository.");
+        }
+
+
+        /// <summary>
+        /// Insert a Country entity. This method is not supported in this repository and will always throw a <see cref="NotSupportedException"/>.
+        /// </summary>
+        /// <param name="entity">The Entity of the Country entity to Add.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        /// <exception cref="NotSupportedException">Thrown always to indicate that this method is not supported.</exception>
+        [Obsolete("This method is not supported in this repository.", error: true)]
+        public override Task<Country> InsertAsync(Country entity)
+        {
+            throw new NotSupportedException("This method is not supported in this repository.");
+        }
+
+        /// <summary>
+        /// Update a Country entity. This method is not supported in this repository and will always throw a <see cref="NotSupportedException"/>.
+        /// </summary>
+        /// <param name="entity">The Entity of the Country entity to Update.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        /// <exception cref="NotSupportedException">Thrown always to indicate that this method is not supported.</exception>
+        [Obsolete("This method is not supported in this repository.", error: true)]
+        public override Task<bool> UpdateAsync(Country entity)
+        {
+            throw new NotSupportedException("This method is not supported in this repository.");
+        }
+
     }
 }
