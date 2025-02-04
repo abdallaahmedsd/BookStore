@@ -62,7 +62,7 @@ namespace BookStore.DataAccess.Repositories
         /// </summary>
         /// <param name="ISBA">The ISBA of the Book entity to retrieve.</param>
         /// <returns>A task representing the asynchronous operation. The task result contains the Book entity if found; otherwise, null.</returns>
-        public async Task<Book?> GetByISBAAsync(string ISBA)
+        public async Task<Book?> GetByISBNAsync(string ISBA)
         {
             try
             {

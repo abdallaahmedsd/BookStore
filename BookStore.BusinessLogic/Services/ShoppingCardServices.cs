@@ -4,185 +4,121 @@ using BookStore.Models.Entities;
 using BookStore.Utilties.BusinessHelpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BookStore.BusinessLogic.Services
 {
     /// <summary>
-    /// Provides services for managing shopping cards.
+    /// Provides services for managing shopping carts.
     /// </summary>
-    public class ShoppingCardServices : IServices
+    public class ShoppingCartServices 
     {
-        /// <summary>
-        /// Represents the mode of operation (Add or Update).
-        /// </summary>
-        public enum enMode { Add = 0, Update = 1 }
+        private readonly ShoppingCardRepository _shoppingCartRepository;
 
-        /// <summary>
-        /// Current mode of the service (Add or Update).
-        /// </summary>
-        private enMode Mode = enMode.Add;
-
-
-        private static readonly ShoppingCardRepository _shoppingCardRepository;
-
-        /// <summary>
-        /// Gets the unique identifier for the shopping card.
-        /// </summary>
-        public int Id { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the user ID associated with the shopping card.
-        /// </summary>
-        public int UserID { get; set; }
-
-        /// <summary>
-        /// Gets or sets the book ID associated with the shopping card.
-        /// </summary>
-        public int BookID { get; set; }
-
-        /// <summary>
-        /// Gets or sets the quantity of books in the shopping card.
-        /// </summary>
-        public int Quantity { get; set; }
-
-        /// <summary>
-        /// Gets or sets the subtotal amount for the shopping card.
-        /// </summary>
-        public decimal SubTotal { get; private set; }
-
-        /// <summary>
-        /// Initializes the <see cref="ShoppingCardServices"/> class.
-        /// </summary>
-        static ShoppingCardServices()
+        public ShoppingCartServices()
         {
-            _shoppingCardRepository = new ShoppingCardRepository(ConnectionConfig._connectionString);
+            _shoppingCartRepository = new ShoppingCardRepository(ConnectionConfig._connectionString);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ShoppingCardServices"/> class.
+        /// Finds a shopping cart item by its ID.
         /// </summary>
-        public ShoppingCardServices()
+        /// <param name="id">The ID of the shopping cart item.</param>
+        /// <returns>The shopping cart item if found; otherwise, null.</returns>
+        public async Task<ShoppingCard?> FindAsync(int id)
         {
-            Mode = enMode.Add;
+            if (id <= 0)
+                return null;
+
+            return await _shoppingCartRepository.GetByIdAsync(id);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ShoppingCardServices"/> class with the specified shopping card and mode.
+        /// Checks if a shopping cart item exists by its ID.
         /// </summary>
-        /// <param name="shoppingCard">The shopping card entity.</param>
-        /// <param name="mode">The mode of operation.</param>
-        private ShoppingCardServices(ShoppingCard shoppingCard, enMode mode = enMode.Update)
+        /// <param name="id">The ID of the shopping cart item.</param>
+        /// <returns>True if the item exists; otherwise, false.</returns>
+        public async Task<bool> IsExistAsync(int id)
         {
-            Id = shoppingCard.Id;
-            SubTotal = shoppingCard.SubTotal;
-            Quantity = shoppingCard.Quantity;
-            BookID = shoppingCard.BookID;
-            UserID = shoppingCard.UserID;
-            Mode = mode;
+            if (id <= 0)
+                return false;
+
+            return await _shoppingCartRepository.IsExistsAsync(id);
         }
 
         /// <summary>
-        /// Finds a shopping card entity by its ID.
+        /// Gets all shopping cart items for a specific customer with pagination.
         /// </summary>
-        /// <param name="id">The ID of the shopping card entity.</param>
-        /// <returns>The shopping card entity if found; otherwise, null.</returns>
-        public static async Task<ShoppingCardServices?> FindAsync(int id)
+        /// <param name="customerId">The ID of the customer.</param>
+        /// <param name="pageNumber">The page number for pagination.</param>
+        /// <param name="pageSize">The number of items per page.</param>
+        /// <returns>A collection of shopping cart items.</returns>
+        public async Task<IEnumerable<ShoppingCard>> GetAllAsync(int customerId, int pageNumber = 1, int pageSize = 10)
         {
-            if (id <= 0) return null;
-            ShoppingCard? shoppingCard = await _shoppingCardRepository.GetByIdAsync(id);
-            if(shoppingCard == null) return null;
-            return new ShoppingCardServices(shoppingCard, enMode.Update);
+            if (customerId <= 0)
+                throw new ArgumentOutOfRangeException(nameof(customerId), "Customer ID must be greater than zero.");
+            if (pageNumber <= 0)
+                throw new ArgumentOutOfRangeException(nameof(pageNumber), "Page number must be greater than zero.");
+            if (pageSize <= 0)
+                throw new ArgumentOutOfRangeException(nameof(pageSize), "Page size must be greater than zero.");
+
+            return await _shoppingCartRepository.GetAllAsync(customerId, pageNumber, pageSize);
         }
 
         /// <summary>
-        /// Checks if a shopping card entity exists by its ID.
+        /// Deletes a shopping cart item by its ID and customer ID.
         /// </summary>
-        /// <param name="id">The ID of the shopping card entity.</param>
-        /// <returns>A task that represents the asynchronous operation. The task result contains a boolean value indicating whether the entity exists.</returns>
-        public static async Task<bool> IsExist(int id)
+        /// <param name="id">The ID of the shopping cart item.</param>
+        /// <param name="customerId">The ID of the customer.</param>
+        /// <returns>True if the item was deleted; otherwise, false.</returns>
+        public async Task<bool> DeleteAsync(int id, int customerId)
         {
-            if (id <= 0) return false;
-            return await _shoppingCardRepository.IsExistsAsync(id);
+            if (id <= 0 || customerId <= 0)
+                return false;
+
+            return await _shoppingCartRepository.DeleteAsync(id, customerId);
         }
 
         /// <summary>
-        /// Gets all shopping card entities for a specific customer with pagination.
+        /// Deletes all shopping cart items for a specific customer.
         /// </summary>
-        /// <param name="CustomerID">The ID of the customer.</param>
-        /// <param name="PageNumber">The page number for pagination.</param>
-        /// <param name="PageSize">The number of items per page.</param>
-        /// <returns>A collection of shopping card entities if found; otherwise, null.</returns>
-        public static async Task<IEnumerable<ShoppingCard>?> GetAllAsync(int CustomerID, int PageNumber = 1, int PageSize = 10)
+        /// <param name="customerId">The ID of the customer.</param>
+        /// <returns>True if the items were deleted; otherwise, false.</returns>
+        public async Task<bool> DeleteCustomerItemsAsync(int customerId)
         {
-            if (CustomerID <= 0 || PageNumber <= 0 || PageSize <= 0) return null;
-            return await _shoppingCardRepository.GetAllAsync(CustomerID, PageNumber, PageSize);
+            if (customerId <= 0)
+                return false;
+
+            return await _shoppingCartRepository.DeleteCustomerItemsAsync(customerId);
         }
 
         /// <summary>
-        /// Deletes a shopping card entity by its ID and customer ID.
+        /// Adds a new shopping cart item asynchronously.
         /// </summary>
-        /// <param name="Id">The ID of the shopping card entity.</param>
-        /// <param name="CustomerID">The ID of the customer.</param>
-        /// <returns>A boolean value indicating whether the operation was successful.</returns>
-        public static async Task<bool> DeleteAsync(int Id, int CustomerID)
+        /// <param name="shoppingCart">The shopping cart item to add.</param>
+        /// <returns>True if the item was added successfully; otherwise, false.</returns>
+        public async Task<bool> AddAsync(ShoppingCard shoppingCart)
         {
-            if (Id <= 0 || CustomerID <= 0) return false;
-            return await _shoppingCardRepository.DeleteAsync(Id, CustomerID);
+            if (shoppingCart == null)
+                throw new ArgumentNullException(nameof(shoppingCart));
+            if (shoppingCart.BookID <= 0 || shoppingCart.Quantity <= 0 || shoppingCart.UserID <= 0)
+                throw new ArgumentException("Invalid shopping cart item properties.");
+
+            ShoppingCard? addedCart = await _shoppingCartRepository.InsertAsync(shoppingCart);
+            return addedCart?.Id > 0;
         }
 
         /// <summary>
-        /// Deletes all shopping card items for a specific customer.
+        /// Updates an existing shopping cart item asynchronously.
         /// </summary>
-        /// <param name="CustomerID">The ID of the customer.</param>
-        /// <returns>A boolean value indicating whether the operation was successful.</returns>
-        public static async Task<bool> DeleteCustomerItemsAsync(int CustomerID)
-        {
-            if (CustomerID <= 0) return false;
-            return await _shoppingCardRepository.DeleteCustomerItemsAsync(CustomerID);
-        }
+        /// <param name="shoppingCart">The shopping cart item to update.</param>
+        /// <returns>True if the item was updated successfully; otherwise, false.</returns>
+        //public async Task<bool> UpdateAsync(ShoppingCard shoppingCart)
+        //{
+        //    if (shoppingCart == null)
+        //        throw new ArgumentNullException(nameof(shoppingCart));
 
-        /// <summary>
-        /// Adds a new shopping card entity.
-        /// </summary>
-        /// <returns>A boolean value indicating whether the operation was successful.</returns>
-        private async Task<bool> _AddAsync()
-        {
-            if (BookID <= 0 || Quantity <= 0 || UserID <= 0) return false;
-            ShoppingCard? shoppingCard = await _shoppingCardRepository.InsertAsync(new ShoppingCard
-            {
-                BookID = this.BookID,
-                Quantity = this.Quantity,
-                UserID = this.UserID
-            });
-            if (shoppingCard == null) return false;
-            this.Id = shoppingCard?.Id ?? 0;
-            this.SubTotal = shoppingCard?.SubTotal ?? 0;
-            return  this.Id > 0;
-        }
-
-        /// <summary>
-        /// Saves the current state of the shopping card service.
-        /// </summary>
-        /// <returns>A boolean value indicating whether the operation was successful.</returns>
-        public async Task<bool> SaveAsync()
-        {
-            switch (Mode)
-            {
-                case enMode.Add:
-                    if (await _AddAsync())
-                    {
-                        Mode = enMode.Update;
-                        return true;
-                    }
-                    return false;
-                case enMode.Update:
-                    return false;
-                default:
-                    return false;
-            }
-        }
+        //    return await _shoppingCartRepository.UpdateAsync(shoppingCart);
+        //}
     }
 }

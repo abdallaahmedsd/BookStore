@@ -11,10 +11,6 @@ namespace BookStore.BusinessLogic.Interfaces
     /// </summary>
     public interface IServices
     {
-        /// <summary>
-        /// Saves the entity asynchronously.
-        /// </summary>
-        /// <returns>True if the entity was saved; otherwise, false.</returns>
-        Task<bool> SaveAsync();
+
     }
 }
