@@ -1,8 +1,180 @@
-﻿
+﻿@model AddEditBookViewModel
+
 @{
     ViewData["Section"] = "الكتب";
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
 
+	<form class="ms-5" method="Post" asp-controller="Book" asp-action="Create">
+
+		<div class="row mx-0 my-4">
+
+			<div class="col p-0">
+
+                <div class="form-entity-box">
+                    <div class="entity-input">
+
+                        <label asp-for="@Model.Title"></label>
+                        <input asp-for="@Model.Title"
+                               type="text"
+                               placeholder="عنوان الكتاب"
+                               aria-label="default input example" />
+                    </div>
+                    <span asp-validation-for="@Model.Title"></span>
+                </div>
+
+                <div class="form-entity-box">
+                    <div class="entity-input">
+                        <svg class="add-new" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 12H16" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M12 16V8" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+
+                        <label asp-for="@Model.AuthorID"></label>
+                        <input asp-for="@Model.AuthorID"
+                               type="text"
+                               placeholder="اسم المؤلف"
+                               aria-label="default input example" />
+
+
+                        <svg class="show-dropdown" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19.92 8.94995L13.4 15.47C12.63 16.24 11.37 16.24 10.6 15.47L4.07999 8.94995" stroke="#9E9BA9" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+
+                    </div>
+                    <span asp-validation-for="@Model.AuthorID"></span>
+                </div>
+
+                <div class="form-entity-box">
+                    <div class="entity-input entity-input-lg">
+
+                        <label asp-for="@Model.Description"></label>
+                        <input asp-for="@Model.Description"
+                               type="text"
+                               placeholder="وصف الكتاب"
+                               aria-label="default input example" />
+                    </div>
+                    <span asp-validation-for="@Model.Description"></span>
+                </div>
+
+			</div>
+
+            <div class="col p-0">
+
+                <div class="form-entity-box">
+                        <div class="entity-input">
+                            <svg class="add-new" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 12H16" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M12 16V8" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+
+                            <label asp-for="@Model.CategoryID"></label>
+                            <input asp-for="@Model.CategoryID"
+                                   type="text"
+                                   placeholder="الفئة"
+                                   aria-label="default input example" />
+
+
+                            <svg class="show-dropdown" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19.92 8.94995L13.4 15.47C12.63 16.24 11.37 16.24 10.6 15.47L4.07999 8.94995" stroke="#9E9BA9" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+
+                        </div>
+                        <span asp-validation-for="@Model.CategoryID"></span>
+                    </div>
+
+                <div class="form-entity-box">
+                    <div class="entity-input">
+                        <label asp-for="@Model.LanguageID"></label>
+                        <input asp-for="@Model.LanguageID"
+                               type="text"
+                               placeholder="العربية"
+                               aria-label="default input example" />
+
+
+                        <svg class="show-dropdown" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19.92 8.94995L13.4 15.47C12.63 16.24 11.37 16.24 10.6 15.47L4.07999 8.94995" stroke="#9E9BA9" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+
+                    </div>
+                    <span asp-validation-for="@Model.LanguageID"></span>
+                </div>
+
+                <div class="row-col-2">
+                        <div class="col form-entity-box">
+                            <div class="entity-input entity-input-sm">
+                                <label asp-for="@Model.Price"></label>
+                                <input asp-for="@Model.Price"
+                                       type="text"
+                                       placeholder="100"
+                                       aria-label="default input example" />
+
+
+                                <svg class="show-dropdown" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19.92 8.94995L13.4 15.47C12.63 16.24 11.37 16.24 10.6 15.47L4.07999 8.94995" stroke="#9E9BA9" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+
+                            </div>
+                            <span asp-validation-for="@Model.Price"></span>
+                        </div>
+
+                        <div class="col form-entity-box">
+                            <div class="entity-input entity-input-sm">
+                                <label asp-for="@Model.Quantity"></label>
+                            <input asp-for="@Model.Quantity"
+                                       type="text"
+                                       placeholder="100"
+                                       aria-label="default input example" />
+
+                                <svg class="show-dropdown" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19.92 8.94995L13.4 15.47C12.63 16.24 11.37 16.24 10.6 15.47L4.07999 8.94995" stroke="#9E9BA9" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+
+                            </div>
+                        <span asp-validation-for="@Model.Quantity"></span>
+                        </div>
+                </div>
+
+              </div>
+
+        <div class="col-3 p-0">
+
+                <div class="form-book-cover">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.5 11.6667C11.7887 11.6667 12.8333 10.622 12.8333 9.33333C12.8333 8.04467 11.7887 7 10.5 7C9.21134 7 8.16667 8.04467 8.16667 9.33333C8.16667 10.622 9.21134 11.6667 10.5 11.6667Z" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M15.1667 2.33325H10.5C4.66666 2.33325 2.33333 4.66659 2.33333 10.4999V17.4999C2.33333 23.3333 4.66666 25.6666 10.5 25.6666H17.5C23.3333 25.6666 25.6667 23.3333 25.6667 17.4999V11.6666" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M21 9.33325V2.33325L23.3333 4.66659" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M21 2.33325L18.6667 4.66659" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M3.11501 22.1083L8.86667 18.2467C9.78834 17.6283 11.1183 17.6983 11.9467 18.41L12.3317 18.7483C13.2417 19.53 14.7117 19.53 15.6217 18.7483L20.475 14.5833C21.385 13.8017 22.855 13.8017 23.765 14.5833L25.6667 16.2167" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <h5>إختيار غلاف الكتاب</h5>
+                </div>
+		</div>
+
+
+        <div class="flex-end gap-4">
+            <button class="btn btn-sm btn-red-open flex-between">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.17001 14.8299L14.83 9.16992" stroke="#DB4B4E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M14.83 14.8299L9.17001 9.16992" stroke="#DB4B4E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#DB4B4E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+
+                إلغاء</button>
+            <button type="submit" class="btn btn-lg btn-main flex-between">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 12H16" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M12 16V8" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z"
+                          stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+
+                اضافة</button>
+
+        </div>
+
+
+	</form>

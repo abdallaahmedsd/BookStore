@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System;
 using System.Linq;
 
-namespace BookStore.Utilties.DataHelpers
+namespace BookStore.Utilties.HTMLHelpers
 {
     /// <summary>
     /// Provides extension methods for the <see cref="IHtmlHelper"/> interface to help determine active navigation links.
@@ -77,7 +77,7 @@ namespace BookStore.Utilties.DataHelpers
             bool areaMatches = string.Equals(currentArea, expectedArea ?? "", StringComparison.OrdinalIgnoreCase);
             bool controllerMatches = string.Equals(currentController, expectedController, StringComparison.OrdinalIgnoreCase);
 
-            return (areaMatches && controllerMatches) ? "active" : "";
+            return areaMatches && controllerMatches ? "active" : "";
         }
 
         ///// <summary>
