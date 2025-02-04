@@ -12,20 +12,20 @@ body {
     margin-top:5rem;
 }
 
-.search-box i {
+.search-box svg {
     left: 15px;
-    top: 35%;
+    top: 26%;
 }
 
 .search-box input:focus,
-.search-box input:focus + i {
-    color: var(--main-color);
+.search-box input:focus + svg path {
+    stroke: var(--main-color);
 }
 
 
 /*Middle image*/
 .middle-image {
-    height: 400px;
+    height: 300px;
     border-radius: 50% 50% 0% 0%;
     -webkit-border-radius: 50% 50% 0% 0%;
     -moz-border-radius: 50% 50% 0% 0%;
@@ -33,45 +33,27 @@ body {
     -o-border-radius: 50% 50% 0% 0%;
 }
 
+
 .middle-img-container {
     max-width: 450px;
 }
-
-/* Books Section*/
-.card {
-    border-radius: 1.5rem;
-    -webkit-border-radius: 1.5rem;
-    -moz-border-radius: 1.5rem;
-    -ms-border-radius: 1.5rem;
-    -o-border-radius: 1.5rem;
-    position: relative;
-}
-
-.card .image-container {
-    height: 150px;
-    overflow: hidden;
-    border-radius: 1.5rem;
-}
-
-.card .image-container img {
-    object-fit: cover;
-    border-radius: 1.5rem;
-}
-
-.most-recent-books .card::after {
-    content: attr(data-state);
-    position: absolute;
-    width: 35px;
-    height: 35px;
-    font-size:.75rem;
-    font-weight:bold;
-    background-color: var(--red-color);
-    color: var(--text-color);
-    top: -5%;
-    left: -5%;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-}
+    .middle-img-container img{
+        z-index:100;
+    }
+    /* Books Section*/
+    .most-recent-books .card::after {
+        content: attr(data-state);
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        font-size: .6rem;
+        background-color: var(--red-color);
+        color: var(--text-color);
+        top: -5%;
+        left: -5%;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+    }

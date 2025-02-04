@@ -1,5 +1,7 @@
 using BookStore.Models;
+using BookStore.Models.ViewModels;
 using BookStore.Utilties.BusinessHelpers;
+using BookstoreBackend.BLL.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -15,9 +17,10 @@ namespace BookStore.Web.Areas.Customer.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            List<BestSellingBookDTO> books = (await BookServices.GetTopBestSellingBooksAsync(5)).ToList();
+            return View(books);
         }
         //public IActionResult Main()
         //{
