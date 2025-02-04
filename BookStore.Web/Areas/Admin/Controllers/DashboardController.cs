@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BookStore.Models.ViewModels;
+using BookstoreBackend.BLL.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class DashboardController : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            List<BestSellingBookDTO> books = (await BookServices.GetTopBestSellingBooksAsync(5)).ToList(); 
+            return View(books);
         }
 
         public IActionResult Help()

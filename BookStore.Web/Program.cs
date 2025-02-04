@@ -2,6 +2,7 @@ using BookStore.DataAccess.DbInitializer;
 using BookStore.DataAccess.EntityFrameworkCore.Data;
 using BookStore.Models.Identity;
 using BookStore.Utilties;
+using BookstoreBackend.BLL.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -26,6 +27,9 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
 #region Custom Services
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+
+builder.Services.AddScoped<BookServices, BookServices>();
+
 #endregion
 
 var app = builder.Build();

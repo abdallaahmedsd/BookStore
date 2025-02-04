@@ -1,0 +1,59 @@
+﻿
+/* Landing Page */
+body {
+    background-color:var(--main-color);
+}
+
+.landing {
+    height: 100dvh;
+}
+
+.landing-content {
+    margin-top:5rem;
+}
+
+.search-box svg {
+    left: 15px;
+    top: 26%;
+}
+
+.search-box input:focus,
+.search-box input:focus + svg path {
+    stroke: var(--main-color);
+}
+
+
+/*Middle image*/
+.middle-image {
+    height: 300px;
+    border-radius: 50% 50% 0% 0%;
+    -webkit-border-radius: 50% 50% 0% 0%;
+    -moz-border-radius: 50% 50% 0% 0%;
+    -ms-border-radius: 50% 50% 0% 0%;
+    -o-border-radius: 50% 50% 0% 0%;
+}
+
+
+.middle-img-container {
+    max-width: 450px;
+}
+    .middle-img-container img{
+        z-index:100;
+    }
+    /* Books Section*/
+    .most-recent-books .card::after {
+        content: attr(data-state);
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        font-size: .6rem;
+        background-color: var(--red-color);
+        color: var(--text-color);
+        top: -5%;
+        left: -5%;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+    }

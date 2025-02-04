@@ -1,8 +1,75 @@
-﻿
+﻿@model List<BestSellingBookDTO>
+
 @{
     Layout = "_Layout";
-    ViewData["Title"] = "Dashboard";
+    ViewData["Title"] = "Main";
+    ViewData["Section"] = "الرئيسية";
 }
 
+@section Styles
+{
+    <link rel="stylesheet" href="~/css/Admin/main.css" />
+}
+
+<div class="status-container row-col-2 gap-5 flex-between mx-0 px-3 ">
+
+    <div class="col-7 main-img-container">
+        <img class="size-100" src="~/images/Frame 596.svg"/>
+    </div>
+
+    <div class="col flex-between flex-column h-100">
+        <h5 class="w-25 ms-auto">العملاء</h5>
+        <div class="flex-center w-75">
+            <svg width="189" height="189" viewBox="0 0 189 189">
+                <!-- Background Circle -->
+                <circle cx="94.5" cy="94.5" r="80" stroke="#F5F5F5" stroke-width="14" fill="none" />
+
+                <!-- Progress Circle (Starts from Left) -->
+                <circle id="progress-circle" cx="94.5" cy="94.5" r="80"
+                        stroke="#674FCD" stroke-width="14" fill="none"
+                        stroke-dasharray="502.65" stroke-dashoffset="502.65"
+                        stroke-linecap="round"
+                        transform="rotate(180 94.5 94.5)" />
+
+                <!-- Text inside -->
+                <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle"
+                      font-size="24px" font-weight="bold" fill="#110F0F">
+                    <tspan id="progress-text">0</tspan>
+                </text>
+            </svg>
 
 
+
+
+        </div>
+    </div>
+</div>
+<div class=" row mx-0 ">
+
+        <h5 class="text-end my-4 pe-4 ms-auto"> الأكثر مبيعًا</h5>
+        <div class="row m-0 g-2">
+            @foreach (BestSellingBookDTO book in Model)
+            {
+               <div class="col">
+                    <div class="card card-view">
+                        <div class="card-image">
+                            <img src="@book.CoverImage" class="card-img-top" alt="Book Cover" />
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">@book.Title</h5>
+                            <p class="card-text">@book.AuthorName</p>
+                            <div class="card-price">
+                                <p>السعر</p>
+                                <p>@book.Price<span>$</span></p>
+                            </div>
+                        </div>
+                    </div>
+               </div>
+            }
+        </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/Admin/main.js" asp-append-version="true"></script>
+
+}

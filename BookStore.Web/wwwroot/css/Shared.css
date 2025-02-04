@@ -3,8 +3,9 @@
     --second-color: #A3B12B;
     --text-color: #FFFFFF;
     --opacity-color: #F5F5F5;
-    --black-color: #000000;
+    --black-color: #110F0F;
     --gray-color: #C2C3CB;
+    --strok-color: #9E9BA9;
     --red-color: #DC143C;
 }
 
@@ -69,9 +70,6 @@ input {
     border: none;
     outline: none;
 }
-.row{
-    margin: 0 !important;
-}
 
 
 /* Utility Classes */
@@ -84,41 +82,41 @@ input {
 }
 
 .color-text {
-    color: var(--text-color);
+    color: var(--text-color) !important;
 }
 
 .color-opacity {
-    color: var(--opacity-color);
+    color: var(--opacity-color) !important;
 }
 
 .color-gray {
-    color: var(--gray-color);
+    color: var(--gray-color) !important;
 }
 .color-red {
-    color: var(--gray-red);
+    color: var(--gray-red) !important;
 }
 
 .bg-main {
-    background-color: var(--main-color);
+    background-color: var(--main-color) !important;
 }
 
 .bg-second {
-    background-color: var(--second-color);
+    background-color: var(--second-color) !important;
 }
 
 .bg-text {
-    background-color: var(--text-color);
+    background-color: var(--text-color) !important;
 }
 
 .bg-opacity {
-    background-color: var(--opacity-color);
+    background-color: var(--opacity-color) !important;
 }
 
 .bg-gray {
-    background-color: var(--gray-color);
+    background-color: var(--gray-color) !important;
 }
 .bg-red {
-    background-color: var(--red-color);
+    background-color: var(--red-color) !important;
 }
 
 .shadow-main:focus {
@@ -130,29 +128,7 @@ input {
 }
 
 .rounded-second {
-    border-radius: .75rem;
-}
-
-
-.flex-center {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-}
-
-.flex-between {
-    display: flex;
-    justify-content: space-between;
-    align-content: center;
-    align-items: center;
-}
-
-.flex-around {
-    display: flex;
-    justify-content: space-around;
-    align-content: center;
-    align-items: center;
+    border-radius: .875rem;
 }
 
 .size-100 {
@@ -182,4 +158,290 @@ input {
 
 .hover-black:hover {
     color: var(--black-color) !important;
+}
+
+/* Components */
+
+/* Flex */
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+}
+
+.flex-around {
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+    align-items: center;
+}
+
+
+
+/* Input Box */
+.input-box {
+    position: relative;
+    width: 282px;
+}
+
+.input-box-sm {
+    position: relative;
+    width: 135.5px;
+}
+
+.input-box input,
+.input-box input:focus {
+    height: 50px;
+    width: 282px;
+    color: #C2C3CB;
+    background-color: var(--opacity-color);
+    font-size: .875rem;
+    padding: 0 2.5rem;
+    border: none;
+    border-radius: .875rem !important;
+    -webkit-border-radius: .875rem !important;
+    -moz-border-radius: .875rem !important;
+    -ms-border-radius: .875rem !important;
+    -o-border-radius: .875rem !important;
+}
+
+    .input-box input:focus {
+        color: var(--main-color);
+        box-shadow: 0 0 3px var(--main-color);
+    }
+
+.input-box:has(input:focus) svg path {
+    stroke: var(--main-color);
+}
+
+.input-box svg:first-of-type {
+    position: absolute;
+    right: 10px;
+    top: 25%;
+}
+
+.password-box svg:nth-of-type(2) {
+    position: absolute;
+    left: 10px;
+    top: 25%;
+    cursor: pointer;
+}
+
+
+
+/* Buttons */
+.btn {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: .5rem;
+    border: none !important;
+    border-radius: .875rem !important;
+    -webkit-border-radius: .875rem !important;
+    -moz-border-radius: .875rem !important;
+    -ms-border-radius: .875rem !important;
+    -o-border-radius: .875rem !important;
+}
+
+.btn-input {
+    width: 282px;
+    height: 50px;
+}
+
+.btn-icon {
+    width: 50px;
+    height: 50px;
+}
+
+.btn-lg {
+    width: 160px;
+    height: 50px;
+}
+
+.btn-sm {
+    width: 99px;
+    height: 50px;
+}
+
+.btn:hover {
+    opacity: 0.9 !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.btn-main {
+    background-color: var(--main-color) !important;
+    color: var(--text-color) !important;
+}
+
+    .btn-main:hover {
+        color: var(--text-color) !important;
+    }
+
+.btn-main-open {
+    background-color: var(--text-color) !important;
+    color: var(--main-color) !important;
+    border: 1px var(--main-color) !important;
+}
+
+    .btn-main-open:hover {
+        background-color: var(--main-color) !important;
+        color: var(--text-color) !important;
+    }
+
+.btn-second {
+    background-color: var(--second-color) !important;
+    color: var(--text-color) !important;
+}
+
+    .btn-second:hover {
+        background-color: var(--text-color) !important;
+        color: var(--second-color) !important;
+        border: 1px var(--second-color) !important;
+    }
+
+.btn-second-open {
+    background-color: var(--text-color) !important;
+    color: var(--second-color) !important;
+    border: 1px var(--second-color) !important;
+}
+
+    .btn-second-open:hover {
+        background-color: var(--second-color) !important;
+        color: var(--text-color) !important;
+    }
+
+.btn-red-open {
+    background-color: var(--text-color) !important;
+    color: red !important;
+    border: 1px red !important;
+}
+
+    .btn-red-open:hover {
+        background-color: red !important;
+        color: var(--text-color) !important;
+    }
+
+.btn-strok {
+    background-color: var(--text-color) !important;
+    color: var(--strok-color) !important;
+    border: 1px var(--strok-color) !important;
+}
+
+    .btn-strok:hover {
+        background-color: var(--strok-color) !important;
+        color: var(--text-color) !important;
+    }
+
+.btn-strok-open {
+    background-color: var(--strok-color) !important;
+    color: var(--text-color) !important;
+}
+
+    .btn-strok-open:hover {
+        background-color: var(--text-color) !important;
+        color: var(--strok-color) !important;
+        border: 1px var(--strok-color) !important;
+    }
+
+
+
+/* Card Components */
+.card {
+    position: relative;
+    background-color: var(--opacity-color);
+    width: 195px;
+    padding: 10px;
+    border-radius: .875rem;
+    -webkit-border-radius: .875rem;
+    -moz-border-radius: .875rem;
+    -ms-border-radius: .875rem;
+    -o-border-radius: .875rem;
+    box-shadow: 0 0 2px var(--gray-color);
+    border: 1px solid var(--gray-color);
+}
+
+/* For Admin */
+.card-view {
+    height: 226px;
+}
+
+/* For Customer */
+.card-buy {
+    height: 267px;
+}
+
+.card-image {
+    width: 175px;
+    height: 133px;
+    overflow: hidden;
+    border-radius: .875rem;
+    -webkit-border-radius: .875rem;
+    -moz-border-radius: .875rem;
+    -ms-border-radius: .875rem;
+    -o-border-radius: .875rem;
+    padding: 0;
+    margin: 0;
+}
+
+.card .image-container img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.card-body {
+    padding: 0;
+    margin: 10px 0 0;
+    text-align: right;
+    color: var(--strok-color);
+}
+
+    .card-body .card-title {
+        padding: 0 !important;
+        margin: 0 !important;
+        color: var(--black-color);
+    }
+
+    .card-body .card-text {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .card-body .card-price {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+        .card-body .card-price p {
+            margin: 0 !important;
+        }
+
+            .card-body .card-price p:nth-of-type(2) {
+                font-weight: bold;
+                color: var(--second-color);
+            }
+
+                .card-body .card-price p:nth-of-type(2) span {
+                }
+
+.card-buy .card-body .card-btn {
+    background-color: var(--main-color);
+    color: var(--text-color);
+    width: 100%;
+    height: 31px;
+    margin: 10px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

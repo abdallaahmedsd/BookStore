@@ -38,7 +38,7 @@ namespace BookStore.DataAccess.Configurations
         /// Gets the stored procedure name for retrieving all Books.
         /// </summary>
         public string GetAllProcedure => GetStoredProcedureWithSchema("SP_GetBooks", Schemas.Books);
-
+        
         /// <summary>
         /// Gets the stored procedure name for inserting a new Book.
         /// </summary>

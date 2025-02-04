@@ -1,4 +1,5 @@
-﻿@* @page *@
+﻿@model List<BestSellingBookDTO>
+
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Home Page";
@@ -6,7 +7,7 @@
 
 @section Styles
 {
-    <link rel="stylesheet" href="~/css/Index.css" />
+    <link rel="stylesheet" href="~/css/Customer/home.css" />
 }
 
 
@@ -19,7 +20,7 @@
 
             <div class="search-box w-100 position-relative">
                 <input class="form-control p-2 p-sm-3 rounded-main shadow-main" type="text" placeholder="البحث عن كتاب" aria-label="default input example">
-                <i class="fa-solid fa-magnifying-glass color-gray position-absolute"></i>
+        
             </div>
             <div class="row m-0 w-100">
                 <div class="col-4">
@@ -54,215 +55,67 @@
                 <h2 class="text-end m-0 pe-4 ms-auto">الكتب الأكثر مبيعًا</h2>
                 <div class="flex-center ps-4 ">
                     <h4 class="m-0">الكل</h4>
-                    <a asp-area="Customer" asp-controller="Book" asp-action="Index"><i class="fa-regular fa-circle-left fs-4 color-main p-1 hover-second"></i></a>
+                    <a asp-area="Customer" asp-controller="Book" asp-action="Index"><i class="fa-regular fa-circle-left fs-4 color-main p-1 pointer hover-second"></i></a>
                 </div>
             </div>
 
             <div class="row m-0 flex-wrap row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-5 g-4">
-                <div class="col">
-                    <div class="card h-100 bg-opacity shadow">
-                        <div class="image-container w-100 rounded-5 p-2">
-                            <img src="~/images/Landing-Girl-Image.svg"
-                                 class="card-img-top img-fluid w-100 h-100"
-                                 alt="Book Cover" />
-                        </div>
+                @foreach (BestSellingBookDTO book in Model)
+                {
 
-                        <div class="card-body text-right">
-                            <h5 class="card-title m-0">العادات الذرية</h5>
-                            <p class="card-text m-0 color-gray">جيمس كلير</p>
-                            <div class="flex-between my-2">
-                                <p class="m-0 color-gray">السعر</p>
-                                <p class="fw-bold m-0 color-second ">15$</p>
+                    <div class="col">
+                        <div data-state="جديد" class="card card-buy">
+                            <div class="card-image">
+                                <img src="@book.CoverImage" class="card-img-top" alt="Book Cover" />
                             </div>
-                            <a href="#" class="btn bg-main w-100 rounded-pill color-text">أضف إلى السلة</a>
+                            <div class="card-body">
+                                <h5 class="card-title">@book.Title</h5>
+                                <p class="card-text">@book.AuthorName</p>
+                                <div class="card-price">
+                                    <p>السعر</p>
+                                    <p>@book.Price<span>$</span></p>
+                                </div>
+                                <a href="#" class="btn card-btn">أضف إلى السلة</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100 bg-opacity shadow">
-                        <div class="image-container w-100 rounded-5 p-2">
-                            <img src="~/images/Landing-Girl-Image.svg"
-                                 class="card-img-top img-fluid size-100"
-                                 alt="Book Cover" />
-                        </div>
+                }
+               
 
-                        <div class="card-body text-right">
-                            <h5 class="card-title m-0">العادات الذرية</h5>
-                            <p class="card-text m-0 color-gray">جيمس كلير</p>
-                            <div class="flex-between my-2">
-                                <p class="m-0 color-gray">السعر</p>
-                                <p class="fw-bold m-0 color-second ">15$</p>
-                            </div>
-                            <a href="#" class="btn bg-main w-100 rounded-main color-text">أضف إلى السلة</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100 bg-opacity shadow">
-                        <div class="image-container w-100 rounded-5 p-2">
-                            <img src="~/images/Landing-Girl-Image.svg"
-                                 class="card-img-top img-fluid size-100"
-                                 alt="Book Cover" />
-                        </div>
-
-                        <div class="card-body text-right">
-                            <h5 class="card-title m-0">العادات الذرية</h5>
-                            <p class="card-text m-0 color-gray">جيمس كلير</p>
-                            <div class="flex-between my-2">
-                                <p class="m-0 color-gray">السعر</p>
-                                <p class="fw-bold m-0 color-second ">15$</p>
-                            </div>
-                            <a href="#" class="btn bg-main w-100 rounded-pill color-text">أضف إلى السلة</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100 bg-opacity shadow">
-                        <div class="image-container w-100 rounded-5 p-2">
-                            <img src="~/images/Landing-Girl-Image.svg"
-                                 class="card-img-top img-fluid w-100 h-100"
-                                 alt="Book Cover" />
-                        </div>
-
-                        <div class="card-body text-right">
-                            <h5 class="card-title m-0">العادات الذرية</h5>
-                            <p class="card-text m-0 color-gray">جيمس كلير</p>
-                            <div class="flex-between my-2">
-                                <p class="m-0 color-gray">السعر</p>
-                                <p class="fw-bold m-0 color-second ">15$</p>
-                            </div>
-                            <a href="#" class="btn bg-main w-100 rounded-pill color-text">أضف إلى السلة</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100 bg-opacity shadow">
-                        <div class="image-container w-100 rounded-5 p-2">
-                            <img src="~/images/Landing-Girl-Image.svg"
-                                 class="card-img-top img-fluid w-100 h-100"
-                                 alt="Book Cover" />
-                        </div>
-
-                        <div class="card-body text-right">
-                            <h5 class="card-title m-0">العادات الذرية</h5>
-                            <p class="card-text m-0 color-gray">جيمس كلير</p>
-                            <div class="flex-between my-2">
-                                <p class="m-0 color-gray">السعر</p>
-                                <p class="fw-bold m-0 color-second ">15$</p>
-                            </div>
-                            <a href="#" class="btn bg-main w-100 rounded-pill color-text">أضف إلى السلة</a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
         <div class="row m-0 mb-4">
 
             <div class="d-flex justify-content-between">
-                <h2 class="text-end m-0 pe-4 ms-auto">الكتب الأكثر مبيعًا</h2>
+                <h2 class="text-end m-0 pe-4 ms-auto">الكتب المضافة حديثا</h2>
                 <div class="d-flex justify-content-center align-items-center ps-4 ">
                     <h4 class="m-0">الكل</h4>
-                    <a asp-area="Customer" asp-controller="Book" asp-action="Index"><i class="fa-regular fa-circle-left fs-4 color-main p-1 hover-second"></i></a>
+                    <a asp-area="Customer" asp-controller="Book" asp-action="Index"><i class="fa-regular fa-circle-left fs-4 color-main p-1 pointer hover-second"></i></a>
                 </div>
             </div>
 
             <div class="most-recent-books row m-0 flex-wrap row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-5 g-4">
-                <div class="col">
-                    <div data-state="جديد" class="card h-100 bg-opacity shadow">
-                        <div class="image-container w-100 rounded-5 p-2">
-                            <img src="~/images/Landing-Girl-Image.svg"
-                                 class="card-img-top img-fluid w-100 h-100"
-                                 alt="Book Cover" />
-                        </div>
+                @foreach (BestSellingBookDTO book in Model)
+                {
 
-                        <div class="card-body text-right">
-                            <h5 class="card-title m-0">العادات الذرية</h5>
-                            <p class="card-text m-0 color-gray">جيمس كلير</p>
-                            <div class="flex-between my-2">
-                                <p class="m-0 color-gray">السعر</p>
-                                <p class="fw-bold m-0 color-second ">15$</p>
+                    <div class="col">
+                        <div data-state="جديد" class="card card-buy">
+                            <div class="card-image">
+                                <img src="@book.CoverImage" class="card-img-top" alt="Book Cover" />
                             </div>
-                            <a href="#" class="btn bg-main w-100 rounded-pill color-text">أضف إلى السلة</a>
+                            <div class="card-body">
+                                <h5 class="card-title">@book.Title</h5>
+                                <p class="card-text">@book.AuthorName</p>
+                                <div class="card-price">
+                                    <p>السعر</p>
+                                    <p>@book.Price<span>$</span></p>
+                                </div>
+                                <a href="#" class="btn card-btn">أضف إلى السلة</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div data-state="جديد" class="card h-100 bg-opacity shadow">
-                        <div class="image-container w-100 rounded-5 p-2">
-                            <img src="~/images/Landing-Girl-Image.svg"
-                                 class="card-img-top img-fluid w-100 h-100"
-                                 alt="Book Cover" />
-                        </div>
-
-                        <div class="card-body text-right">
-                            <h5 class="card-title m-0">العادات الذرية</h5>
-                            <p class="card-text m-0 color-gray">جيمس كلير</p>
-                            <div class="flex-between my-2">
-                                <p class="m-0 color-gray">السعر</p>
-                                <p class="fw-bold m-0 color-second ">15$</p>
-                            </div>
-                            <a href="#" class="btn bg-main w-100 rounded-pill color-text">أضف إلى السلة</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div data-state="جديد" class="card h-100 bg-opacity shadow">
-                        <div class="image-container w-100 rounded-5 p-2">
-                            <img src="~/images/Landing-Girl-Image.svg"
-                                 class="card-img-top img-fluid w-100 h-100"
-                                 alt="Book Cover" />
-                        </div>
-
-                        <div class="card-body text-right">
-                            <h5 class="card-title m-0">العادات الذرية</h5>
-                            <p class="card-text m-0 color-gray">جيمس كلير</p>
-                            <div class="flex-between my-2">
-                                <p class="m-0 color-gray">السعر</p>
-                                <p class="fw-bold m-0 color-second ">15$</p>
-                            </div>
-                            <a href="#" class="btn bg-main w-100 rounded-pill color-text">أضف إلى السلة</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div data-state="جديد" class="card h-100 bg-opacity shadow">
-                        <div class="image-container w-100 rounded-5 p-2">
-                            <img src="~/images/Landing-Girl-Image.svg"
-                                 class="card-img-top img-fluid w-100 h-100"
-                                 alt="Book Cover" />
-                        </div>
-
-                        <div class="card-body text-right">
-                            <h5 class="card-title m-0">العادات الذرية</h5>
-                            <p class="card-text m-0 color-gray">جيمس كلير</p>
-                            <div class="flex-between my-2">
-                                <p class="m-0 color-gray">السعر</p>
-                                <p class="fw-bold m-0 color-second ">15$</p>
-                            </div>
-                            <a href="#" class="btn bg-main w-100 rounded-pill color-text">أضف إلى السلة</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div data-state="جديد" class="card h-100 bg-opacity shadow">
-                        <div class="image-container w-100 rounded-5 p-2">
-                            <img src="~/images/Landing-Girl-Image.svg"
-                                 class="card-img-top img-fluid w-100 h-100"
-                                 alt="Book Cover" />
-                        </div>
-
-                        <div class="card-body text-right">
-                            <h5 class="card-title m-0">العادات الذرية</h5>
-                            <p class="card-text m-0 color-gray">جيمس كلير</p>
-                            <div class="flex-between my-2">
-                                <p class="m-0 color-gray">السعر</p>
-                                <p class="fw-bold m-0 color-second ">15$</p>
-                            </div>
-                            <a href="#" class="btn bg-main w-100 rounded-pill color-text">أضف إلى السلة</a>
-                        </div>
-                    </div>
-                </div>
+                }
 
                 
             </div>
@@ -273,6 +126,6 @@
 
 
 @section Scripts {
-    <script src="/js/Customer/index.js"></script>
+    <script src="/js/Customer/home.js"></script>
 
 }
