@@ -1,20 +1,34 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BookStore.Models.Entities;
+using BookStore.Models.ViewModels;
+using BookstoreBackend.BLL.Services;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace BookStore.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class BookController : Controller
     {
-        // GET: BookController
-        public ActionResult Index()
+        // QU: ??
+        public readonly BookServices _bookService;
+
+        public BookController(BookServices bookService)
         {
-            return View();
+            _bookService = bookService;
+        }
+
+        // GET: BookController
+        public async Task<ActionResult> Index()
+        {
+            List<BookDTO> books = (await BookServices.GetAllAsync()).ToList();
+
+            return View(books);
         }
 
         // GET: BookController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            return View(await BookServices.FindAsync(id));
         }
 
         // GET: BookController/Create

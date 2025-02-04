@@ -5,24 +5,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BookStore.Web</title>
-    <!--  Bootstrap Css -->
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+   
 
-    <link rel="stylesheet" href="~/BookStore.Web.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/Shared.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/Layouts/Home.css" asp-append-version="true" />
+    <partial name="_StyleLinksPartial"></partial>
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="/lib/fontawesome-free-6.2.0-web/css/all.min.css" />
 
-    <!-- Googole Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
-          rel="stylesheet" />
-
+    <link rel="stylesheet" href="~/css/Customer/siteLayout.css" asp-append-version="true" />
     @await RenderSectionAsync("Styles", required: false)
-
 </head>
 <body dir="rtl">
     <header>
@@ -47,22 +36,22 @@
                     <div class="offcanvas-body bg-main">
                         <ul class="navbar-nav me-auto mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link active p-2 p-lg-3"
+                                <a class="nav-link p-2 p-lg-3 @Html.IsActive("Customer/Home/Index")"
                                    aria-current="page"
                                    asp-area="Customer" asp-controller="Home" asp-action="Index">الرئيسية</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link p-2 p-lg-3" href="#">ادارة المشتريات</a>
+                                <a class="nav-link p-2 p-lg-3 @Html.IsActive("Customer/Home/Index")" href="#">ادارة المشتريات</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link p-2 p-lg-3"
+                                <a class="nav-link p-2 p-lg-3 @Html.IsActive("Customer/Home/Privacy")"
                                    asp-area="Customer" asp-controller="Home" asp-action="Privacy">سياسة الخصوصية</a>
                             </li>
 
                             @if (User.IsInRole(AppUserRoles.RoleAdmin))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link p-2 p-lg-3" asp-area="Admin" asp-action="Index" asp-controller="Dashboard">ادارة التطبيق</a>
+                                    <a class="nav-link p-2 p-lg-3 @Html.IsActive("Admin/Dashboard/Index")" asp-area="Admin" asp-action="Index" asp-controller="Dashboard">ادارة التطبيق</a>
                                 </li>
                             }
                         </ul>
@@ -86,8 +75,6 @@
     </header>
           
     
-    <partial name="_ShoppingCardModel"></partial>
-
 
     @RenderBody() 
 
@@ -107,11 +94,10 @@
         </div>
     </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="/js/Customer/home.js"></script>
-    <script src="/js/Customer/index.js"></script>
+    <partial name="_ScriptsPartial"></partial>
+
+    <script src="~/js/Customer/siteLayout.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

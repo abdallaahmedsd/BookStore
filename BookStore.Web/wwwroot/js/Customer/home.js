@@ -1,16 +1,14 @@
+let searchInput = document.querySelector(".search-box input");
+let navbarUl = document.querySelector(".navbar-nav");
 
-let navLinks = document.querySelectorAll(".nav-link");
+searchInput.addEventListener("keyup", e => {
+    if (e.keyCode === 13) {  // Enter key
+        let searchValue = searchInput.value.trim();
 
-navLinks.forEach(link => {
+        if (searchValue !== "") {
+            window.location.href = `/Customer/Book/Index?search=${encodeURIComponent(searchValue)}`;
+        }
+    }
+});
 
-    link.addEventListener("click",e => {
-
-        let activeLink = document.querySelector(".nav-link.active");
-        activeLink?.classList.remove("active");
-
-        link.classList.add("active");
-    })
-
-
-})
 

@@ -1,0 +1,13 @@
+﻿body {
+}
+
+.status-container {
+    max-height:330px !important;
+}
+.main-img-container {
+    height: 330px !important;
+}
+    .main-img-container + div {
+        padding: 1.2rem 0 4rem 0;
+        height: 330px !important;
+    }
