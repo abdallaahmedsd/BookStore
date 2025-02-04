@@ -1,5 +1,5 @@
 using BookStore.Models;
-using BookStore.Models.ViewModels;
+using BookStore.Models.ViewModels.Customer;
 using BookStore.Utilties.BusinessHelpers;
 using BookstoreBackend.BLL.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -19,9 +19,15 @@ namespace BookStore.Web.Areas.Customer.Controllers
 
         public async Task<IActionResult> Index()
         {
-            List<BestSellingBookDTO> books = (await BookServices.GetTopBestSellingBooksAsync(5)).ToList();
+            HomeViewModel books = new HomeViewModel();
+            books.RecentlyPublishedBooks = (await BookServices.GetTopRecentlyPublishedBooksAsync(5)).ToList();
+            books.BestSellingBooks = (await BookServices.GetTopBestSellingBooksAsync(5)).ToList();
+
+
+
             return View(books);
         }
+
         //public IActionResult Main()
         //{
         //    return View();
@@ -31,9 +37,6 @@ namespace BookStore.Web.Areas.Customer.Controllers
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-
-
-        public IActionResult AdminDashboard() => View();
 
         
     }
