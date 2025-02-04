@@ -1,5 +1,6 @@
 ﻿using BookStore.DataAccess.Repositories;
 using BookStore.Models.Entities;
+using BookStore.Utilties.BusinessHelpers;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace BookStore.BusinessLogic.Services
         /// </summary>
         private enMode Mode = enMode.Add;
 
-        private static readonly string _connectionString = "Server=.;Database=BookStoreDb;Trusted_Connection=True;TrustServerCertificate=True;";
+      
         private static readonly LanguageRepository _languageRepository;
 
         /// <summary>
@@ -39,7 +40,7 @@ namespace BookStore.BusinessLogic.Services
         /// </summary>
         static LanguageServices()
         {
-            _languageRepository = new LanguageRepository(_connectionString);
+            _languageRepository = new LanguageRepository(ConnectionConfig._connectionString);
         }
 
         /// <summary>

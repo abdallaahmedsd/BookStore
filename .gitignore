@@ -364,4 +364,8 @@ FodyWeavers.xsd
 /BookStore.Web/appsettings.json
 /BookStore.Web/appsettings.json
 /BookStore.Web/Views/Shared/_Layout.cshtml
+<<<<<<< HEAD
+/ConsoleApp1
+=======
 /Testing
+>>>>>>> 0103c33b0fec260f1d253fb84b7d3afc7dc963bf

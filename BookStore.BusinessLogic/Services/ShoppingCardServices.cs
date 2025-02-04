@@ -1,6 +1,7 @@
 ﻿using BookStore.BusinessLogic.Interfaces;
 using BookStore.DataAccess.Repositories;
 using BookStore.Models.Entities;
+using BookStore.Utilties.BusinessHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,8 +25,7 @@ namespace BookStore.BusinessLogic.Services
         /// </summary>
         private enMode Mode = enMode.Add;
 
-        private static readonly string _connectionString = "Server=.;Database=BookStoreDb;Trusted_Connection=True;TrustServerCertificate=True;";
-
+       
         private static readonly ShoppingCardRepository _shoppingCardRepository;
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace BookStore.BusinessLogic.Services
         /// </summary>
         static ShoppingCardServices()
         {
-            _shoppingCardRepository = new ShoppingCardRepository(_connectionString);
+            _shoppingCardRepository = new ShoppingCardRepository(ConnectionConfig._connectionString);
         }
 
         /// <summary>
