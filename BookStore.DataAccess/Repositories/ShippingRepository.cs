@@ -117,6 +117,45 @@ namespace BookStore.DataAccess.Repositories
             return null;
         }
 
+
+        /// <summary>
+        /// Retrieves all shippings for a specific user asynchronously.
+        /// </summary>
+        /// <param name="userId">The ID of the user.</param>
+        /// <returns>A task representing the asynchronous operation. The task result is an enumerable collection of Shipping entities if found; otherwise, null.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when the user ID is less than or equal to zero.</exception>
+        /// <exception cref="RepositoryException">
+        /// Thrown when there is a database error while retrieving shippings
+        /// with the specified user ID or an unexpected error occurs.
+        /// </exception>
+        public async Task<IEnumerable<Shipping>?> GetShippingsByUserId(int userId)
+        {
+            List<Shipping> shippings = new List<Shipping>();
+            try
+            {
+                using SqlConnection connection = new SqlConnection(_connectionString);
+                using SqlCommand command = new SqlCommand(_config.GetShippingByOrderID, connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@UserID", userId);
+                connection.Open();
+                using SqlDataReader reader = await command.ExecuteReaderAsync();
+                while (reader.Read())
+                {
+                    shippings.Add(_config.MapEntity(reader));
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new RepositoryException($"Database error while retrieving Shipping with User ID {userId}: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new RepositoryException($"Unexpected error while retrieving Shipping with User ID {userId}.", ex);
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Updates the status of a Shipping entity.
         /// </summary>

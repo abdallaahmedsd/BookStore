@@ -154,6 +154,13 @@ namespace BookStore.BusinessLogic.Services
             return this.Id > 0;
         }
 
+        public static async Task<bool> IsExist(int Id)
+        {
+            if (Id <= 0) return false;
+
+            return await _categoryRepository.IsExistsAsync(Id);
+        }
+
         /// <summary>
         /// Updates an existing category asynchronously.
         /// </summary>

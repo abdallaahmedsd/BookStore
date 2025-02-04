@@ -158,7 +158,9 @@ namespace BookStore.BusinessLogic.Services
                 Quantity = this.Quantity,
                 UserID = this.UserID
             });
+            if (shoppingCard == null) return false;
             this.Id = shoppingCard?.Id ?? 0;
+            this.SubTotal = shoppingCard?.SubTotal ?? 0;
             return  this.Id > 0;
         }
 

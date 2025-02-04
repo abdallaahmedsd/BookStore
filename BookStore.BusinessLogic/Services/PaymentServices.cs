@@ -129,8 +129,23 @@ namespace BookStore.BusinessLogic.Services
             {
                 OrderId = OrderId
             });
+
+            if(payment == null) return false;
+
             this.Id = payment?.Id ?? 0;
+            this.OrderId = payment.OrderId;
+            this.PaymentDate = payment.PaymentDate;
+            this.UserID = payment.UserId;
+            this.Amount = payment.Amount;
+
             return this.Id > 0;
+        }
+
+        public static async Task<bool> IsExist(int Id)
+        {
+            if (Id <= 0) return false;
+
+            return await _paymentRepository.IsExistsAsync(Id);
         }
 
         /// <summary>
