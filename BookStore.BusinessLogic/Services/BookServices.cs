@@ -332,6 +332,13 @@ namespace BookStore.BusinessLogic.Services
             return bookDTOs;
         }
 
+        public static async Task<bool> IsExist(int Id)
+        {
+            if (Id <= 0) return false;
+
+            return await _bookRepository.IsExistsAsync(Id);
+        }
+
         /// <summary>
         /// Deletes a book by its ID.
         /// </summary>

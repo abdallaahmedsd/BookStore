@@ -25,7 +25,7 @@ namespace BookStore.BusinessLogic.Services
         /// </summary>
         private enMode Mode = enMode.Add;
 
-       
+
         private static readonly ShoppingCardRepository _shoppingCardRepository;
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace BookStore.BusinessLogic.Services
         /// <summary>
         /// Gets or sets the subtotal amount for the shopping card.
         /// </summary>
-        public decimal SubTotal { get; internal set; }
+        public decimal SubTotal { get; private set; }
 
         /// <summary>
         /// Initializes the <see cref="ShoppingCardServices"/> class.
@@ -89,10 +89,12 @@ namespace BookStore.BusinessLogic.Services
         /// </summary>
         /// <param name="id">The ID of the shopping card entity.</param>
         /// <returns>The shopping card entity if found; otherwise, null.</returns>
-        public static async Task<ShoppingCard?> FindAsync(int id)
+        public static async Task<ShoppingCardServices?> FindAsync(int id)
         {
             if (id <= 0) return null;
-            return await _shoppingCardRepository.GetByIdAsync(id);
+            ShoppingCard? shoppingCard = await _shoppingCardRepository.GetByIdAsync(id);
+            if(shoppingCard == null) return null;
+            return new ShoppingCardServices(shoppingCard, enMode.Update);
         }
 
         /// <summary>
@@ -155,7 +157,9 @@ namespace BookStore.BusinessLogic.Services
                 Quantity = this.Quantity,
                 UserID = this.UserID
             });
+            if (shoppingCard == null) return false;
             this.Id = shoppingCard?.Id ?? 0;
+            this.SubTotal = shoppingCard?.SubTotal ?? 0;
             return  this.Id > 0;
         }
 

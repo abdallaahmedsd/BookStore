@@ -35,7 +35,7 @@ namespace BookStore.DataAccess.Configurations
         /// <summary>
         /// Gets the name of the stored procedure for getting an entity by ID.
         /// </summary>
-        public string GetByIdProcedure => throw new NotImplementedException();
+        public string GetByIdProcedure => GetStoredProcedureWithSchema("SP_GetPaymentById",Schemas.Sales);
 
         /// <summary>
         /// Gets the name of the stored procedure for getting all entities.
@@ -60,7 +60,7 @@ namespace BookStore.DataAccess.Configurations
         /// <summary>
         /// Gets the name of the stored procedure for checking if an entity exists by ID.
         /// </summary>
-        public string IsExistsByIdProcedure => throw new NotImplementedException();
+        public string IsExistsByIdProcedure => GetStoredProcedureWithSchema("Fun_IsPaymentExistsById", Schemas.Sales);
         /// <summary>
         /// Gets the name of the stored procedure for retrieving payments by user ID.
         /// </summary>
@@ -83,7 +83,7 @@ namespace BookStore.DataAccess.Configurations
                 Id = reader.GetInt32(reader.GetOrdinal("Id")),
                 OrderId = reader.GetInt32(reader.GetOrdinal("OrderId")),
                 PaymentDate = reader.GetDateTime(reader.GetOrdinal("PaymentDate")),
-                Amount = reader.GetDecimal(reader.GetOrdinal("Amount")),
+                Amount = reader.GetDecimal(reader.GetOrdinal("Amoumt")),
                 UserId = reader.GetInt32(reader.GetOrdinal("UserId"))
             };
         }
@@ -97,8 +97,7 @@ namespace BookStore.DataAccess.Configurations
         {
             SqlParameter[] paramsPayment = new SqlParameter[]
             {
-                new SqlParameter("@Amount", SqlDbType.Decimal) { Value = entity.Amount },
-                new SqlParameter("@UserId", SqlDbType.Int) { Value = entity.UserId }
+                new SqlParameter("@OrderID", SqlDbType.Int) { Value = entity.OrderId },
             };
 
             command.Parameters.AddRange(paramsPayment);

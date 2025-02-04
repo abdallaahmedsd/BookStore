@@ -22,7 +22,6 @@ namespace BookStore.BusinessLogic.Services
         /// </summary>
         private enMode Mode = enMode.Add;
 
-      
         private static readonly LanguageRepository _languageRepository;
 
         /// <summary>
