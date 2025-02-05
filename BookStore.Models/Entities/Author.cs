@@ -32,6 +32,12 @@
         public string LastName { get; set; }
 
         /// <summary>
+        /// Gets the full name of the author.
+        /// </summary>
+        public string FullName { get { return FirstName + ' ' + LastName; } private set { } }
+
+
+        /// <summary>
         /// Gets or sets the identifier for the author's nationality.
         /// </summary>
         public int NationalityID { get; set; }
