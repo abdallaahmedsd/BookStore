@@ -6,7 +6,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using BookStore.DataAccess.Repositories;
 using BookStore.Models.Entities;
+using BookStore.Models.ViewModels.Admin;
 using BookStore.Utilties.BusinessHelpers;
+using Microsoft.Identity.Client;
 
 namespace BookstoreBackend.BLL.Services
 {
@@ -15,128 +17,45 @@ namespace BookstoreBackend.BLL.Services
     /// </summary>
     public class AuthorService
     {
-        private enum enMode { Add = 0, Update = 1 }
-
-        private enMode Mode = enMode.Add;
 
 
         private static readonly AuthorRepository _authorrepo;
 
-        /// <summary>
-        /// Gets or sets the author ID.
-        /// </summary>
-        public int Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets the biography of the author.
-        /// </summary>
-        public string? Bio { get; set; }
-
-        /// <summary>
-        /// Gets or sets the ID of the user who created the author entry.
-        /// </summary>
-        public int CreatedBy { get; set; }
-
-        /// <summary>
-        /// Gets the full name of the author.
-        /// </summary>
-        public string FullName { get { return FirstName + ' ' + LastName; } private set { } }
-
-        /// <summary>
-        /// Gets or sets the first name of the author.
-        /// </summary>
-        public string FirstName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the last name of the author.
-        /// </summary>
-        public string LastName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the nationality ID of the author.
-        /// </summary>
-        public int NationalityID { get; set; }
-
-        /// <summary>
-        /// Gets or sets the phone number of the author.
-        /// </summary>
-        public string? Phone { get; set; }
-
-        /// <summary>
-        /// Gets or sets the email of the author.
-        /// </summary>
-        public string Email { get; set; }
-
-        /// <summary>
-        /// Gets or sets the profile image of the author.
-        /// </summary>
-        public string? ProfileImage { get; set; }
-
-        /// <summary>
-        /// Retrieves country information based on the author's nationality ID.
-        /// </summary>
-        public async Task<CountryService?> GetCountryInfo()
-        {
-            return await CountryService.FindAsync(this.NationalityID);
-        }
 
         static AuthorService()
         {
             _authorrepo = new AuthorRepository(ConnectionConfig._connectionString);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AuthorService"/> class using an existing author.
-        /// </summary>
-        public AuthorService(Author author)
-        {
-            Id = author.Id;
-            Bio = author.Bio;
-            CreatedBy = author.CreatedBy;
-            FirstName = author.FirstName;
-            LastName = author.LastName;
-            NationalityID = author.NationalityID;
-            Phone = author.Phone;
-            Email = author.Email;
-            ProfileImage = author.ProfileImage;
-
-            this.Mode = enMode.Update;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AuthorService"/> class for adding a new author.
-        /// </summary>
-        public AuthorService()
-        {
-            Id = -1;
-            Bio = null;
-            CreatedBy = -1;
-            FirstName = string.Empty;
-            LastName = string.Empty;
-            NationalityID = -1;
-            Phone = null;
-            Email = string.Empty;
-            ProfileImage = null;
-
-            this.Mode = enMode.Add;
-        }
+ 
 
         /// <summary>
         /// Retrieves a list of all authors asynchronously.
         /// </summary>
-        public static async Task<IEnumerable<AuthorService>> GetAuthorsAsync()
+        public static async Task<IEnumerable<Author>> GetAuthorsAsync()
         {
             IEnumerable<Author> authors = await _authorrepo.GetAllAsync();
-            return authors.Select(author => new AuthorService(author)).ToList();
+            return authors;
         }
+
+        /// <summary>
+        /// Retrieves a list of all AuthorViewModel asynchronously.
+        /// </summary>
+        public static async Task<IEnumerable<AuthorViewModel>> GetAuthorViewModelAsync()
+        {
+            IEnumerable<Author> authors = await _authorrepo.GetAllAsync();
+            return authors.Select(author => new AuthorViewModel { Id = author.Id, Name = author.FullName });
+        }
+
+
 
         /// <summary>
         /// Finds an author by ID asynchronously.
         /// </summary>
-        public static async Task<AuthorService?> FindAsync(int Id)
+        public static async Task<Author?> FindAsync(int Id)
         {
             Author? author = await _authorrepo.GetByIdAsync(Id);
-            return (author == null) ? null : new AuthorService(author);
+            return author;
         }
 
         /// <summary>
@@ -150,44 +69,24 @@ namespace BookstoreBackend.BLL.Services
         /// <summary>
         /// Adds a new author asynchronously.
         /// </summary>
-        private async Task<bool> _AddAsync()
+        public async Task<bool> _AddAsync(Author author)
         {
             // Validation logic...
 
-            Author? author = await _authorrepo.InsertAsync(new Author
-            {
-                Bio = this.Bio,
-                CreatedBy = this.CreatedBy,
-                FirstName = this.FirstName,
-                LastName = this.LastName,
-                Email = this.Email,
-                ProfileImage = this.ProfileImage,
-                NationalityID = this.NationalityID,
-                Phone = this.Phone
-            });
+            Author? newAuthor = await _authorrepo.InsertAsync(author);
 
-            this.Id = (author == null || author.Id <= 0) ? -1 : author.Id;
-            return this.Id > 0;
+            if (newAuthor != null) 
+                author.Id = newAuthor.Id;
+            return (newAuthor == null)? false : newAuthor.Id > 0;
         }
 
         /// <summary>
         /// Updates an existing author asynchronously.
         /// </summary>
-        private Task<bool> _UpdateAsync()
+        public Task<bool> _UpdateAsync(Author author)
         {
             // Validation logic...
-            return _authorrepo.UpdateAsync(new Author
-            {
-                Id = this.Id,
-                Bio = this.Bio,
-                CreatedBy = this.CreatedBy,
-                FirstName = this.FirstName,
-                LastName = this.LastName,
-                Email = this.Email,
-                ProfileImage = this.ProfileImage,
-                NationalityID = this.NationalityID,
-                Phone = this.Phone
-            });
+            return _authorrepo.UpdateAsync(author);
         }
 
         /// <summary>
@@ -198,25 +97,5 @@ namespace BookstoreBackend.BLL.Services
             return await _authorrepo.Delete(Id);
         }
 
-        /// <summary>
-        /// Saves the current author (either adding or updating) asynchronously.
-        /// </summary>
-        public async Task<bool> SaveAsync()
-        {
-            switch (this.Mode)
-            {
-                case enMode.Add:
-                    if (await _AddAsync())
-                    {
-                        Mode = enMode.Update;
-                        return true;
-                    }
-                    return false;
-                case enMode.Update:
-                    return await _UpdateAsync();
-                default:
-                    return false;
-            }
-        }
     }
 }
