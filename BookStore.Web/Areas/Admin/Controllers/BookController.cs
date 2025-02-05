@@ -8,6 +8,7 @@ using BookStore.Web.Mappers;
 using BookstoreBackend.BLL.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Host;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -42,7 +43,6 @@ namespace BookStore.Web.Areas.Admin.Controllers
         {
             try
             {
-
                 //List<AuthorViewModel> authors = (await AuthorServices.GetAllAsync())
                 //   .Select(x => new AuthorViewModel
                 //   {
@@ -57,12 +57,19 @@ namespace BookStore.Web.Areas.Admin.Controllers
                         Name = x.Name
                     }).ToList();
 
+                //List<LanguageViewModel> languages = (await LanguageServices.GetAllAsync())
+                // .Select(x => new CategoryViewModel
+                // {
+                //     Id = x.Id,
+                //     Name = x.Name
+                // }).ToList();
+                
                 var bookViewModel = new AddEditBookViewModel
                 {
-                    Categories = categories
-                     //    Authors = authors
-                 };
-
+                    Categories = categories,
+                     //    Authors = authors,
+                     //Languages = languages
+                };
 
 
                 return View(bookViewModel);
@@ -78,28 +85,60 @@ namespace BookStore.Web.Areas.Admin.Controllers
         // POST: BookController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AddEditBookViewModel bookViewModel)
+        public async Task<ActionResult> Create(AddEditBookViewModel bookViewModel)
         {
-            try
+
+            if (ModelState.IsValid)
             {
-                ClaimsIdentity claimsIdentity = (ClaimsIdentity)User?.Identity;
-                int userId = int.Parse(claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
+                try
+                {
+                    ClaimsIdentity claimsIdentity = (ClaimsIdentity)User?.Identity;
+                    int userId = int.Parse(claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-                Book book = new Book();
+                    Book book = new Book();
 
-                Mapper.Map(bookViewModel, book);
+                    Mapper.Map(bookViewModel, book);
 
-                book.UpdatedByUserID = userId;
+                    book.UpdatedByUserID = userId;
 
-                // _bookService.Add(book);
+                    // _bookService.Add(book);
 
 
-                return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    TempData["error"] = "An error occurred while adding a new book.";
+                    return View("Error");
+                }
             }
-            catch
+            else
             {
-                TempData["error"] = "An error occurred while adding a new book.";
-                return View("Error");
+                // return same data to the fields
+                //List<AuthorViewModel> authors = (await AuthorServices.GetAllAsync())
+                //   .Select(x => new AuthorViewModel
+                //   {
+                //       Id = x.Id,
+                //       Name = x.Name
+                //   }).ToList();
+
+                List<CategoryViewModel> categories = (await CategoryServices.GetAllAsync())
+                    .Select(x => new CategoryViewModel
+                    {
+                        Id = x.Id,
+                        Name = x.Name
+                    }).ToList();
+
+                //List<LanguageViewModel> languages = (await LanguageServices.GetAllAsync())
+                // .Select(x => new CategoryViewModel
+                // {
+                //     Id = x.Id,
+                //     Name = x.Name
+                // }).ToList();
+
+                bookViewModel.Categories = categories;
+
+                return View(bookViewModel);
             }
         }
 

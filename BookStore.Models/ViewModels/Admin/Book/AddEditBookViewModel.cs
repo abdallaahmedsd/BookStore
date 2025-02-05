@@ -35,6 +35,7 @@ namespace BookStore.Models.ViewModels.Admin.Book
         public string Quantity { get; set; }
         public List<CategoryViewModel> Categories { get; set; }
         public List<AuthorViewModel> Authors { get; set; }
+        public List<AuthorViewModel> Languages { get; set; }
 
     }
 }
