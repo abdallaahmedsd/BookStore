@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Host;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BookstoreBackend.BLL.Services;
 
 namespace BookStore.Web.Areas.Admin.Controllers
 {
@@ -20,11 +21,15 @@ namespace BookStore.Web.Areas.Admin.Controllers
     {
         public readonly BookServices _bookService;
         private readonly CategoryServices _categoryServices;
+        private readonly AuthorService _authorService;
+        private readonly BusinessLogic.Services.LanguageServices _languageServices;
 
-        public BookController(BookServices bookService, CategoryServices categoryServices)
+        public BookController(BookServices bookService, CategoryServices categoryServices, AuthorService authorService, BusinessLogic.Services.LanguageServices languageServices)
         {
             _bookService = bookService;
-           _categoryServices = categoryServices;
+            _categoryServices = categoryServices;
+            _authorService = authorService;
+            _languageServices = languageServices;
         }
 
         // GET: BookController
@@ -46,21 +51,21 @@ namespace BookStore.Web.Areas.Admin.Controllers
         {
             try
             {
-                //List<AuthorViewModel> authors = (await AuthorServices.GetAllAsync())
+                //List<AuthorViewModel> authors = (await _authorService.Geta())
                 //   .Select(x => new AuthorViewModel
                 //   {
                 //       Id = x.Id,
                 //       Name = x.Name
                 //   }).ToList();
 
-                //List<CategoryViewModel> categories = (await _categoryServices.GetAllAsync())
-                //    .Select(x => new CategoryViewModel
-                //    {
-                //        Id = x.Id,
-                //        Name = x.Name
-                //    }).ToList();
+                List<CategoryViewModel> categories = (await _categoryServices.GetAllCategoryViewModelAsync())
+                    .Select(x => new CategoryViewModel
+                    {
+                        Id = x.Id,
+                        Name = x.Name
+                    }).ToList();
 
-                //List<LanguageViewModel> languages = (await LanguageServices.GetAllAsync())
+                //List<LanguageViewModel> languages = (await _languageServices())
                 // .Select(x => new CategoryViewModel
                 // {
                 //     Id = x.Id,
@@ -70,8 +75,8 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 var bookViewModel = new AddEditBookViewModel
                 {
                     //Categories = categories,
-                     //    Authors = authors,
-                     //Languages = languages
+                    //    Authors = authors,
+                    //Languages = languages
                 };
 
 
