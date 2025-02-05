@@ -1,4 +1,4 @@
-﻿@model List<BestSellingBookDTO>
+﻿@model List<BookHomeBestSellingViewModel>
 
 @{
     Layout = "_Layout";
@@ -48,7 +48,7 @@
 
         <h5 class="text-end my-4 pe-4 ms-auto"> الأكثر مبيعًا</h5>
         <div class="row m-0 g-2">
-            @foreach (BestSellingBookDTO book in Model)
+        @foreach (BookHomeBestSellingViewModel book in Model)
             {
                <div class="col">
                     <div class="card card-view">

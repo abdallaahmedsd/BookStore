@@ -1,3 +1,4 @@
+using BookStore.BusinessLogic.Services;
 using BookStore.DataAccess.DbInitializer;
 using BookStore.DataAccess.EntityFrameworkCore.Data;
 using BookStore.Models.Identity;
@@ -29,6 +30,7 @@ builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 
 builder.Services.AddScoped<BookServices>();
+builder.Services.AddScoped<CategoryServices>();
 
 #endregion
 

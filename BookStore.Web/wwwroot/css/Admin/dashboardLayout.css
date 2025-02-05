@@ -226,6 +226,10 @@ ul.pagination {
 
 /* Components */
 
+.form-entity-box {
+    margin-top:1rem;
+}
+
 .form-entity-box span {
     color: var(--red-color);
     font-size: .75rem;
@@ -365,11 +369,11 @@ ul.pagination {
 .img-options {
     background-color: var(--opacity-color);
     display: flex;
-/*    display: none;*/
+    /*    display: none;*/
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
+    margin-top: 1rem;
     border-radius: 0 .875rem .875rem 0;
     border: 2px solid;
     border-color: var(--gray-color) var(--gray-color) var(--gray-color) transparent;

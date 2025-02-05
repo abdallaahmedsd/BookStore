@@ -1,8 +1,19 @@
-﻿
+﻿@model AddEditBookViewModel
+
 @{
     ViewData["Title"] = "Edit";
     ViewData["Section"] = "الكتب";
 }
 
-<h1>Edit</h1>
+<form asp-area="admin" asp-controller="Book" asp-action="Edit" method="Post" enctype="multipart/form-data">
 
+    @*<div asp-validation-summary="ModelOnly"></div>*@
+
+    <partial name="_AddEditBookHTMLPartial" model="Model" />
+
+</form>
+
+
+@section Scripts {
+    <script src="~/js/Admin/book.js" asp-append-version="true"></script>
+}

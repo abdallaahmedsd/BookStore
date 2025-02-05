@@ -1,3 +1,4 @@
+using BookStore.BusinessLogic.Services;
 using BookStore.Models;
 using BookStore.Models.ViewModels.Customer;
 using BookStore.Utilties.BusinessHelpers;
@@ -11,27 +12,24 @@ namespace BookStore.Web.Areas.Customer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly BookServices _bookService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, BookServices bookService)
         {
             _logger = logger;
+            _bookService = bookService;
         }
 
         public async Task<IActionResult> Index()
         {
             HomeViewModel books = new HomeViewModel();
-            books.RecentlyPublishedBooks = (await BookServices.GetTopRecentlyPublishedBooksAsync(5)).ToList();
-            books.BestSellingBooks = (await BookServices.GetTopBestSellingBooksAsync(5)).ToList();
+            books.LastAddedPublishedBooks = (await _bookService.GetLastAddedBooksAsync(5)).ToList();
+            books.BestSellingBooks = (await _bookService.GetTopBestSellingBooksAsync(5)).ToList();
 
 
 
             return View(books);
         }
-
-        //public IActionResult Main()
-        //{
-        //    return View();
-        //}
 
         public IActionResult Privacy() => View();
 
