@@ -1,5 +1,6 @@
 ﻿using BookStore.DataAccess.Repositories;
 using BookStore.Models.Entities;
+using BookStore.Models.ViewModels.Admin;
 using BookStore.Utilties.BusinessHelpers;
 using System;
 using System.Collections.Generic;
@@ -65,6 +66,11 @@ namespace BookStore.BusinessLogic.Services
         public async Task<IEnumerable<Language>> GetAllAsync()
         {
             return await _languageRepository.GetAllAsync();
+        }
+        public async Task<IEnumerable<LanguageViewModel>> GetAllLanguageViewModelAsync()
+        {
+            IEnumerable<Language> languages = await _languageRepository.GetAllAsync();
+            return languages.Select(l => new LanguageViewModel { Id = l.Id, Name = l.LanguageName });
         }
 
         /// <summary>
