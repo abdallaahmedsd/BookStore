@@ -1,6 +1,7 @@
 ﻿using BookStore.BusinessLogic.Interfaces;
 using BookStore.DataAccess.Repositories;
 using BookStore.Models.Entities;
+using BookStore.Models.ViewModels.Admin;
 using BookStore.Utilties.BusinessHelpers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -55,6 +56,48 @@ namespace BookStore.BusinessLogic.Services
             return await _categoryRepository.GetByNameAsync(categoryName.Trim());
         }
 
+
+        /// <summary>
+        /// Retrieves a <see cref="CategoryViewModel"/> based on the provided category ID.
+        /// </summary>
+        /// <param name="id">The unique identifier of the category.</param>
+        /// <returns>
+        /// A task representing the asynchronous operation. The task result contains the <see cref="CategoryViewModel"/> if found; otherwise, <c>null</c>.
+        /// </returns>
+        public async Task<CategoryViewModel?> GetCategoryViewModel(int id)
+        {
+            if (id <= 0)
+                return null;
+
+            Category? category = await FindAsync(id);
+
+            if (category == null)
+                return null;
+
+            return new CategoryViewModel { Id = category.Id, Name = category.Name };
+        }
+
+        /// <summary>
+        /// Retrieves a <see cref="CategoryViewModel"/> based on the provided category name.
+        /// </summary>
+        /// <param name="name">The name of the category.</param>
+        /// <returns>
+        /// A task representing the asynchronous operation. The task result contains the <see cref="CategoryViewModel"/> if found; otherwise, <c>null</c>.
+        /// </returns>
+        public async Task<CategoryViewModel?> GetCategoryViewModel(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return null;
+
+            Category? category = await FindAsync(name.Trim());
+
+            if (category == null)
+                return null;
+
+            return new CategoryViewModel { Id = category.Id, Name = category.Name };
+        }
+
+
         /// <summary>
         /// Deletes a category by ID.
         /// </summary>
@@ -83,7 +126,7 @@ namespace BookStore.BusinessLogic.Services
         /// <returns>A task representing the asynchronous operation. The task result is true if the category is added successfully; otherwise, false.</returns>
         public async Task<bool> AddAsync(Category newCategory)
         {
-            if (newCategory == null) throw new ArgumentNullException(nameof(newCategory));
+            if (newCategory == null) return false;
             Category? category = await _categoryRepository.InsertAsync(newCategory);
             newCategory.Id = category?.Id ?? 0;
             return newCategory.Id > 0;
@@ -96,7 +139,7 @@ namespace BookStore.BusinessLogic.Services
         /// <returns>A task representing the asynchronous operation. The task result is true if the category is updated successfully; otherwise, false.</returns>
         public async Task<bool> UpdateAsync(Category category)
         {
-            if (category == null) throw new ArgumentNullException(nameof(category));
+            if (category == null) return false;
             return await _categoryRepository.UpdateAsync(category);
         }
 

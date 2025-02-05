@@ -4,6 +4,8 @@ using BookStore.Models.ViewModels;
 using RepoSP.Net.Services;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using BookStore.Models.ViewModels.Customer.Book;
+using BookStore.Models.ViewModels.Book;
 
 
 namespace BookStore.DataAccess.Repositories
@@ -160,92 +162,167 @@ namespace BookStore.DataAccess.Repositories
             return books;
         }
 
-        public async Task<IEnumerable<BestSellingBookDTO>> GetTopBestSellingBooksAsync(int topN)
+        /// <summary>
+        /// Retrieves the details of a book by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the book.</param>
+        /// <returns>A <see cref="BookDetailsViewModel"/> instance if found; otherwise, null.</returns>
+        public async Task<BookDetailsViewModel?> GetBookDetailsByIdAsync(int id)
         {
-            var bestSellingBooks = new List<BestSellingBookDTO>();
+            BookDetailsViewModel? bookDetails = null;
 
-            try
+            using (var connection = new SqlConnection(_connectionString))
             {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (var command = new SqlCommand(_config.GetBookDetailsById, connection))
                 {
-                    using (SqlCommand command = new SqlCommand(_config.GetTopBestSellingBooksDetails, connection))
-                    {
-                        command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@TopN", topN);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add(new SqlParameter($"@{_config.IdParameterName}", id));
 
-                        connection.Open();
-                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    await connection.OpenAsync();
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        if (await reader.ReadAsync())
                         {
-                            while (reader.Read())
+                            bookDetails = new BookDetailsViewModel
                             {
-                                var book = new BestSellingBookDTO()
-                                {
-                                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                                    Title = reader.GetString(reader.GetOrdinal("Title")),
-                                    AuthorName = reader.GetString(reader.GetOrdinal("AuthorName")),
-                                    Price = reader.GetDecimal(reader.GetOrdinal("Price")),
-                                    CoverImage = reader["CoverImage"] == DBNull.Value ? null : reader.GetString(reader.GetOrdinal("CoverImage")),
-                                    TotalQuantity = reader.GetInt32(reader.GetOrdinal("TotalQuantity"))
-                                };
-                                bestSellingBooks.Add(book);
-                            }
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                CategoryName = reader.GetString(reader.GetOrdinal("CategoryName")),
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Price = reader.GetDecimal(reader.GetOrdinal("Price")),
+                                Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : reader.GetString(reader.GetOrdinal("Description")),
+                                ISBA = reader.GetString(reader.GetOrdinal("ISBA")),
+                                PublicationDate = reader.GetDateTime(reader.GetOrdinal("PublicationDate")),
+                                CoverImage = reader.IsDBNull(reader.GetOrdinal("CoverImage")) ? null : reader.GetString(reader.GetOrdinal("CoverImage")),
+                                LanguageName = reader.GetString(reader.GetOrdinal("LanguageName")),
+                                AuthorName = reader.GetString(reader.GetOrdinal("AuthorName")),
+                                TotalSellingQuantity = reader.GetInt32(reader.GetOrdinal("TotalSellingQuantity"))
+                            };
                         }
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
 
-            return bestSellingBooks;
+            return bookDetails;
         }
 
         /// <summary>
-        /// Retrieves the top N recently published books from the database.
+        /// Retrieves the list of books for admin.
         /// </summary>
-        /// <param name="topN">The number of top recently published books to retrieve.</param>
-        /// <returns>A task representing the asynchronous operation. The task result contains a list of recently published books.</returns>
-        public async Task<IEnumerable<RecentlyPublishedBookDTO>> GetTopRecentlyPublishedBooksAsync(int topN)
+        /// <returns>A list of <see cref="BookListViewModel"/> instances.</returns>
+        public async Task<List<BookListViewModel>> GetBookListAsync()
         {
-            var recentlyPublishedBooks = new List<RecentlyPublishedBookDTO>();
+            var results = new List<BookListViewModel>();
 
-            try
+            using (var connection = new SqlConnection(_connectionString))
             {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (var command = new SqlCommand("SELECT * FROM Books.v_BooksSummaryList", connection))
                 {
-                    using (SqlCommand command = new SqlCommand(_config.GetTopRecentlyPublishedBooks, connection))
-                    {
-                        command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@TopN", topN);
+                    command.CommandType = CommandType.Text;
 
-                        connection.Open();
-                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    await connection.OpenAsync();
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
                         {
-                            while (reader.Read())
+                            var book = new BookListViewModel
                             {
-                                var book = new RecentlyPublishedBookDTO
-                                {
-                                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                                    Title = reader.GetString(reader.GetOrdinal("Title")),
-                                    AuthorName = reader.GetString(reader.GetOrdinal("AuthorName")),
-                                    Price = reader.GetDecimal(reader.GetOrdinal("Price")),
-                                    CoverImage = reader["CoverImage"] == DBNull.Value ? null : reader.GetString(reader.GetOrdinal("CoverImage")),
-                                    PublicationDate = reader.GetDateTime(reader.GetOrdinal("PublicationDate"))
-                                };
-                                recentlyPublishedBooks.Add(book);
-                            }
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                AuthorName = reader.GetString(reader.GetOrdinal("AuthorName")),
+                                CategoryName = reader.GetString(reader.GetOrdinal("CategoryName")),
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Price = reader.GetDecimal(reader.GetOrdinal("Price")),
+                                CoverImage = reader.IsDBNull(reader.GetOrdinal("CoverImage")) ? null : reader.GetString(reader.GetOrdinal("CoverImage"))
+                            };
+                            results.Add(book);
                         }
                     }
                 }
             }
-            catch (Exception ex)
+
+            return results;
+        }
+
+
+        /// <summary>
+        /// Retrieves the top N best-selling books.
+        /// </summary>
+        /// <param name="topN">The number of top best-selling books to retrieve.</param>
+        /// <returns>A IEnumerable of <see cref="BookHomeBestSellingViewModel"/> instances.</returns>
+        public async Task<IEnumerable<BookHomeBestSellingViewModel>> GetTopBestSellingBooksAsync(int topN)
+        {
+            var results = new List<BookHomeBestSellingViewModel>();
+
+            using (var connection = new SqlConnection(_connectionString))
             {
-                Console.WriteLine($"An error occurred: {ex.Message}");
+                using (var command = new SqlCommand(_config.GetTopBestSellingBooks, connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add(new SqlParameter("@TopN", topN));
+
+                    await connection.OpenAsync();
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            var book = new BookHomeBestSellingViewModel
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                AuthorName = reader.GetString(reader.GetOrdinal("AuthorName")),
+                                CategoryName = reader.GetString(reader.GetOrdinal("CategoryName")),
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Price = reader.GetDecimal(reader.GetOrdinal("Price")),
+                                CoverImage = reader.IsDBNull(reader.GetOrdinal("CoverImage")) ? null : reader.GetString(reader.GetOrdinal("CoverImage")),
+                                TotalSellingQuantity = reader.GetInt32(reader.GetOrdinal("TotalSellingQuantity")).ToString()
+                            };
+                            results.Add(book);
+                        }
+                    }
+                }
             }
 
-            return recentlyPublishedBooks;
+            return results;
         }
+
+        /// <summary>
+        /// Retrieves the last added books.
+        /// </summary>
+        /// <param name="topN">The number of most recently added books to retrieve.</param>
+        /// <returns>A list of <see cref="BookHomeLastAddedViewModel"/> instances.</returns>
+        public async Task<IEnumerable<BookHomeLastAddedViewModel>> GetLastAddedBooksAsync(int topN)
+        {
+            var results = new List<BookHomeLastAddedViewModel>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                using (var command = new SqlCommand(_config.GetLastAddedBooks, connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add(new SqlParameter("@TopN", topN));
+
+                    await connection.OpenAsync();
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            var book = new BookHomeLastAddedViewModel
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                AuthorName = reader.GetString(reader.GetOrdinal("AuthorName")),
+                                CategoryName = reader.GetString(reader.GetOrdinal("CategoryName")),
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Price = reader.GetDecimal(reader.GetOrdinal("Price")),
+                                CoverImage = reader.IsDBNull(reader.GetOrdinal("CoverImage")) ? null : reader.GetString(reader.GetOrdinal("CoverImage")),
+                                PublicationDate = reader.GetDateTime(reader.GetOrdinal("PublicationDate"))
+                            };
+                            results.Add(book);
+                        }
+                    }
+                }
+            }
+
+            return results;
+        }
+
 
     }
 

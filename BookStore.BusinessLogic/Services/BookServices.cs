@@ -2,6 +2,8 @@
 using BookStore.DataAccess.Repositories;
 using BookStore.Models.Entities;
 using BookStore.Models.ViewModels;
+using BookStore.Models.ViewModels.Book;
+using BookStore.Models.ViewModels.Customer.Book;
 using BookStore.Utilties.BusinessHelpers;
 using System;
 using System.Collections.Generic;
@@ -31,36 +33,6 @@ namespace BookStore.BusinessLogic.Services
         {
             if (id <= 0) return null;
             return await _bookRepository.GetByIdAsync(id);
-        }
-
-        /// <summary>
-        /// Gets the top N best-selling books.
-        /// </summary>
-        /// <param name="topN">The number of top best-selling books to retrieve.</param>
-        /// <returns>A task representing the asynchronous operation. The task result contains a list of best-selling books.</returns>
-        public async Task<IEnumerable<BestSellingBookDTO>?> GetTopBestSellingBooksAsync(int topN)
-        {
-            if (topN <= 0)
-            {
-                // Handle the error, return null, or throw an exception based on your needs
-                return null;
-            }
-            return await _bookRepository.GetTopBestSellingBooksAsync(topN);
-        }
-
-        /// <summary>
-        /// Gets the top N recently published books.
-        /// </summary>
-        /// <param name="topN">The number of top recently published books to retrieve.</param>
-        /// <returns>A task representing the asynchronous operation. The task result contains a list of recently published books.</returns>
-        public async Task<IEnumerable<RecentlyPublishedBookDTO>?> GetTopRecentlyPublishedBooksAsync(int topN)
-        {
-            if (topN <= 0)
-            {
-                // Handle the error, return null, or throw an exception based on your needs
-                return null;
-            }
-            return await _bookRepository.GetTopRecentlyPublishedBooksAsync(topN);
         }
 
         /// <summary>
@@ -135,7 +107,7 @@ namespace BookStore.BusinessLogic.Services
         /// <returns>True if the book was added; otherwise, false.</returns>
         public async Task<bool> AddAsync(Book newBook)
         {
-            if (newBook == null) throw new ArgumentNullException(nameof(newBook));
+            if (newBook == null) return false;
             Book? book = await _bookRepository.InsertAsync(newBook);
             newBook.Id = book?.Id ?? 0;
             return newBook.Id > 0;
@@ -148,13 +120,60 @@ namespace BookStore.BusinessLogic.Services
         /// <returns>True if the book was updated; otherwise, false.</returns>
         public async Task<bool> UpdateAsync(Book book)
         {
-            if (book == null) throw new ArgumentNullException(nameof(book));
-            if (book.UpdatedByUserID == null)
-            {
-                // Handle the error, return false, or throw an exception based on your needs
-                throw new Exception("UpdatedByUserID is required.");
-            }
+            
+            if (book == null || book.UpdatedByUserID == null) return false;
+
             return await _bookRepository.UpdateAsync(book);
+        }
+
+
+        /// <summary>
+        /// Retrieves the details of a book by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the book.</param>
+        /// <returns>A <see cref="BookDetailsViewModel"/> instance if found; otherwise, null.</returns>
+        public async Task<BookDetailsViewModel?> GetBookDetailsByIdAsync(int id)
+        {
+            if (id <= 0)
+                return null;
+
+            return await _bookRepository.GetBookDetailsByIdAsync(id);
+        }
+
+        /// <summary>
+        /// Retrieves the list of books for admin.
+        /// </summary>
+        /// <returns>A list of <see cref="BookListViewModel"/> instances.</returns>
+        public async Task<List<BookListViewModel>> GetBookListAsync()
+        {
+            return await _bookRepository.GetBookListAsync();
+        }
+
+        /// <summary>
+        /// Retrieves the top N best-selling books.
+        /// </summary>
+        /// <param name="topN">The number of top best-selling books to retrieve.</param>
+        /// <returns>A IEnumerable of <see cref="BookHomeBestSellingViewModel"/> instances.</returns>
+        public async Task<IEnumerable<BookHomeBestSellingViewModel>?> GetTopBestSellingBooksAsync(int topN)
+        {
+            if (topN <= 0) return null;
+               
+
+            return await _bookRepository.GetTopBestSellingBooksAsync(topN);
+        }
+
+        /// <summary>
+        /// Retrieves the last added books.
+        /// </summary>
+        /// <param name="topN">The number of most recently added books to retrieve.</param>
+        /// <returns>A list of <see cref="BookHomeLastAddedViewModel"/> instances.</returns>
+        public async Task<IEnumerable<BookHomeLastAddedViewModel>?> GetLastAddedBooksAsync(int topN)
+        {
+            if (topN <= 0) return Enumerable.Empty<BookHomeLastAddedViewModel>();
+               
+
+            return await _bookRepository.GetLastAddedBooksAsync(topN);
         }
     }
 }
+
