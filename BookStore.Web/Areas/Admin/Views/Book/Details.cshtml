@@ -1,8 +1,15 @@
-﻿
+﻿@model BookDetailsViewModel
+
 @{
     ViewData["Section"] = "الكتب";
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
 
+
+<partial name="_BookHTMLPartial" model="Model" />
+
+
+@section Scripts {
+    <script src="~/js/Admin/book.js" asp-append-version="true"></script>
+}

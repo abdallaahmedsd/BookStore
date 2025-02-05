@@ -45,61 +45,6 @@ namespace BookStore.Web.Mappers
         //    bookDetailsViewModel.Price = bookModel.Price;
         //}
 
-        public static void Map(Category model, CategoryViewModel viewModel)
-        {
-            viewModel.Id = model.Id;
-            viewModel.Name = model.Name;
-        }
-        public static void Map(CategoryViewModel viewModel, Category model)
-        {
-            model.Id = viewModel.Id;
-            model.Name = viewModel.Name;
-            //model.CreatedBy = ;
-        }
-
-        //public static void Map(Author model, AuthorViewModel viewModel)
-        //{
-        //    viewModel.Id = model.Id;
-        //    viewModel.Name = model.Name;
-        //}
-        //public static void Map(AuthorViewModel viewModel, Author model)
-        //{
-        //    model.Id = viewModel.Id;
-        //    model.Name = viewModel.Name;
-        //    //model.CreatedBy = ;
-        //}
-
-      
-
-        //public static void Map(TbCompany companyModel, CompanyViewModel companyViewModel)
-        //{
-        //    companyViewModel.Id = companyModel.Id;
-        //    companyViewModel.Name = companyModel.Name;
-        //    companyViewModel.PhoneNumber = companyModel.PhoneNumber;
-        //    companyViewModel.StreetAddress = companyModel.AddressInfo.StreetAddress;
-        //    companyViewModel.City = companyModel.AddressInfo.City;
-        //    companyViewModel.State = companyModel.AddressInfo.State;
-        //    companyViewModel.PostalCode = companyModel.AddressInfo.PostalCode;
-        //}
-
-        //public static void Map(CompanyViewModel companyViewModel, TbCompany companyModel)
-        //{
-        //    companyModel.Name = companyViewModel.Name;
-        //    companyModel.PhoneNumber = companyViewModel.PhoneNumber;
-        //    companyModel.AddressInfo = new AddressInfo
-        //    {
-        //        StreetAddress = companyViewModel.StreetAddress,
-        //        City = companyViewModel.City,
-        //        State = companyViewModel.State,
-        //        PostalCode = companyViewModel.PostalCode
-        //    };
-        //}
-
-        //public static void Map(TbBook bookModel, BookDetailsViewModel shoppingCartViewModel)
-        //{
-        //    shoppingCartViewModel.BookDetails = new();
-        //    Map(bookModel, shoppingCartViewModel.BookDetails);
-        //}
 
         //public static void Map(ApplicationUser user, TbOrder order)
         //{

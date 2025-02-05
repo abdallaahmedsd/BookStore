@@ -4,6 +4,7 @@ using BookStore.Models.Identity;
 using BookStore.Models.ViewModels;
 using BookStore.Models.ViewModels.Admin;
 using BookStore.Models.ViewModels.Admin.Book;
+using BookStore.Models.ViewModels.Book;
 using BookStore.Web.Mappers;
 using BookstoreBackend.BLL.Services;
 using Microsoft.AspNetCore.Identity;
@@ -18,16 +19,18 @@ namespace BookStore.Web.Areas.Admin.Controllers
     public class BookController : Controller
     {
         public readonly BookServices _bookService;
+        private readonly CategoryServices _categoryServices;
 
-        public BookController(BookServices bookService)
+        public BookController(BookServices bookService, CategoryServices categoryServices)
         {
             _bookService = bookService;
+           _categoryServices = categoryServices;
         }
 
         // GET: BookController
         public async Task<ActionResult> Index()
         {
-            List<BookDTO> books = (await BookServices.GetAllAsync()).ToList();
+            List<BookListViewModel> books = (await _bookService.GetBookListAsync()).ToList();
 
             return View(books);
         }
@@ -35,7 +38,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
         // GET: BookController/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            return View(await BookServices.FindAsync(id));
+            return View(await _bookService.GetBookDetailsByIdAsync(id));
         }
 
         // GET: BookController/Create
@@ -50,12 +53,12 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 //       Name = x.Name
                 //   }).ToList();
 
-                List<CategoryViewModel> categories = (await CategoryServices.GetAllAsync())
-                    .Select(x => new CategoryViewModel
-                    {
-                        Id = x.Id,
-                        Name = x.Name
-                    }).ToList();
+                //List<CategoryViewModel> categories = (await _categoryServices.GetAllAsync())
+                //    .Select(x => new CategoryViewModel
+                //    {
+                //        Id = x.Id,
+                //        Name = x.Name
+                //    }).ToList();
 
                 //List<LanguageViewModel> languages = (await LanguageServices.GetAllAsync())
                 // .Select(x => new CategoryViewModel
@@ -63,10 +66,10 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 //     Id = x.Id,
                 //     Name = x.Name
                 // }).ToList();
-                
+
                 var bookViewModel = new AddEditBookViewModel
                 {
-                    Categories = categories,
+                    //Categories = categories,
                      //    Authors = authors,
                      //Languages = languages
                 };
@@ -122,12 +125,12 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 //       Name = x.Name
                 //   }).ToList();
 
-                List<CategoryViewModel> categories = (await CategoryServices.GetAllAsync())
-                    .Select(x => new CategoryViewModel
-                    {
-                        Id = x.Id,
-                        Name = x.Name
-                    }).ToList();
+                //List<CategoryViewModel> categories = (await CategoryServices.GetAllAsync())
+                //    .Select(x => new CategoryViewModel
+                //    {
+                //        Id = x.Id,
+                //        Name = x.Name
+                //    }).ToList();
 
                 //List<LanguageViewModel> languages = (await LanguageServices.GetAllAsync())
                 // .Select(x => new CategoryViewModel
@@ -136,7 +139,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 //     Name = x.Name
                 // }).ToList();
 
-                bookViewModel.Categories = categories;
+                //bookViewModel.Categories = categories;
 
                 return View(bookViewModel);
             }
