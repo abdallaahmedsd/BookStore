@@ -54,29 +54,6 @@ namespace BookStore.DataAccess.Repositories
             throw new NotSupportedException();
         }
 
-        /// <summary>
-        /// Finds a Payment entity by its ID. This method is not supported and will always throw a <see cref="NotSupportedException"/>.
-        /// </summary>
-        /// <param name="Id">The ID of the Payment entity to find.</param>
-        /// <returns>A task that represents the asynchronous operation.</returns>
-        /// <exception cref="NotSupportedException">Thrown always to indicate that this method is not supported.</exception>
-        [Obsolete("This method is not supported in this repository.", error: true)]
-        public override async Task<Payment?> GetByIdAsync(int Id)
-        {
-            throw new NotSupportedException();
-        }
-
-        /// <summary>
-        /// Checks if a Payment entity exists by its ID. This method is not supported and will always throw a <see cref="NotSupportedException"/>.
-        /// </summary>
-        /// <param name="Id">The ID of the Payment entity to check.</param>
-        /// <returns>A task that represents the asynchronous operation.</returns>
-        /// <exception cref="NotSupportedException">Thrown always to indicate that this method is not supported.</exception>
-        [Obsolete("This method is not supported in this repository.", error: true)]
-        public  async Task<bool> IsExistsAsync(int Id)
-        {
-            throw new NotSupportedException();
-        }
 
         /// <summary>
         /// Updates a Payment entity. This method is not supported and will always throw a <see cref="NotSupportedException"/>.

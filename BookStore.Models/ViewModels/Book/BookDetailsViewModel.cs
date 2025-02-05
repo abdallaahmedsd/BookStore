@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 
-namespace BookStore.Models.ViewModels.Book
+namespace BookStore.Models.ViewModels.Book;
+
+    public class BookDetailsViewModel
 {
-    public class BookDetailsForAdminViewModel
-    {
         public int Id { get; set; }
 
         [DisplayName("اسم المؤلف")]
@@ -36,6 +36,6 @@ namespace BookStore.Models.ViewModels.Book
         public string Quantity { get; set; } // that does exsits
 
         [DisplayName("عدد المبيعات")]
-        public string TotalSellingQuantity { get; set; } // sales
+        public int TotalSellingQuantity { get; set; } // sales
     }
-}
+

@@ -54,7 +54,17 @@ namespace BookStore.DataAccess.Repositories
         {
             throw new NotSupportedException("This method is not supported in this repository.");
         }
-
+        /// <summary>
+        /// Updates a Language entity. This method is not supported in this repository and will always throw a <see cref="NotSupportedException"/>.
+        /// </summary>
+        /// <param name="entity">The Language entity to update.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        /// <exception cref="NotSupportedException">Thrown always to indicate that this method is not supported.</exception>
+        [Obsolete("This method is not supported in this repository.", error: true)]
+        public override Task<Language?> InsertAsync(Language entity)
+        {
+            throw new NotSupportedException("This method is not supported in this repository.");
+        }
 
         // Custom methods //
 

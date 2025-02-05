@@ -12,96 +12,100 @@ namespace BookStore.BusinessLogic.Services
     /// </summary>
     public class LanguageServices
     {
-        /// <summary>
-        /// Represents the mode of operation (Add or Update).
-        /// </summary>
-        public enum enMode { Add = 0, Update = 1 }
+        private readonly LanguageRepository _languageRepository;
 
-        /// <summary>
-        /// Current mode of the service (Add or Update).
-        /// </summary>
-        private enMode Mode = enMode.Add;
-
-      
-        private static readonly LanguageRepository _languageRepository;
-
-        /// <summary>
-        /// Gets the unique identifier for the language.
-        /// </summary>
-        public int Id { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the name of the language.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Initializes the <see cref="LanguageServices"/> class.
-        /// </summary>
-        static LanguageServices()
+        public LanguageServices()
         {
             _languageRepository = new LanguageRepository(ConnectionConfig._connectionString);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LanguageServices"/> class for adding a new language.
-        /// </summary>
-        /// <param name="language">The language entity.</param>
-        public LanguageServices()
-        {
-            Mode = enMode.Add;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LanguageServices"/> class for updating an existing language.
-        /// </summary>
-        /// <param name="language">The language entity.</param>
-        /// <param name="mode">The mode (default is Update).</param>
-        private LanguageServices(Language language, enMode mode = enMode.Update)
-        {
-            Id = language.Id;
-            Name = language.LanguageName;
-            Mode = mode;
-        }
-
-        /// <summary>
-        /// Finds a language by its ID asynchronously.
+        /// Finds a language by ID asynchronously.
         /// </summary>
         /// <param name="id">The language ID.</param>
-        /// <returns>A <see cref="LanguageServices"/> instance if found; otherwise, null.</returns>
-        public static async Task<LanguageServices?> FindAsync(int id)
+        /// <returns>The <see cref="Language"/> entity if found; otherwise, null.</returns>
+        public async Task<Language?> FindAsync(int id)
         {
             if (id <= 0)
-            {
                 return null;
-            }
-            Language? language = await _languageRepository.GetByIdAsync(id);
-            return language == null ? null : new LanguageServices(language, enMode.Update);
+
+            return await _languageRepository.GetByIdAsync(id);
         }
 
         /// <summary>
-        /// Finds a language by its name asynchronously.
+        /// Finds a language by name asynchronously.
         /// </summary>
         /// <param name="languageName">The language name.</param>
-        /// <returns>A <see cref="LanguageServices"/> instance if found; otherwise, null.</returns>
-        public static async Task<LanguageServices?> FindAsync(string languageName)
+        /// <returns>The <see cref="Language"/> entity if found; otherwise, null.</returns>
+        public async Task<Language?> FindAsync(string languageName)
         {
             if (string.IsNullOrWhiteSpace(languageName))
-            {
                 return null;
-            }
-            Language? language = await _languageRepository.GetByNameAsync(languageName);
-            return language == null ? null : new LanguageServices(language, enMode.Update);
+
+            return await _languageRepository.GetByNameAsync(languageName.Trim());
         }
 
         /// <summary>
-        /// Retrieves all languages asynchronously.
+        /// Deletes a language by ID asynchronously.
+        /// </summary>
+        /// <param name="id">The language ID.</param>
+        /// <returns>True if the language was deleted; otherwise, false.</returns>
+        //public async Task<bool> DeleteAsync(int id)
+        //{
+        //    if (id <= 0)
+        //        return false;
+
+        //    return await _languageRepository.Delete(id);
+        //}
+
+        /// <summary>
+        /// Gets all languages asynchronously.
         /// </summary>
         /// <returns>A collection of <see cref="Language"/> entities.</returns>
-        public static async Task<IEnumerable<Language>> GetAllAsync()
+        public async Task<IEnumerable<Language>> GetAllAsync()
         {
-            IEnumerable<Language> languages = await _languageRepository.GetAllAsync();
-            return languages;
+            return await _languageRepository.GetAllAsync();
+        }
+
+        /// <summary>
+        /// Adds a new language asynchronously.
+        /// </summary>
+        /// <param name="newLanguage">The new language to add.</param>
+        /// <returns>True if the language was added successfully; otherwise, false.</returns>
+        //public async Task<bool> AddAsync(Language newLanguage)
+        //{
+        //    if (newLanguage == null)
+        //        throw new ArgumentNullException(nameof(newLanguage));
+
+        //    Language? language = await _languageRepository.InsertAsync(newLanguage);
+        //    newLanguage.Id = language?.Id ?? 0;
+        //    return newLanguage.Id > 0;
+        //}
+
+        /// <summary>
+        /// Updates an existing language asynchronously.
+        /// </summary>
+        /// <param name="language">The language to update.</param>
+        /// <returns>True if the language was updated successfully; otherwise, false.</returns>
+        //public async Task<bool> UpdateAsync(Language language)
+        //{
+        //    if (language == null)
+        //        throw new ArgumentNullException(nameof(language));
+
+        //    return await _languageRepository.UpdateAsync(language);
+        //}
+
+        /// <summary>
+        /// Checks if a language exists by ID asynchronously.
+        /// </summary>
+        /// <param name="id">The language ID.</param>
+        /// <returns>True if the language exists; otherwise, false.</returns>
+        public async Task<bool> IsExistAsync(int id)
+        {
+            if (id <= 0)
+                return false;
+
+            return await _languageRepository.IsExistsAsync(id);
         }
     }
 }

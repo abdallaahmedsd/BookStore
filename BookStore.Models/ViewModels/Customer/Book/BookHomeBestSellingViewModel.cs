@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Models.ViewModels.Customer.Book
 {
-    internal class BookHomeBestSellingViewModel
+    public class BookHomeBestSellingViewModel
     {
         public int Id { get; set; }
 

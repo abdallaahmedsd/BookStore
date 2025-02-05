@@ -89,14 +89,30 @@ namespace BookStore.DataAccess.Configurations
         /// </returns>
         public string IsExistsByIdProcedure => GetStoredProcedureWithSchema("Fun_IsBookExistsByID", Schemas.Books);
         /// <summary>
+        /// Gets the stored procedure name for retrieving the book details.
+        /// </summary>
+        public string GetBookDetailsById => GetStoredProcedureWithSchema("SP_GetBookDetailsById", Schemas.Books);
+
+        /// <summary>
         /// Gets the stored procedure name for retrieving the top N best-selling books details.
         /// </summary>
-        public string GetTopBestSellingBooksDetails => GetStoredProcedureWithSchema("SP_GetTopBestSellingBooksDetails", Schemas.Books);
+        public string GetTopBestSellingBooks => GetStoredProcedureWithSchema("SP_GetTopBestSellingBooks", Schemas.Books);
 
         /// <summary>
         /// Gets the stored procedure name for retrieving the top N recently published books.
         /// </summary>
-        public string GetTopRecentlyPublishedBooks => GetStoredProcedureWithSchema("SP_GetTopRecentlyPublishedBooks", Schemas.Books);
+        public string GetLastAddedBooks => GetStoredProcedureWithSchema("SP_GetLastAddedBooks", Schemas.Books);
+
+        /// <summary>
+        /// Gets the view name for retrieving book details.
+        /// </summary>
+        public string vwBooksDetails => GetStoredProcedureWithSchema("v_BooksDetails", Schemas.Books);
+
+        /// <summary>
+        /// Gets the view name for retrieving the book summary list for admin.
+        /// </summary>
+        public string BooksSummaryList => GetStoredProcedureWithSchema("v_BooksSummaryList", Schemas.Books);
+
 
 
         /// <summary>

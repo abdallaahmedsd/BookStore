@@ -26,7 +26,7 @@ namespace BookStore.DataAccess.Configurations
         /// <summary>
         /// Gets the stored procedure name for retrieving a Shipping by ID.
         /// </summary>
-        public string GetByIdProcedure => throw new NotImplementedException();
+        public string GetByIdProcedure => GetStoredProcedureWithSchema("SP_GetShippingByID",Schemas.Sales);
 
         /// <summary>
         /// Gets the stored procedure name for retrieving a Shipping by Order ID.
@@ -36,7 +36,7 @@ namespace BookStore.DataAccess.Configurations
         /// <summary>
         /// Gets the stored procedure name for retrieving Orders by User ID.
         /// </summary>
-        public string GetOrdersByUserID => GetStoredProcedureWithSchema("SP_GetOrdersByUserID", Schemas.Sales);
+        public string GetShippingsByUserId => GetStoredProcedureWithSchema("SP_GetShippingsByUserID", Schemas.Sales);
 
         // Get All stored procedures //
 
@@ -78,7 +78,7 @@ namespace BookStore.DataAccess.Configurations
         /// <summary>
         /// Gets the stored procedure name for checking if a Shipping exists by ID.
         /// </summary>
-        public string IsExistsByIdProcedure => throw new NotImplementedException();
+        public string IsExistsByIdProcedure => GetStoredProcedureWithSchema("Fun_IsShippingExistsById",Schemas.Sales);
 
 
         // Parameter Names //
@@ -86,7 +86,7 @@ namespace BookStore.DataAccess.Configurations
         /// <summary>
         /// Gets the name of the ID parameter.
         /// </summary>
-        public string IdParameterName => "ShippingID";
+        public string IdParameterName => "Id";
 
         /// <summary>
         /// Gets the name of the output parameter for the new ID.
