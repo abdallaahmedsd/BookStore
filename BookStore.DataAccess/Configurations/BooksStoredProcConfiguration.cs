@@ -40,6 +40,9 @@ namespace BookStore.DataAccess.Configurations
         /// </summary>
         public string GetByIdProcedure => GetStoredProcedureWithSchema("SP_GetBookByID", Schemas.Books);
 
+        public string SP_GetBookNavgationById => GetStoredProcedureWithSchema("SP_GetBookNavgationById", Schemas.Books);
+
+        
         /// <summary>
         /// Gets the stored procedure name for retrieving all Books.
         /// </summary>

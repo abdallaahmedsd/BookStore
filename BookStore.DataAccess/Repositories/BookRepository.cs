@@ -323,8 +323,102 @@ namespace BookStore.DataAccess.Repositories
             return results;
         }
 
+        /// <summary>
+        /// Retrieves detailed book information, including author, category, and language details, by the specified book ID.
+        /// </summary>
+        /// <param name="id">The unique identifier for the book.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the <see cref="Book"/> object
+        /// with detailed information including author, category, and language details, if found; otherwise, null.
+        /// </returns>
+        /// <exception cref="SqlException">Thrown when an error occurs while executing the SQL command.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when the connection state is invalid.</exception>
+        /// <exception cref="Exception">Thrown when an unexpected error occurs.</exception>
+        /// 
+        public async Task<Book> GetBookNavigationByIdAsync(int id)
+        {
+            Book book = null;
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                // Query to get book details
+                // string query = @"EXEC [Books].[SP_GetBookNavgationById] @Id";
+
+                using (SqlCommand command = new SqlCommand(_config.SP_GetBookNavgationById, connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue($"@{_config.IdParameterName}", id);
+
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        // Read book details
+                        if (await reader.ReadAsync())
+                        {
+                            book = new Book
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Price = reader.GetDecimal(reader.GetOrdinal("Price")),
+                                Description = (reader["Description"] != DBNull.Value) ? reader.GetString(reader.GetOrdinal("Description")) : null,
+                                ISBA = reader.GetString(reader.GetOrdinal("ISBA")),
+                                PublicationDate = reader.GetDateTime(reader.GetOrdinal("PublicationDate")),
+                                CoverImage = (reader["CoverImage"] != DBNull.Value) ? reader.GetString(reader.GetOrdinal("CoverImage")) : null
+                            };
+                        }
+
+                        // Read author details if available
+                        if (await reader.NextResultAsync())
+                        {
+                            if (await reader.ReadAsync())
+                            {
+                                book.Author = new Author
+                                {
+                                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                    Bio = reader.GetString(reader.GetOrdinal("Bio")),
+                                    CreatedBy = reader.GetInt32(reader.GetOrdinal("CreatedBy")),
+                                    FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
+                                    LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                                    NationalityID = reader.GetInt32(reader.GetOrdinal("NationalityID")),
+                                    Phone = reader.IsDBNull(reader.GetOrdinal("Phone")) ? null : reader.GetString(reader.GetOrdinal("Phone")),
+                                    Email = reader.GetString(reader.GetOrdinal("Email")),
+                                    ProfileImage = reader.IsDBNull(reader.GetOrdinal("ProfileImage")) ? null : reader.GetString(reader.GetOrdinal("ProfileImage"))
+                                };
+                            }
+                        }
+
+                        // Read category details if available
+                        if (await reader.NextResultAsync())
+                        {
+                            if (await reader.ReadAsync())
+                            {
+                                book.Category = new Category
+                                {
+                                    Id = reader.GetInt32(reader.GetOrdinal("CategoryID")),
+                                    Name = reader.GetString(reader.GetOrdinal("CategoryName")),
+                                    CreatedBy = reader.GetInt32(reader.GetOrdinal("CreatedBy"))
+                                };
+                            }
+                        }
+
+                        // Read language details if available
+                        if (await reader.NextResultAsync())
+                        {
+                            if (await reader.ReadAsync())
+                            {
+                                book.Language = new Language
+                                {
+                                    Id = reader.GetInt32(reader.GetOrdinal("LanguageID")),
+                                    LanguageName = reader.GetString(reader.GetOrdinal("LanguageName"))
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+            return book;
+        }
 
     }
-
 }
 
