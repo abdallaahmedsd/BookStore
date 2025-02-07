@@ -1,9 +1,9 @@
 ﻿@model AddEditBookViewModel
 @{
 
-    // SelectList categories = new SelectList(Model.Categories, "Id", "Name");
-    // SelectList authors = new SelectList(Model.Authors, "Id", "Name");
-    // SelectList languages = new SelectList(Model.Languages, "Id", "Name");
+    SelectList categories = new SelectList(Model.Categories, "Id", "Name");
+    SelectList authors = new SelectList(Model.Authors, "Id", "Name");
+    SelectList languages = new SelectList(Model.Languages, "Id", "Name");
 }
 
 
@@ -31,9 +31,9 @@
                 </svg>
 
                 <label asp-for="AuthorID"></label>
-                @* <select asp-for="AuthorID" asp-items="authors" aria-label="Default select example"> *@
-                @*     <option selected disabled value="0" >اسم المؤلف</option> *@
-                @* </select> *@
+                 <select asp-for="AuthorID" asp-items="authors" aria-label="Default select example"> 
+                     <option selected disabled value="0" >اسم المؤلف</option>
+                </select> 
 
             </div>
             <span asp-validation-for="AuthorID"></span>
@@ -64,9 +64,9 @@
                 </svg>
 
                 <label asp-for="CategoryID"></label>
-                @* <select asp-for="CategoryID" asp-items="categories" aria-label="Default select example"> *@
-                @*     <option selected disabled value="0">الفئة</option> *@
-                @* </select> *@
+                 <select asp-for="CategoryID" asp-items="categories" aria-label="Default select example"> 
+                     <option selected disabled value="0">الفئة</option> 
+               </select> 
             </div>
             <span asp-validation-for="CategoryID"></span>
         </div>
@@ -74,22 +74,22 @@
         <div class="form-entity-box">
             <div class="entity-input">
                 <label asp-for="LanguageID"></label>
-                @* <select asp-for="LanguageID" asp-items="languages" aria-label="Default select example"> *@
-                @*     <option selected disabled value="0">اللغة</option> *@
-                @* </select> *@
+                <select asp-for="LanguageID" asp-items="languages" aria-label="Default select example"> 
+                    <option selected disabled value="0">اللغة</option> 
+                </select> 
             </div>
-            <span asp-validation-for="@Model.LanguageID"></span>
+            <span asp-validation-for="LanguageID"></span>
         </div>
 
         <div class="p-0 form-entity-box">
             <div class="entity-input">
-                <label asp-for="@Model.Price"></label>
-                <input asp-for="@Model.Price"
+                <label asp-for="Price"></label>
+                <input asp-for="Price"
                         
-                       placeholder="100"
+                       placeholder="0"
                        aria-label="default input example" />
             </div>
-            <span asp-validation-for="@Model.Price"></span>
+            <span asp-validation-for="Price"></span>
         </div>
 
         <div class="form-entity-box">
@@ -108,7 +108,6 @@
 
                 <label asp-for="ISBA"></label>
                 <input asp-for="ISBA"
-                        
                        placeholder="ISBA"
                        aria-label="default input example" />
             </div>
@@ -119,45 +118,98 @@
 
     <div class="col p-0">
 
-        <div class="row m-0">
-            <div class="col-2 p-0 img-options">
-                <button class="btn reset">
-                    reset
-                </button>
-                <button class="btn delete">
-                    delete
-                </button>
-            </div>
+        <div class="row m-0 gy-2">
 
-            <div class="col p-0 form-entity-box">
-                <div class="form-book-cover">
-                    <label asp-for="CoverImage">
-                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10.5 11.6667C11.7887 11.6667 12.8333 10.622 12.8333 9.33333C12.8333 8.04467 11.7887 7 10.5 7C9.21134 7 8.16667 8.04467 8.16667 9.33333C8.16667 10.622 9.21134 11.6667 10.5 11.6667Z" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M15.1667 2.33325H10.5C4.66666 2.33325 2.33333 4.66659 2.33333 10.4999V17.4999C2.33333 23.3333 4.66666 25.6666 10.5 25.6666H17.5C23.3333 25.6666 25.6667 23.3333 25.6667 17.4999V11.6666" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M21 9.33325V2.33325L23.3333 4.66659" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M21 2.33325L18.6667 4.66659" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M3.11501 22.1083L8.86667 18.2467C9.78834 17.6283 11.1183 17.6983 11.9467 18.41L12.3317 18.7483C13.2417 19.53 14.7117 19.53 15.6217 18.7483L20.475 14.5833C21.385 13.8017 22.855 13.8017 23.765 14.5833L25.6667 16.2167" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                        <h5>إختيار غلاف الكتاب</h5>
-                    </label>
+            <div class="col-12 p-0 form-entity-box">
+                <div class="form-book-cover flex-column">
+                        @* <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"> *@
+                        @*     <path d="M10.5 11.6667C11.7887 11.6667 12.8333 10.622 12.8333 9.33333C12.8333 8.04467 11.7887 7 10.5 7C9.21134 7 8.16667 8.04467 8.16667 9.33333C8.16667 10.622 9.21134 11.6667 10.5 11.6667Z" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> *@
+                        @*     <path d="M15.1667 2.33325H10.5C4.66666 2.33325 2.33333 4.66659 2.33333 10.4999V17.4999C2.33333 23.3333 4.66666 25.6666 10.5 25.6666H17.5C23.3333 25.6666 25.6667 23.3333 25.6667 17.4999V11.6666" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> *@
+                        @*     <path d="M21 9.33325V2.33325L23.3333 4.66659" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> *@
+                        @*     <path d="M21 2.33325L18.6667 4.66659" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> *@
+                        @*     <path d="M3.11501 22.1083L8.86667 18.2467C9.78834 17.6283 11.1183 17.6983 11.9467 18.41L12.3317 18.7483C13.2417 19.53 14.7117 19.53 15.6217 18.7483L20.475 14.5833C21.385 13.8017 22.855 13.8017 23.765 14.5833L25.6667 16.2167" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> *@
+                        @* </svg> *@
+                        @* <h5> غلاف الكتاب</h5> *@
+
                     <!-- Image preview -->
-                    <img src="" alt="Book Cover" style="display: none;" />
+                    @if (Model.Mode == "Details")
+                    {
+                        if (!string.IsNullOrEmpty(Model.CoverImage))
+                           {
+                            @* <img src="@Model.CoverImage" class="card-img-top rounded" /> *@
+                            <img src="~/images/Landing-Girl-Image.svg" class="card-img-top rounded" />
+                           }
+                           else
+                           {
+                            <img src="https://placehold.co/500x600/png" class="card-img-top rounded" />
+                           }
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(Model.CoverImage))
+                        {
+                            @* <img src="@Model.CoverImage" class="card-img-top rounded" /> *@
+                            <img src="~/images/Landing-Girl-Image.svg" class="card-img-top rounded" />
+                        }
+                        else
+                        {
+                            <img src="" alt="Book Cover" style="display: none;" />
+                        }
 
-                    <input type="file" asp-for="CoverImage" />
+                    }
+
 
                 </div>
                 <span asp-validation-for="CoverImage"></span>
             </div>
 
-        </div>
+            @if (Model.Mode != "Details")
+            {
 
+                <div class="col-12 p-0">
+                    <div class="input-group d-flex align-items-center gap-2">
+                        <input asp-for="CoverImage" type="file" class="form-control" id="CoverImage" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                        <button class="btn delete btn-icon btn-red">
+                            <svg width="24" height="24" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14.387 4.42172C12.1312 4.19817 9.86187 4.08301 7.59929 4.08301C6.258 4.08301 4.91671 4.15075 3.57542 4.28623L2.19348 4.42172" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M5.91931 3.73752L6.06834 2.8501C6.17673 2.20655 6.25802 1.72559 7.40286 1.72559H9.1777C10.3225 1.72559 10.4106 2.23365 10.5122 2.85688L10.6612 3.73752" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M12.9307 6.5625L12.4903 13.3841C12.4158 14.4477 12.3549 15.2741 10.4649 15.2741H6.11583C4.22583 15.2741 4.16486 14.4477 4.09035 13.3841L3.65002 6.5625" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M7.15894 11.5483H9.41474" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M6.59668 8.83862H9.98378" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+
+                </div>
+            }
+
+
+
+
+            @* <div class="col-12 p-0 img-options"> *@
+            @*     <button class="btn reset btn-icon btn-second"> *@
+            @*         <svg width="24" height="24" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg"> *@
+            @*             <path d="M8.19345 1.72583H6.83862C3.45152 1.72583 2.09668 3.08067 2.09668 6.46777V10.5323C2.09668 13.9194 3.45152 15.2742 6.83862 15.2742H10.9031C14.2902 15.2742 15.6451 13.9194 15.6451 10.5323V9.17744" stroke="#F9F9F9" stroke-width="1.01613" stroke-linecap="round" stroke-linejoin="round" /> *@
+            @*             <path d="M11.6077 2.41682L6.26961 7.75488C6.06639 7.95811 5.86316 8.35779 5.82252 8.64908L5.53123 10.6881C5.42284 11.4265 5.94445 11.9413 6.68284 11.8397L8.72187 11.5484C9.00639 11.5078 9.40607 11.3046 9.61607 11.1013L14.9541 5.76327C15.8754 4.84198 16.309 3.77166 14.9541 2.41682C13.5993 1.06198 12.529 1.49553 11.6077 2.41682Z" stroke="#F9F9F9" stroke-width="1.01613" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" /> *@
+            @*             <path d="M10.8422 3.18213C11.296 4.80116 12.5628 6.06794 14.1886 6.52858" stroke="#F9F9F9" stroke-width="1.01613" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" /> *@
+            @*         </svg> *@
+            @*     </button> *@
+            @*     <button class="btn delete btn-icon btn-red"> *@
+            @*         <svg width="24" height="24" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg"> *@
+            @*             <path d="M14.387 4.42172C12.1312 4.19817 9.86187 4.08301 7.59929 4.08301C6.258 4.08301 4.91671 4.15075 3.57542 4.28623L2.19348 4.42172" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> *@
+            @*             <path d="M5.91931 3.73752L6.06834 2.8501C6.17673 2.20655 6.25802 1.72559 7.40286 1.72559H9.1777C10.3225 1.72559 10.4106 2.23365 10.5122 2.85688L10.6612 3.73752" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> *@
+            @*             <path d="M12.9307 6.5625L12.4903 13.3841C12.4158 14.4477 12.3549 15.2741 10.4649 15.2741H6.11583C4.22583 15.2741 4.16486 14.4477 4.09035 13.3841L3.65002 6.5625" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> *@
+            @*             <path d="M7.15894 11.5483H9.41474" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> *@
+            @*             <path d="M6.59668 8.83862H9.98378" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> *@
+            @*         </svg> *@
+            @*     </button> *@
+
+            @* </div> *@
+
+
+        </div>
 
     </div>
 
+
 </div>
-
-
-@section Scripts {
-    <script src="~/js/Admin/book.js" asp-append-version="true"></script>
-}

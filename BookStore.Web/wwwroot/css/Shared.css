@@ -250,10 +250,15 @@ input {
 
 /* Buttons */
 .btn {
-    font-size: 1rem;
-    font-weight: bold;
-    padding: .5rem;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    align-content: center !important;
+    font-size: 1rem !important;
+    font-weight: bold !important;
+    padding: .5rem !important;
     border: none !important;
+    outline: none !important;
     border-radius: .875rem !important;
     -webkit-border-radius: .875rem !important;
     -moz-border-radius: .875rem !important;
@@ -307,7 +312,11 @@ input {
         color: var(--text-color) !important;
     }
 
-.btn-second {
+.btn-main-open:hover svg path {
+    stroke: var(--text-color) !important;
+}
+
+    .btn-second {
     background-color: var(--second-color) !important;
     color: var(--text-color) !important;
 }
@@ -317,6 +326,10 @@ input {
         color: var(--second-color) !important;
         border: 2px solid var(--second-color) !important;
     }
+
+.btn-second:hover svg path {
+    stroke: var(--second-color) !important;
+}
 
 .btn-second-open {
     background-color: var(--text-color) !important;
@@ -329,6 +342,21 @@ input {
         color: var(--text-color) !important;
     }
 
+.btn-red {
+    background-color: var(--red-color) !important;
+    color: var(--text-color) !important;
+}
+
+.btn-red:hover {
+    background-color: var(--text-color) !important;
+    color: red !important;
+    border: 2px solid var(--red-color) !important;
+}
+.btn-red:hover svg path{
+    stroke: red !important;
+}
+
+
 .btn-red-open {
     background-color: var(--text-color) !important;
     color: red !important;
@@ -339,6 +367,11 @@ input {
         background-color: var(--red-color) !important;
         color: var(--text-color) !important;
     }
+    .btn-red-open:hover svg path {
+        stroke: var(--text-color) !important;
+    }
+
+
 
 .btn-strok {
     background-color: var(--text-color) !important;
@@ -455,4 +488,11 @@ input {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+
+.rotated-button {
+    transform: rotate(270deg);
+    transform-origin: center;
+    white-space: nowrap; /* Prevents text from breaking */
 }

@@ -1,32 +1,28 @@
-﻿@model AddEditBookViewModel
+﻿@model CategoryViewModel
 
 @{
-    ViewData["Section"] = "الكتب";
+    ViewData["Section"] = "الفئات";
     ViewData["Title"] = "Details";
 }
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/Admin/book.css" />
+    <link rel="stylesheet" href="~/css/Admin/category.css" />
     <link rel="stylesheet" href="~/css/Admin/details.css" />
+
 }
-
-
-
-
-
 
 <div class="row m-0">
 
-    <div class="col-12 p-0 flex-start gap-4 my-2">
-        <h4> بيانات الكتاب</h4>
-        <a class="btn btn-icon btn-second" asp-area="Admin" asp-controller="Book" asp-action="Edit" asp-route-id="@Model.Id">
+    <div class="col-12 p-0 flex-start gap-4 my-2" >
+        <h4> بيانات الفئة</h4>
+        <a class="btn btn-icon btn-second" asp-area="Admin" asp-controller="Category" asp-action="Edit" asp-route-id="@Model.Id">
             <svg width="24" height="24" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M8.19345 1.72583H6.83862C3.45152 1.72583 2.09668 3.08067 2.09668 6.46777V10.5323C2.09668 13.9194 3.45152 15.2742 6.83862 15.2742H10.9031C14.2902 15.2742 15.6451 13.9194 15.6451 10.5323V9.17744" stroke="#F9F9F9" stroke-width="1.01613" stroke-linecap="round" stroke-linejoin="round" />
                 <path d="M11.6077 2.41682L6.26961 7.75488C6.06639 7.95811 5.86316 8.35779 5.82252 8.64908L5.53123 10.6881C5.42284 11.4265 5.94445 11.9413 6.68284 11.8397L8.72187 11.5484C9.00639 11.5078 9.40607 11.3046 9.61607 11.1013L14.9541 5.76327C15.8754 4.84198 16.309 3.77166 14.9541 2.41682C13.5993 1.06198 12.529 1.49553 11.6077 2.41682Z" stroke="#F9F9F9" stroke-width="1.01613" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
                 <path d="M10.8422 3.18213C11.296 4.80116 12.5628 6.06794 14.1886 6.52858" stroke="#F9F9F9" stroke-width="1.01613" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
         </a>
-        <a class="btn btn-icon btn-red" onclick="confirmDelete(@Model.Id, 'Book')">
+        <a class="btn btn-icon btn-red" onclick="confirmDelete(@Model.Id, 'Category')">
             <svg width="24" height="24" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M14.387 4.42172C12.1312 4.19817 9.86187 4.08301 7.59929 4.08301C6.258 4.08301 4.91671 4.15075 3.57542 4.28623L2.19348 4.42172" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                 <path d="M5.91931 3.73752L6.06834 2.8501C6.17673 2.20655 6.25802 1.72559 7.40286 1.72559H9.1777C10.3225 1.72559 10.4106 2.23365 10.5122 2.85688L10.6612 3.73752" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -38,25 +34,23 @@
     </div>
 
     <div class="col-12 p-0">
-        <partial name="_BookHTMLPartial" model="Model" />
+        <partial name="_CategoryHTMLPartial" model="Model" />
+
     </div>
 
 
     <div class="col-12 p-0 flex-end">
-
-        <a asp-area="Admin" asp-controller="Book" asp-action="Index" class="me-2 btn btn-sm btn-red-open">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9.17001 14.8299L14.83 9.16992" stroke="#DB4B4E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M14.83 14.8299L9.17001 9.16992" stroke="#DB4B4E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#DB4B4E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-            <span class="me-2">إلغاء</span>
-        </a>
+        
+<a asp-area="Admin" asp-controller="Category" asp-action="Index" class="me-2 btn btn-sm btn-red-open ">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9.17001 14.8299L14.83 9.16992" stroke="#DB4B4E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M14.83 14.8299L9.17001 9.16992" stroke="#DB4B4E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#DB4B4E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+    <span class="me-2">إلغاء</span>
+</a>
     </div>
 </div>
-
-
-
 
 
 
@@ -67,9 +61,8 @@
 
         window.confirmDelete = confirmDelete; // Make it accessible globally
     </script>
-
-    <script src="~/js/Admin/book.js" asp-append-version="true"></script>
+    <script src="~/js/Admin/category.js" asp-append-version="true"></script>
     <script src="~/js/Admin/details.js" asp-append-version="true"></script>
-    
 
 }
+

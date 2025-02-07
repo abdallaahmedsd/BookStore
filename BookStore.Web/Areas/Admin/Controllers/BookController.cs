@@ -12,11 +12,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Host;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using BookstoreBackend.BLL.Services;
+using BookStore.Utilties;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookStore.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = AppUserRoles.RoleAdmin)]
     public class BookController : Controller
     {
         public readonly BookServices _bookService;
@@ -43,7 +45,39 @@ namespace BookStore.Web.Areas.Admin.Controllers
         // GET: BookController/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            return View(await _bookService.GetBookDetailsByIdAsync(id));
+            try
+            {
+                //BookDetailsViewModel bookViewModel = await _bookService.GetBookDetailsByIdAsync(id);
+
+                Book bookModel = (await _bookService.FindAsync(id));
+
+            if (bookModel == null)
+                return NotFound();
+
+            List<AuthorViewModel> authors = (await _authorService.GetAuthorViewModelAsync()).ToList();
+
+            List<CategoryViewModel> categories = (await _categoryServices.GetAllCategoryViewModelAsync()).ToList();
+
+            List<LanguageViewModel> languages = (await _languageServices.GetAllLanguageViewModelAsync()).ToList();
+
+            var bookViewModel = new AddEditBookViewModel
+            {
+                Categories = categories,
+                Authors = authors,
+                Languages = languages
+            };
+
+            Mapper.Map(bookModel, bookViewModel);
+
+            bookViewModel.Mode = "Details";
+
+            return View(bookViewModel);
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = "An error occurred while retrieving the book.";
+                return View("Error");
+            }
         }
 
         // GET: BookController/Create
@@ -51,32 +85,17 @@ namespace BookStore.Web.Areas.Admin.Controllers
         {
             try
             {
-                //List<AuthorViewModel> authors = (await _authorService.Geta())
-                //   .Select(x => new AuthorViewModel
-                //   {
-                //       Id = x.Id,
-                //       Name = x.Name
-                //   }).ToList();
+                List<AuthorViewModel> authors = (await _authorService.GetAuthorViewModelAsync()).ToList();
 
-                List<CategoryViewModel> categories = (await _categoryServices.GetAllCategoryViewModelAsync())
-                    .Select(x => new CategoryViewModel
-                    {
-                        Id = x.Id,
-                        Name = x.Name
-                    }).ToList();
+                List<CategoryViewModel> categories = (await _categoryServices.GetAllCategoryViewModelAsync()).ToList();
 
-                //List<LanguageViewModel> languages = (await _languageServices())
-                // .Select(x => new CategoryViewModel
-                // {
-                //     Id = x.Id,
-                //     Name = x.Name
-                // }).ToList();
+                List<LanguageViewModel> languages = (await _languageServices.GetAllLanguageViewModelAsync()).ToList();
 
                 var bookViewModel = new AddEditBookViewModel
                 {
-                    //Categories = categories,
-                    //    Authors = authors,
-                    //Languages = languages
+                    Categories = categories,
+                    Authors = authors,
+                    Languages = languages
                 };
 
 
@@ -84,7 +103,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                TempData["error"] = "An error occurred while retrieving the categories.";
+                TempData["error"] = "An error occurred while retrieving the data.";
                 return View("Error");
             }
         }
@@ -95,6 +114,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(AddEditBookViewModel bookViewModel)
         {
+
 
             if (ModelState.IsValid)
             {
@@ -109,92 +129,155 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
                     book.UpdatedByUserID = userId;
 
-                    // _bookService.Add(book);
+                    _bookService.AddAsync(book);
 
+                    //later: Save images in folder
 
+                    TempData["success"] = "Book created successfully!";
                     return RedirectToAction(nameof(Index));
                 }
                 catch
                 {
-                    TempData["error"] = "An error occurred while adding a new book.";
+                    TempData["error"] = "An error occurred while creating the book.";
                     return View("Error");
                 }
             }
             else
             {
-                // return same data to the fields
-                //List<AuthorViewModel> authors = (await AuthorServices.GetAllAsync())
-                //   .Select(x => new AuthorViewModel
-                //   {
-                //       Id = x.Id,
-                //       Name = x.Name
-                //   }).ToList();
+                List<AuthorViewModel> authors = (await _authorService.GetAuthorViewModelAsync()).ToList();
 
-                //List<CategoryViewModel> categories = (await CategoryServices.GetAllAsync())
-                //    .Select(x => new CategoryViewModel
-                //    {
-                //        Id = x.Id,
-                //        Name = x.Name
-                //    }).ToList();
+                List<CategoryViewModel> categories = (await _categoryServices.GetAllCategoryViewModelAsync()).ToList();
 
-                //List<LanguageViewModel> languages = (await LanguageServices.GetAllAsync())
-                // .Select(x => new CategoryViewModel
-                // {
-                //     Id = x.Id,
-                //     Name = x.Name
-                // }).ToList();
+                List<LanguageViewModel> languages = (await _languageServices.GetAllLanguageViewModelAsync()).ToList();
 
-                //bookViewModel.Categories = categories;
-
+                bookViewModel = new AddEditBookViewModel
+                {
+                    Categories = categories,
+                    Authors = authors,
+                    Languages = languages
+                };
                 return View(bookViewModel);
             }
         }
 
 
 
-
-
-
         // GET: BookController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            if (id <= 0)
+                return NotFound();
+
+            try
+            {
+                Book bookModel = (await _bookService.FindAsync(id));
+
+                if (bookModel == null)
+                    return NotFound();
+
+                List<AuthorViewModel> authors = (await _authorService.GetAuthorViewModelAsync()).ToList();
+
+                List<CategoryViewModel> categories = (await _categoryServices.GetAllCategoryViewModelAsync()).ToList();
+
+                List<LanguageViewModel> languages = (await _languageServices.GetAllLanguageViewModelAsync()).ToList();
+
+                var bookViewModel = new AddEditBookViewModel
+                {
+                    Categories = categories,
+                    Authors = authors,
+                    Languages = languages
+                };
+
+                Mapper.Map(bookModel, bookViewModel);
+                bookViewModel.Mode = "Edit";
+
+                return View(bookViewModel);
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = "An error occurred while retrieving the book for editing.";
+                return View("Error");
+            }
         }
 
         // POST: BookController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, AddEditBookViewModel bookViewModel)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    ClaimsIdentity claimsIdentity = (ClaimsIdentity)User?.Identity;
+                    int userId = int.Parse(claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+                    var bookModel = await _bookService.FindAsync(id);
+
+                    if (bookModel == null)
+                        return NotFound();
+
+                    Mapper.Map(bookViewModel, bookModel);
+
+                    bookModel.UpdatedByUserID = userId;
+
+                    await _bookService.UpdateAsync(bookModel);
+
+                    //later: Save images in folder
+
+                    TempData["success"] = "Book updated successfully!";
+                    return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    // Log exception (ex) here
+                    TempData["error"] = "An error occurred while updating the book.";
+                    return View("Error");
+                }
             }
-            catch
+            else
             {
-                return View();
+                List<AuthorViewModel> authors = (await _authorService.GetAuthorViewModelAsync()).ToList();
+
+                List<CategoryViewModel> categories = (await _categoryServices.GetAllCategoryViewModelAsync()).ToList();
+
+                List<LanguageViewModel> languages = (await _languageServices.GetAllLanguageViewModelAsync()).ToList();
+
+                bookViewModel = new AddEditBookViewModel
+                {
+                    Categories = categories,
+                    Authors = authors,
+                    Languages = languages
+                };
+                return View(bookViewModel);
             }
         }
 
-        // GET: BookController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: BookController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(int id)
         {
+            if (id <= 0)
+                return NotFound();
+
             try
             {
+                Book book = await _bookService.FindAsync(id);
+
+                if (book == null)
+                    return NotFound();
+
+                await _bookService.DeleteAsync(id);
+
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                // Log exception (ex) here
+                TempData["error"] = "An error occurred while retrieving the book for deletion.";
+                return View("Error");
             }
         }
+
     }
 }
