@@ -27,7 +27,7 @@ namespace BookstoreBackend.BLL.Services
         /// Retrieves all orders asynchronously.
         /// </summary>
         /// <returns>A collection of <see cref="Order"/>.</returns>
-        public static async Task<IEnumerable<Order>> GetOrders()
+        public async Task<IEnumerable<Order>> GetOrders()
         {
             var orders = await _orderrepo.GetAllAsync();
             return orders;
