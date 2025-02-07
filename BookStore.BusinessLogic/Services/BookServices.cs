@@ -174,6 +174,20 @@ namespace BookStore.BusinessLogic.Services
 
             return await _bookRepository.GetLastAddedBooksAsync(topN);
         }
+        /// <summary>
+        /// Retrieves a book with navigation properties by the specified book ID.
+        /// </summary>
+        /// <param name="Id">The unique identifier for the book.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the <see cref="Book"/> object with navigation properties if found; otherwise, null.
+        /// </returns>
+        /// <exception cref="ArgumentException">Thrown when the provided book ID is less than or equal to zero.</exception>
+        public async Task<Book?> GetBookNavgById(int Id)
+        {
+            if (Id <= 0) return null;
+            return await _bookRepository.GetBookNavigationByIdAsync(Id);
+        }
+
     }
 }
 
