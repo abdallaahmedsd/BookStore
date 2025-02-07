@@ -59,6 +59,7 @@ namespace BookStore.DataAccess.Configurations
         /// Stored procedure name for checking if an Author exists by ID.
         /// </summary>
         public string IsExistsByIdProcedure => GetStoredProcedureWithSchema("Fun_IsAuthorExistsById", Schemas.People);
+        public string GetAllAuthorsId_Name => GetStoredProcedureWithSchema("GetAllAuthorsId_Name", Schemas.People);
 
         /// <summary>
         /// Maps the SQL data reader to an Author entity by reading values from the data reader.
