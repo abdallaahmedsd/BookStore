@@ -1,4 +1,4 @@
-﻿import { confirmDelete } from '/js/Shared.js'; 
+﻿import { confirmDelete } from '/js/Shared.js';
 
 const deleteBtns = document.querySelectorAll(".delete-button");
 
@@ -18,3 +18,4 @@ deleteBtns.forEach(btn => {
         confirmDelete(id, "Author");
     });
 });
+

@@ -48,6 +48,29 @@ namespace BookStore.Web.Mappers
             categoryModel.Name = categoryViewModel.Name;
         }
 
+        public static void Map(AddEditAuthorViewModel authorViewModel, Author authorModel)
+        {
+            authorModel.Id = authorViewModel.Id;
+            authorModel.Bio = authorViewModel.Bio;
+            authorModel.FirstName = authorViewModel.FirstName;
+            authorModel.LastName = authorViewModel.LastName;
+            authorModel.NationalityID = authorViewModel.NationalityID;
+            authorModel.Phone = authorViewModel.Phone;
+            authorModel.Email = authorViewModel.Email;
+            authorModel.ProfileImage = authorViewModel.ProfileImage;
+        }
+        public static void Map(Author authorModel, AddEditAuthorViewModel authorViewModel)
+        {
+            authorViewModel.Id = authorModel.Id;
+            authorViewModel.Bio = authorModel.Bio;
+            authorViewModel.FirstName = authorModel.FirstName;
+            authorViewModel.LastName = authorModel.LastName;
+            authorViewModel.NationalityID = authorModel.NationalityID;
+            authorViewModel.Phone = authorModel.Phone;
+            authorViewModel.Email = authorModel.Email;
+            authorViewModel.ProfileImage = authorModel.ProfileImage;
+        }
+
         //public static void Map(ApplicationUser user, TbOrder order)
         //{
         //    order.Name = user.Name;

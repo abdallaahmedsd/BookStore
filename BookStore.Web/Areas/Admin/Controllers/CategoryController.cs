@@ -176,14 +176,12 @@ namespace BookStore.Web.Areas.Admin.Controllers
             }
         }
 
-    
+
         // POST: CategoriesController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int id, IFormCollection collection)
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
         {
-            if (id <= 0)
-                return NotFound();
+
 
             try
             {

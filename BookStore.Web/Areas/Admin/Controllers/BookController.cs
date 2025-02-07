@@ -14,6 +14,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using BookStore.Utilties;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 
 namespace BookStore.Web.Areas.Admin.Controllers
 {
@@ -25,13 +26,15 @@ namespace BookStore.Web.Areas.Admin.Controllers
         private readonly CategoryServices _categoryServices;
         private readonly AuthorService _authorService;
         private readonly BusinessLogic.Services.LanguageServices _languageServices;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public BookController(BookServices bookService, CategoryServices categoryServices, AuthorService authorService, BusinessLogic.Services.LanguageServices languageServices)
+        public BookController(BookServices bookService, CategoryServices categoryServices, AuthorService authorService, BusinessLogic.Services.LanguageServices languageServices, IWebHostEnvironment webHostEnvironment)
         {
             _bookService = bookService;
             _categoryServices = categoryServices;
             _authorService = authorService;
             _languageServices = languageServices;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: BookController
@@ -112,10 +115,8 @@ namespace BookStore.Web.Areas.Admin.Controllers
         // POST: BookController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(AddEditBookViewModel bookViewModel)
+        public async Task<ActionResult> Create(AddEditBookViewModel bookViewModel, IFormFile mainImage, List<IFormFile> files)
         {
-
-
             if (ModelState.IsValid)
             {
                 try
@@ -126,12 +127,16 @@ namespace BookStore.Web.Areas.Admin.Controllers
                     Book book = new Book();
 
                     Mapper.Map(bookViewModel, book);
-
                     book.UpdatedByUserID = userId;
 
-                    _bookService.AddAsync(book);
+                    await _bookService.AddAsync(book);
 
-                    //later: Save images in folder
+                    #region Save Author iamges 
+                    await _HandleBookImages(book.Id, bookViewModel, mainImage, files);
+
+                    await _bookService.UpdateAsync(book);
+                    #endregion
+
 
                     TempData["success"] = "Book created successfully!";
                     return RedirectToAction(nameof(Index));
@@ -159,7 +164,6 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 return View(bookViewModel);
             }
         }
-
 
 
         // GET: BookController/Edit/5
@@ -203,7 +207,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
         // POST: BookController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, AddEditBookViewModel bookViewModel)
+        public async Task<ActionResult> Edit(int id, AddEditBookViewModel bookViewModel,IFormFile? mainImage, List<IFormFile>? files)
         {
             if (ModelState.IsValid)
             {
@@ -216,6 +220,30 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
                     if (bookModel == null)
                         return NotFound();
+
+
+                    if (mainImage != null)
+                    {
+                        // if the main image chaneged
+                        // remove the old main image from the database and from the hard desk as well
+
+                        //var oldImageFromDb = await _unitOfWork.BookImage.GetAsync(x => x.BookId == id && x.IsMainImage);
+                        //if (oldImageFromDb != null)
+                        //{
+                            //// Delete old image
+                            string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+                            string fullPath = Path.Combine(wwwRootPath, bookModel.CoverImage.Trim('\\'));
+
+                            if (System.IO.File.Exists(fullPath))
+                            {
+                                System.IO.File.Delete(fullPath);
+                            }
+                        //}
+
+                    }
+
+                    await _HandleBookImages(id, bookViewModel, mainImage, files);
 
                     Mapper.Map(bookViewModel, bookModel);
 
@@ -230,7 +258,8 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 }
                 catch
                 {
-                    // Log exception (ex) here
+                    bookViewModel.Mode = "Edit";
+
                     TempData["error"] = "An error occurred while updating the book.";
                     return View("Error");
                 }
@@ -253,8 +282,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
             }
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
             if (id <= 0)
@@ -278,6 +306,59 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 return View("Error");
             }
         }
+
+        private async Task _HandleBookImages(int bookId, AddEditBookViewModel bookViewModel, IFormFile? mainImage, List<IFormFile>? files)
+        {
+            try
+            {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                string bookPath = @"uploads\images\books\book-" + bookId;
+                string finalPath = Path.Combine(wwwRootPath, bookPath);
+
+                if (!Directory.Exists(finalPath))
+                    Directory.CreateDirectory(finalPath);
+
+                // save the main image
+                if (mainImage != null)
+                {
+                    await _CopayImage(mainImage, true);
+                }
+
+                // save others book images
+                if (files != null)
+                {
+                    foreach (var file in files)
+                    {
+                        await _CopayImage(file);
+                    }
+                }
+
+                async Task _CopayImage(IFormFile file, bool isMainImage = false)
+                {
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    using (var fileStream = new FileStream(Path.Combine(finalPath, fileName), FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream);
+                    }
+
+                    //TbBookImage bookImage = new()
+                    //{
+                    //    ImageUrl = @"\" + bookPath + @"\" + fileName,
+                    //    BookId = bookId,
+                    //    IsMainImage = isMainImage
+                    //};
+
+                    //bookViewModel.BookImages.Add(bookImage);
+
+                    bookViewModel.CoverImage = @"\" + bookPath + @"\" + fileName;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
 
     }
 }

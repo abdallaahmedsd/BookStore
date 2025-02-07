@@ -1,28 +1,4 @@
-﻿import Swal from 'sweetalert2'
-
-import Swal from 'sweetalert2/dist/sweetalert2.js'
-import 'sweetalert2/src/sweetalert2.scss'
-
-// or via CommonJS
-const Swal = require('sweetalert2')
-
-
-
-
-const passwordField = document.querySelector(".password-box input");
-const togglePasswordSVG = passwordField.closest(".password-box").querySelector("#toggle-password");
-
-togglePasswordSVG.addEventListener("click", function () {
-    if (passwordField.type === "password") {
-        passwordField.type = "text"; // Show password
-    } else {
-        passwordField.type = "password"; // Hide password
-    }
-});
-
-
-
-export function confirmDelete(id, controller) {
+﻿export function confirmDelete(id, controller) {
     Swal.fire({
         title: "هل أنت متأكد؟",
         text: "لن تتمكن من التراجع عن هذا!",
@@ -40,9 +16,9 @@ export function confirmDelete(id, controller) {
         if (result.isConfirmed) {
             // Send DELETE request
             $.ajax({
-                url: `/Admin/${controller}/Delete`,
-                type: "POST",
-                data: { id: id }, // Send as a form field
+                url: `/api/admin/${controller}/${id}`,
+                type: "DELETE",
+                //data: { id: id }, // Send as a form field
                 success: function () {
                     Swal.fire({
                         title: "تم الحذف!",
@@ -53,8 +29,8 @@ export function confirmDelete(id, controller) {
                             confirmButton: "btn btn-main"
                         }
                     }).then(() => {
-                        // Remove the deleted row from the DataTable
-                        table.row($(`tr[data-id="${id}"]`)).remove().draw();
+
+                        window.location.href = `/admin/${controller}/index`;
                     });
                 },
                 error: function (xhr, status, error) {

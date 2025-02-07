@@ -1,13 +1,7 @@
-﻿const today = new Date().toISOString().split("T")[0];
-
-const dateInput = document.getElementById("bookDate");
-dateInput.max = today;  
-dateInput.min = "1900-01-01"; 
-
-
-const img = document.querySelector(".form-book-cover img");
+﻿
+const img = document.querySelector(".form-book-cover img"); // fix this naming 
 const imgDeleteBtn = document.querySelector(".input-group .delete-image");
-const imgInput = document.getElementById("CoverImage");
+const imgInput = document.getElementById("ProfileImage");
 
 imgInput.addEventListener("change", function (event) {
 

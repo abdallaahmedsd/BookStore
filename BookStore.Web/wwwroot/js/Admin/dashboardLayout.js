@@ -1,52 +1,5 @@
 ﻿
 
-function confirmDelete(id, controller) {
-    Swal.fire({
-        title: "هل أنت متأكد؟",
-        text: "لن تتمكن من التراجع عن هذا!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "نعم، احذفه!",
-        cancelButtonText: "إلغاء",
-        customClass: {
-            confirmButton: "btn btn-second-open",
-            cancelButton: "btn btn-red"
-        }
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Send DELETE request
-            $.ajax({
-                url: `/Admin/${controller}/Delete`,
-                type: "POST",
-                data: { id: id }, // Send as a form field
-                success: function () {
-                    Swal.fire({
-                        title: "تم الحذف!",
-                        text: "تم حذف السجل بنجاح.",
-                        icon: "success",
-                        confirmButtonText: "حسنًا",
-                        customClass: {
-                            confirmButton: "btn btn-main"
-                        }
-                    }).then(() => {
-                        // Remove the deleted row from the DataTable
-                        table.row($(`tr[data-id="${id}"]`)).remove().draw();
-                    });
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error:", xhr.responseText);
-                    Swal.fire("خطأ", "فشل في حذف السجل.", "error");
-                }
-            });
-        }
-    });
-}
-
-
-
-
 $(document).ready(function () {
     let table = $('#example').DataTable({
         dom: 'lrtip',
@@ -85,15 +38,17 @@ $(document).ready(function () {
         }
     });
 
-    $('#example .delete-button').on('click', function () {
-        let id = $(this).closest("tr").data("id");
+    ////$('#delete-button').on('click', function () {
+    //$('#example .delete-button').on('click', function () {
+    //    alert("ff");
+    //    let id = $(this).closest("tr").data("id");
 
-        if (!id) {
-            Swal.fire("Error", "Invalid ID. Cannot delete.", "error");
-            return;
-        }
+    //    if (!id) {
+    //        Swal.fire("Error", "Invalid ID. Cannot delete.", "error");
+    //        return;
+    //    }
 
-        confirmDelete(id, controller);
+    //    confirmDelete(id, controller);
 
-    });
+    //});
 });

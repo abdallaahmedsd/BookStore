@@ -47,8 +47,8 @@ namespace BookStore.Models.ViewModels.Admin.Book
         [Required(ErrorMessage = "تاريخ اصدار الكتاب مطلوب")]
         [DisplayName("تاريخ اصدار الكتاب")]
         public DateTime PublicationDate { get; set; }
-        public string? CoverImage { get; set; }
 
+        public string? CoverImage { get; set; }
 
         public string Mode { get; set; } = "Create";
 

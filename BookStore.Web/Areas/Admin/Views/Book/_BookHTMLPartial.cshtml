@@ -122,22 +122,13 @@
 
             <div class="col-12 p-0 form-entity-box">
                 <div class="form-book-cover flex-column">
-                        @* <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"> *@
-                        @*     <path d="M10.5 11.6667C11.7887 11.6667 12.8333 10.622 12.8333 9.33333C12.8333 8.04467 11.7887 7 10.5 7C9.21134 7 8.16667 8.04467 8.16667 9.33333C8.16667 10.622 9.21134 11.6667 10.5 11.6667Z" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> *@
-                        @*     <path d="M15.1667 2.33325H10.5C4.66666 2.33325 2.33333 4.66659 2.33333 10.4999V17.4999C2.33333 23.3333 4.66666 25.6666 10.5 25.6666H17.5C23.3333 25.6666 25.6667 23.3333 25.6667 17.4999V11.6666" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> *@
-                        @*     <path d="M21 9.33325V2.33325L23.3333 4.66659" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> *@
-                        @*     <path d="M21 2.33325L18.6667 4.66659" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> *@
-                        @*     <path d="M3.11501 22.1083L8.86667 18.2467C9.78834 17.6283 11.1183 17.6983 11.9467 18.41L12.3317 18.7483C13.2417 19.53 14.7117 19.53 15.6217 18.7483L20.475 14.5833C21.385 13.8017 22.855 13.8017 23.765 14.5833L25.6667 16.2167" stroke="#9E9BA9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> *@
-                        @* </svg> *@
-                        @* <h5> غلاف الكتاب</h5> *@
 
                     <!-- Image preview -->
                     @if (Model.Mode == "Details")
                     {
                         if (!string.IsNullOrEmpty(Model.CoverImage))
                            {
-                            @* <img src="@Model.CoverImage" class="card-img-top rounded" /> *@
-                            <img src="~/images/Landing-Girl-Image.svg" class="card-img-top rounded" />
+                            <img src="@Model.CoverImage" class="card-img-top rounded" />
                            }
                            else
                            {
@@ -146,10 +137,11 @@
                     }
                     else
                     {
+                       
                         if (!string.IsNullOrEmpty(Model.CoverImage))
                         {
-                            @* <img src="@Model.CoverImage" class="card-img-top rounded" /> *@
-                            <img src="~/images/Landing-Girl-Image.svg" class="card-img-top rounded" />
+                            <img src="@Model.CoverImage" class="card-img-top rounded" />
+
                         }
                         else
                         {
@@ -160,7 +152,7 @@
 
 
                 </div>
-                <span asp-validation-for="CoverImage"></span>
+                @* <span asp-validation-for="CoverImage"></span> *@
             </div>
 
             @if (Model.Mode != "Details")
@@ -168,8 +160,27 @@
 
                 <div class="col-12 p-0">
                     <div class="input-group d-flex align-items-center gap-2">
-                        <input asp-for="CoverImage" type="file" class="form-control" id="CoverImage" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                        <button class="btn delete btn-icon btn-red">
+
+                        @if (Model.Id != 0)
+                        {
+                            <input name="mainImage" type="file" class="form-control" id="CoverImage" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                        }
+                        else
+                        {
+                            <input id="CoverImage"
+                                class="form-control border-0 shadow input-validation-error"
+                                   type="file"
+                                   data-val="true"
+                                   data-val-required="الصورة مطلوبة"
+                                   name="mainImage"
+                                   aria-describedby="mainImage-error"
+                                   aria-invalid="true" />
+                            <span class="text-danger field-validation-error" data-valmsg-for="mainImage" data-valmsg-replace="true"></span>
+                        }
+
+
+
+                        <button class="btn delete-image btn-icon btn-red">
                             <svg width="24" height="24" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M14.387 4.42172C12.1312 4.19817 9.86187 4.08301 7.59929 4.08301C6.258 4.08301 4.91671 4.15075 3.57542 4.28623L2.19348 4.42172" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 <path d="M5.91931 3.73752L6.06834 2.8501C6.17673 2.20655 6.25802 1.72559 7.40286 1.72559H9.1777C10.3225 1.72559 10.4106 2.23365 10.5122 2.85688L10.6612 3.73752" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />

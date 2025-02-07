@@ -46,7 +46,7 @@
                                 <path d="M10.8422 3.18213C11.296 4.80116 12.5628 6.06794 14.1886 6.52858" stroke="#F9F9F9" stroke-width="1.01613" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                         </a>
-                        <a class="btn btn-icon btn-red  delete-button" >
+                        <button data-id="@book.Id" class="btn btn-icon btn-red delete-button">
                             <svg width="24" height="24" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M14.387 4.42172C12.1312 4.19817 9.86187 4.08301 7.59929 4.08301C6.258 4.08301 4.91671 4.15075 3.57542 4.28623L2.19348 4.42172" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 <path d="M5.91931 3.73752L6.06834 2.8501C6.17673 2.20655 6.25802 1.72559 7.40286 1.72559H9.1777C10.3225 1.72559 10.4106 2.23365 10.5122 2.85688L10.6612 3.73752" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -54,10 +54,17 @@
                                 <path d="M7.15894 11.5483H9.41474" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 <path d="M6.59668 8.83862H9.98378" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
-                        </a>
+                        </button>
+
+
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
+@section Scripts {
+    <script type="module" src="~/js/Admin/delete-book.js" asp-append-version="true"></script>
+    @* <script src="~/js/Admin/book.js" asp-append-version="true"></script> *@
+}
