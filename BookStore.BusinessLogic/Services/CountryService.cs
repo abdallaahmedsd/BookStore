@@ -30,7 +30,7 @@ namespace BookstoreBackend.BLL.Services
         /// Retrieves all countries asynchronously.
         /// </summary>
         /// <returns>A collection of <see cref="Country"/> instances.</returns>
-        public static async Task<IEnumerable<Country>> GetCountriesAsync()
+        public async Task<IEnumerable<Country>> GetCountriesAsync()
         {
             IEnumerable<Country> countries = await _countryRepository.GetAllAsync();
             return countries;
@@ -41,7 +41,7 @@ namespace BookstoreBackend.BLL.Services
         /// </summary>
         /// <param name="id">The country ID.</param>
         /// <returns>A <see cref="Country"/> instance if found; otherwise, null.</returns>
-        public static async Task<Country?> FindAsync(int id)
+        public async Task<Country?> FindAsync(int id)
         {
             Country? country = await _countryRepository.GetByIdAsync(id);
             return country;
@@ -52,7 +52,7 @@ namespace BookstoreBackend.BLL.Services
         /// </summary>
         /// <param name="name">The country name.</param>
         /// <returns>A <see cref="Country"/> instance if found; otherwise, null.</returns>
-        public static async Task<Country?> FindAsync(string name)
+        public async Task<Country?> FindAsync(string name)
         {
             Country? country = await _countryRepository.GetCountryByNameAsync(name);
             return country;

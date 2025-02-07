@@ -10,6 +10,7 @@ using BookStore.Models.ViewModels.Admin;
 using BookStore.Utilties.BusinessHelpers;
 using Microsoft.Identity.Client;
 
+
 namespace BookstoreBackend.BLL.Services
 {
     /// <summary>
@@ -32,7 +33,7 @@ namespace BookstoreBackend.BLL.Services
         /// <summary>
         /// Retrieves a list of all authors asynchronously.
         /// </summary>
-        public static async Task<IEnumerable<Author>> GetAuthorsAsync()
+        public async Task<IEnumerable<Author>> GetAuthorsAsync()
         {
             IEnumerable<Author> authors = await _authorrepo.GetAllAsync();
             return authors;
@@ -41,7 +42,7 @@ namespace BookstoreBackend.BLL.Services
         /// <summary>
         /// Retrieves a list of all AuthorViewModel asynchronously.
         /// </summary>
-        public static async Task<IEnumerable<AuthorViewModel>> GetAuthorViewModelAsync()
+        public async Task<IEnumerable<AuthorViewModel>> GetAuthorViewModelAsync()
         {
             IEnumerable<Author> authors = await _authorrepo.GetAllAsync();
             return authors.Select(author => new AuthorViewModel { Id = author.Id, Name = author.FullName });
@@ -52,7 +53,7 @@ namespace BookstoreBackend.BLL.Services
         /// <summary>
         /// Finds an author by ID asynchronously.
         /// </summary>
-        public static async Task<Author?> FindAsync(int Id)
+        public async Task<Author?> FindAsync(int Id)
         {
             Author? author = await _authorrepo.GetByIdAsync(Id);
             return author;
@@ -61,7 +62,7 @@ namespace BookstoreBackend.BLL.Services
         /// <summary>
         /// Checks if an author exists by ID.
         /// </summary>
-        public static async Task<bool> IsExists(int Id)
+        public async Task<bool> IsExists(int Id)
         {
             return await _authorrepo.IsExistsAsync(Id);
         }
@@ -92,7 +93,7 @@ namespace BookstoreBackend.BLL.Services
         /// <summary>
         /// Deletes an author asynchronously by ID.
         /// </summary>
-        public static async Task<bool> DeleteAsync(int Id)
+        public async Task<bool> DeleteAsync(int Id)
         {
             return await _authorrepo.Delete(Id);
         }
