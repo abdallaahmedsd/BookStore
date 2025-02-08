@@ -1,11 +1,4 @@
 ﻿@model AddEditAuthorViewModel
-@{
-
-    // SelectList categories = new SelectList(Model.Categories, "Id", "Name");
-    // SelectList authors = new SelectList(Model.Authors, "Id", "Name");
-    // SelectList languages = new SelectList(Model.Languages, "Id", "Name");
-}
-
 
 <div class="row mx-0 my-4">
 
@@ -118,28 +111,10 @@
 
             @if (Model.Mode != "Details")
             {
-
                 <div class="col-12 p-0">
                     <div class="input-group d-flex align-items-center gap-2">
 
-                        @if (Model.Id != 0)
-                        {
-                            <input name="authorProfileImage" type="file" class="form-control" id="ProfileImage" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                        }
-                        else
-                        {
-                            <input name="authorProfileImage" type="file" class="form-control" id="ProfileImage" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-
-                            @* <input id="ProfileImage" *@
-                            @*     class="form-control border-0 shadow input-validation-error" *@
-                            @*        type="file" *@
-                            @*        data-val="true" *@
-                            @*        data-val-required="الصورة مطلوبة" *@
-                            @*        name="authorProfileImage" *@
-                            @*        aria-describedby="authorProfileImage-error" *@
-                            @*        aria-invalid="true" /> *@
-                            @* <span class="text-danger field-validation-error" data-valmsg-for="authorProfileImage" data-valmsg-replace="true"></span> *@
-                        }
+                        <input name="authorProfileImage"  type="file" class="form-control" id="ProfileImage" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
 
                         <button class="btn delete-image btn-icon btn-red">
                             <svg width="24" height="24" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -151,7 +126,6 @@
                             </svg>
                         </button>
                     </div>
-
                 </div>
             }
         </div>
