@@ -10,6 +10,7 @@ using BookStore.Models.ViewModels.Admin;
 using BookStore.Utilties.BusinessHelpers;
 using Microsoft.Identity.Client;
 
+
 namespace BookstoreBackend.BLL.Services
 {
     /// <summary>
@@ -31,7 +32,7 @@ namespace BookstoreBackend.BLL.Services
         /// <summary>
         /// Retrieves a list of all authors asynchronously.
         /// </summary>
-        public  async Task<IEnumerable<Author>> GetAuthorsAsync()
+        public async Task<IEnumerable<Author>> GetAuthorsAsync()
         {
             IEnumerable<Author> authors = await _authorrepo.GetAllAsync();
             return authors;
@@ -40,18 +41,29 @@ namespace BookstoreBackend.BLL.Services
         /// <summary>
         /// Retrieves a list of all AuthorViewModel asynchronously.
         /// </summary>
-        public  async Task<IEnumerable<AuthorViewModel>> GetAuthorViewModelAsync()
+        public async Task<IEnumerable<AuthorViewModel>> GetAuthorViewModelAsync()
         {
-            IEnumerable<Author> authors = await _authorrepo.GetAllAsync();
-            return authors.Select(author => new AuthorViewModel { Id = author.Id, Name = author.FullName });
+            return await _authorrepo.GetAllAuthorsId_Name();
         }
 
-
+        /// <summary>
+        /// Retrieves a list of all AuthorListViewModel asynchronously.
+        /// </summary>
+        public async Task<IEnumerable<AuthorListViewModel>> GetAuthorListViewModelAsync()
+        {
+            IEnumerable<Author> authors = await _authorrepo.GetAllAsync();
+            IEnumerable<AuthorListViewModel> authorsListViewModle = 
+                        authors.Select(author => new AuthorListViewModel() {
+                            Id = author.Id, Bio = author.Bio, CreatedBy = author.CreatedBy,
+                            Email = author.Email, FullName = author.FullName,
+                            ProfileImage = author.ProfileImage });
+            return authorsListViewModle;
+        }
 
         /// <summary>
         /// Finds an author by ID asynchronously.
         /// </summary>
-        public  async Task<Author?> FindAsync(int Id)
+        public async Task<Author?> FindAsync(int Id)
         {
             Author? author = await _authorrepo.GetByIdAsync(Id);
             return author;

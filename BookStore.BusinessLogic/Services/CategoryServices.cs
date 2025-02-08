@@ -116,8 +116,11 @@ namespace BookStore.BusinessLogic.Services
         /// <returns>A task representing the asynchronous operation. The task result is an enumerable collection of <see cref="CategoryViewModel"/> objects.</returns>
         public async Task<IEnumerable<CategoryViewModel?>> GetAllCategoryViewModelAsync()
         {
-            IEnumerable<Category> categories = await _categoryRepository.GetAllAsync();
-            return categories.Select(c => new CategoryViewModel { Id = c.Id, Name = c.Name });
+            IEnumerable<Category> categoriesModel = await _categoryRepository.GetAllAsync();
+
+            IEnumerable<CategoryViewModel> categoriesViewModel = categoriesModel.Select(c => new CategoryViewModel { Id = c.Id, Name = c.Name });
+
+            return categoriesViewModel;
         }
 
         /// <summary>

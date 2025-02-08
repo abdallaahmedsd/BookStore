@@ -33,7 +33,7 @@ namespace BookstoreBackend.BLL.Services
         /// </summary>
         /// <param name="OrderId">The order ID.</param>
         /// <returns>A collection of order items.</returns>
-        public static async Task<IEnumerable<OrderItem>> GetAllItmesByOrderId(int OrderId)
+        public async Task<IEnumerable<OrderItem>> GetAllItmesByOrderId(int OrderId)
         {
             var orderItmess = await _orderitemrepo.GetAllAsync(OrderId);
             return orderItmess;

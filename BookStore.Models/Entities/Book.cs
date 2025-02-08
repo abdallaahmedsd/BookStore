@@ -21,15 +21,21 @@ namespace BookStore.Models.Entities
         /// </summary>
         public int AuthorID { get; set; }
 
+        public Author? Author { get; set; }
+
         /// <summary>
         /// Gets or sets the ID of the category the book belongs to.
         /// </summary>
         public int CategoryID { get; set; }
 
+        public Category? Category { get; set; }
+
         /// <summary>
         /// Gets or sets the ID of the language the book is written in.
         /// </summary>
         public int LanguageID { get; set; }
+
+        public Language? Language { get; set; }
 
         /// <summary>
         /// Gets or sets the title of the book.
