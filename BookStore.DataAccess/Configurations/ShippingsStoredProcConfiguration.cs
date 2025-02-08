@@ -26,7 +26,7 @@ namespace BookStore.DataAccess.Configurations
         /// <summary>
         /// Gets the stored procedure name for retrieving a Shipping by ID.
         /// </summary>
-        public string GetByIdProcedure => GetStoredProcedureWithSchema("SP_GetShippingByID",Schemas.Sales);
+        public string GetByIdProcedure => GetStoredProcedureWithSchema("SP_GetShippingByID", Schemas.Sales);
 
         /// <summary>
         /// Gets the stored procedure name for retrieving a Shipping by Order ID.
