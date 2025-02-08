@@ -46,7 +46,19 @@ namespace BookstoreBackend.BLL.Services
             return await _authorrepo.GetAllAuthorsId_Name();
         }
 
-
+        /// <summary>
+        /// Retrieves a list of all AuthorListViewModel asynchronously.
+        /// </summary>
+        public async Task<IEnumerable<AuthorListViewModel>> GetAuthorListViewModelAsync()
+        {
+            IEnumerable<Author> authors = await _authorrepo.GetAllAsync();
+            IEnumerable<AuthorListViewModel> authorsListViewModle = 
+                        authors.Select(author => new AuthorListViewModel() {
+                            Id = author.Id, Bio = author.Bio, CreatedBy = author.CreatedBy,
+                            Email = author.Email, FullName = author.FullName,
+                            ProfileImage = author.ProfileImage });
+            return authorsListViewModle;
+        }
 
         /// <summary>
         /// Finds an author by ID asynchronously.
