@@ -165,7 +165,7 @@
             </nav>
 
             <main class="container col-10 d-flex flex-column h-100 p-0">
-               
+                  <partial name="_NotificationsPartial" />
                     @RenderBody()
                  
             </main>
@@ -178,12 +178,8 @@
 
 
 
-
 <partial name="_ScriptsPartial"></partial>
-
 <script src="~/js/Admin/dashboardLayout.js" asp-append-version="true"></script>
-
-    <partial name="_ValidationScriptsPartial"></partial>
 
 @await RenderSectionAsync("Scripts", required: false)
 
