@@ -3,20 +3,13 @@
 const dateInput = document.getElementById("bookDate");
 dateInput.max = today;  
 dateInput.min = "1900-01-01"; 
-dateInput.value = today;  
 
 
-const img = document.querySelector(".form-book-cover img")
-const label = document.querySelector(".form-book-cover label")
-const imgOptions = document.querySelector(".img-options")
-const imgDeleteBtn = document.querySelector(".img-options .delete")
-const imgResetBtn = document.querySelector(".img-options .reset")
-const imgContainer = document.querySelector(".form-book-cover")
-
+const img = document.querySelector(".form-book-cover img");
+const imgDeleteBtn = document.querySelector(".input-group .delete-image");
 const imgInput = document.getElementById("CoverImage");
 
 imgInput.addEventListener("change", function (event) {
-    alert("change");
 
     const file = event.target.files[0];
     if (file) {
@@ -24,31 +17,18 @@ imgInput.addEventListener("change", function (event) {
         reader.onload = function (e) {
             img.src = e.target.result;
             img.style.display = "block";
-            label.style.display = "none";
-            //imgOptions.style.display = "flex";
-            //imgContainer.style.borderRadius = ".875rem 0 0.875rem";
         };
         reader.readAsDataURL(file);
     }
 });
-imgDeleteBtn.addEventListener("click", function (event) {
-    alert("are you sure?");
 
+imgDeleteBtn.addEventListener("click", function (event) {
+    alert("delete image");
     imgInput.value = "";
 
     img.style.display = "none";
-    label.style.display = "block";
+
+    alert("delete image");
 
 });
 
-imgResetBtn.addEventListener("click", function (event) {
-    alert("reset");
-
-    imgInput.value = "";
-
-    imgInput.click();
-    }
-});
-
-
-//imgContainer.style.borderRadius = ".875rem";

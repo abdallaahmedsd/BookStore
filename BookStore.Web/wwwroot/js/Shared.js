@@ -1,10 +1,43 @@
-﻿const passwordField = document.querySelector(".password-box input");
-const togglePasswordSVG = passwordField.closest(".password-box").querySelector("#toggle-password");
+﻿export function confirmDelete(id, controller) {
+    Swal.fire({
+        title: "هل أنت متأكد؟",
+        text: "لن تتمكن من التراجع عن هذا!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "نعم، احذفه!",
+        cancelButtonText: "إلغاء",
+        customClass: {
+            confirmButton: "btn btn-second-open",
+            cancelButton: "btn btn-red"
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Send DELETE request
+            $.ajax({
+                url: `/api/admin/${controller}/${id}`,
+                type: "DELETE",
+                //data: { id: id }, // Send as a form field
+                success: function () {
+                    Swal.fire({
+                        title: "تم الحذف!",
+                        text: "تم حذف السجل بنجاح.",
+                        icon: "success",
+                        confirmButtonText: "حسنًا",
+                        customClass: {
+                            confirmButton: "btn btn-main"
+                        }
+                    }).then(() => {
 
-togglePasswordSVG.addEventListener("click", function () {
-    if (passwordField.type === "password") {
-        passwordField.type = "text"; // Show password
-    } else {
-        passwordField.type = "password"; // Hide password
-    }
-});
+                        window.location.href = `/admin/${controller}/index`;
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error:", xhr.responseText);
+                    Swal.fire("خطأ", "فشل في حذف السجل.", "error");
+                }
+            });
+        }
+    });
+}

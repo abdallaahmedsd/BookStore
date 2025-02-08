@@ -1,0 +1,18 @@
+﻿@model CategoryViewModel
+
+<div class="row mx-0 my-4">
+
+    <div class="col p-0">
+
+        <div class="form-entity-box">
+            <div class="entity-input">
+
+                <label asp-for="Name"></label>
+                <input asp-for="Name"
+                       placeholder="تصنيف"
+                       aria-label="default input example" />
+            </div>
+            <span asp-validation-for="Name"></span>
+        </div>
+    </div>
+</div>

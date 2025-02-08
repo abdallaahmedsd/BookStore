@@ -19,7 +19,6 @@ namespace BookstoreBackend.BLL.Services
     public class AuthorService
     {
 
-
         private static readonly AuthorRepository _authorrepo;
 
 

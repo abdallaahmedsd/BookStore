@@ -2,6 +2,7 @@
 using BookStore.Models.Identity;
 using BookStore.Models.ViewModels.Admin;
 using BookStore.Models.ViewModels.Admin.Book;
+using BookStore.Models.ViewModels.Book;
 using Microsoft.AspNetCore.Identity;
 
 namespace BookStore.Web.Mappers
@@ -20,7 +21,6 @@ namespace BookStore.Web.Mappers
             bookViewModel.ISBA = bookModel.ISBA;
             bookViewModel.PublicationDate = bookModel.PublicationDate;
             bookViewModel.CoverImage = bookModel.CoverImage;
-            bookViewModel.CoverImage = bookModel.CoverImage;
         }
 
         public static void Map(AddEditBookViewModel bookViewModel, Book bookModel)
@@ -36,15 +36,40 @@ namespace BookStore.Web.Mappers
             bookModel.PublicationDate = bookViewModel.PublicationDate;
             bookModel.CoverImage = bookViewModel.CoverImage;
         }
+      
+        public static void Map(Category categoryModel, CategoryViewModel categoryViewModel)
+        {
+            categoryViewModel.Id = categoryModel.Id;
+            categoryViewModel.Name = categoryModel.Name;
+        }
+        public static void Map(CategoryViewModel categoryViewModel ,Category categoryModel)
+        {
+            categoryModel.Id = categoryViewModel.Id;
+            categoryModel.Name = categoryViewModel.Name;
+        }
 
-        //public static void Map(Book bookModel, BookDetailsForAdminViewModel bookDetailsViewModel)
-        //{
-        //    bookDetailsViewModel.Id = bookModel.Id;
-        //    bookDetailsViewModel.Title = bookModel.Title;
-        //    bookDetailsViewModel.Description = bookModel.Description;
-        //    bookDetailsViewModel.Price = bookModel.Price;
-        //}
-
+        public static void Map(AddEditAuthorViewModel authorViewModel, Author authorModel)
+        {
+            authorModel.Id = authorViewModel.Id;
+            authorModel.Bio = authorViewModel.Bio;
+            authorModel.FirstName = authorViewModel.FirstName;
+            authorModel.LastName = authorViewModel.LastName;
+            authorModel.NationalityID = authorViewModel.NationalityID;
+            authorModel.Phone = authorViewModel.Phone;
+            authorModel.Email = authorViewModel.Email;
+            authorModel.ProfileImage = authorViewModel.ProfileImage;
+        }
+        public static void Map(Author authorModel, AddEditAuthorViewModel authorViewModel)
+        {
+            authorViewModel.Id = authorModel.Id;
+            authorViewModel.Bio = authorModel.Bio;
+            authorViewModel.FirstName = authorModel.FirstName;
+            authorViewModel.LastName = authorModel.LastName;
+            authorViewModel.NationalityID = authorModel.NationalityID;
+            authorViewModel.Phone = authorModel.Phone;
+            authorViewModel.Email = authorModel.Email;
+            authorViewModel.ProfileImage = authorModel.ProfileImage;
+        }
 
         //public static void Map(ApplicationUser user, TbOrder order)
         //{

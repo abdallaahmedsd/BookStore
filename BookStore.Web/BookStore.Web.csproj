@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Icons-svg\" />
+    <Folder Include="wwwroot\uploads\images\books\" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,10 @@
+﻿.entity-input.disable {
+    pointer-events: none;
+    /*    background-color: var(--text-color);*/
+}
+    .entity-input.disable input ,
+        .entity-input.disable textarea,
+    .entity-input.disable select {
+    color: var(--main-color) !important;
+    /*    background-color: var(--text-color);*/
+}
