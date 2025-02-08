@@ -18,8 +18,5 @@ namespace BookStore.Models.ViewModels.Book
         [DisplayName("سعر الكتاب")]
         public decimal Price { get; set; }
         public string? CoverImage { get; set; }
-
-        [DisplayName("عدد النسخ")]
-        public string Quantity { get; set; }
     }
 }

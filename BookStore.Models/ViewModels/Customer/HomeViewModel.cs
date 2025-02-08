@@ -1,8 +1,10 @@
-﻿namespace BookStore.Models.ViewModels.Customer
+﻿using BookStore.Models.ViewModels.Customer.Book;
+
+namespace BookStore.Models.ViewModels.Customer
 {
     public class HomeViewModel
     {
-        public List<BestSellingBookDTO> BestSellingBooks { get; set; }
-        public List<RecentlyPublishedBookDTO> RecentlyPublishedBooks { get; set; }
+        public List<BookHomeBestSellingViewModel> BestSellingBooks { get; set; }
+        public List<BookHomeLastAddedViewModel> LastAddedPublishedBooks { get; set; }
     }
 }

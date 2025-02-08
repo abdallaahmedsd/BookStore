@@ -32,9 +32,6 @@ namespace BookStore.Models.ViewModels.Book;
 
         public string? CoverImage { get; set; }
 
-        [DisplayName("عدد النسخ")]
-        public string Quantity { get; set; } // that does exsits
-
         [DisplayName("عدد المبيعات")]
         public int TotalSellingQuantity { get; set; } // sales
     }

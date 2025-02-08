@@ -6,7 +6,6 @@ dateInput.min = "1900-01-01";
 dateInput.value = today;  
 
 
-
 const img = document.querySelector(".form-book-cover img")
 const label = document.querySelector(".form-book-cover label")
 const imgOptions = document.querySelector(".img-options")
@@ -17,7 +16,7 @@ const imgContainer = document.querySelector(".form-book-cover")
 const imgInput = document.getElementById("CoverImage");
 
 imgInput.addEventListener("change", function (event) {
-    alert("test");
+    alert("change");
 
     const file = event.target.files[0];
     if (file) {
@@ -34,6 +33,7 @@ imgInput.addEventListener("change", function (event) {
 });
 imgDeleteBtn.addEventListener("click", function (event) {
     alert("are you sure?");
+
     imgInput.value = "";
 
     img.style.display = "none";
@@ -43,8 +43,11 @@ imgDeleteBtn.addEventListener("click", function (event) {
 
 imgResetBtn.addEventListener("click", function (event) {
     alert("reset");
+
     imgInput.value = "";
+
     imgInput.click();
+    }
 });
 
 

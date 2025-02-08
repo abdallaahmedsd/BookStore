@@ -1,4 +1,4 @@
-﻿@model List<BookDTO>
+﻿@model List<BookListViewModel>
 
 @{
     ViewData["Title"] = "Dashboard";
@@ -36,14 +36,14 @@
         </thead>
         <tbody>
 
-            @foreach (BookDTO bookDTO in Model)
+            @foreach (BookListViewModel book in Model)
             {
-                <tr data-id="@bookDTO.Id">
+                <tr data-id="@book.Id">
                     <td><img src="~/images/Logo-1.svg" alt="Book 1"></td>
-                    <td>@bookDTO.Title</td>
-                    <td>@bookDTO.Author</td>
-                    <td>@bookDTO.Price $</td>
-                    <td>@bookDTO.Category</td>
+                    <td>@book.Title</td>
+                    <td>@book.AuthorName</td>
+                    <td>@book.Price $</td>
+                    <td>@book.CategoryName</td>
                     <td class="flex-between">
                         <button id="edit-button" class="btn bg-second">
                             <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
