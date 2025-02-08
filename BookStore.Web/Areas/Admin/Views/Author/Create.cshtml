@@ -1,0 +1,24 @@
+﻿@model AddEditAuthorViewModel
+
+@{
+    ViewData["Section"] = "المؤلفين";
+    ViewData["Title"] = "Create";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Admin/author.css" />
+
+}
+<form asp-area="admin" asp-controller="Author" asp-action="Create" method="Post" enctype="multipart/form-data">
+
+    <div asp-validation-summary="All"></div>
+
+    <partial name="_AddEditAuthorHTMLPartial" model="Model" />
+
+</form>
+
+
+@section Scripts {
+
+    <script src="~/js/Admin/author.js" asp-append-version="true"></script>
+}

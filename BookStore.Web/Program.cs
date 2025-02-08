@@ -31,7 +31,8 @@ builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 
 builder.Services.AddScoped<BookServices>();
 builder.Services.AddScoped<CategoryServices>();
-
+builder.Services.AddScoped<AuthorService>();
+builder.Services.AddScoped<LanguageServices>();
 #endregion
 
 var app = builder.Build();
