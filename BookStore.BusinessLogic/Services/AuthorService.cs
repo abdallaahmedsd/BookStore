@@ -43,8 +43,7 @@ namespace BookstoreBackend.BLL.Services
         /// </summary>
         public async Task<IEnumerable<AuthorViewModel>> GetAuthorViewModelAsync()
         {
-            IEnumerable<Author> authors = await _authorrepo.GetAllAsync();
-            return authors.Select(author => new AuthorViewModel { Id = author.Id, Name = author.FullName });
+            return await _authorrepo.GetAllAuthorsId_Name();
         }
 
 
