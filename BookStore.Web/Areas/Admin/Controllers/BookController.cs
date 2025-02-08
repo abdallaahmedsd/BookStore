@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using BookStore.Utilties;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using BookStore.Models.ViewModels.Customer.Book;
 
 namespace BookStore.Web.Areas.Admin.Controllers
 {

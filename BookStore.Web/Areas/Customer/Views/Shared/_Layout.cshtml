@@ -41,8 +41,14 @@
                                    aria-current="page"
                                    asp-area="Customer" asp-controller="Home" asp-action="Index">الرئيسية</a>
                             </li>
+
                             <li class="nav-item">
-                                <a class="nav-link p-2 p-lg-3 @Html.IsActive("Customer/Home/Index")" href="#">ادارة المشتريات</a>
+                                <a class="nav-link p-2 p-lg-3 @Html.IsActive("Customer/Book/Index")"
+                                   asp-area="Customer" asp-controller="Book" asp-action="Index">الكتب</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link p-2 p-lg-3 @Html.IsActive("Customer/Order/Index")" href="#">ادارة المشتريات</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link p-2 p-lg-3 @Html.IsActive("Customer/Home/Privacy")"

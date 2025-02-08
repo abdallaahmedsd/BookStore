@@ -3,6 +3,7 @@ using BookStore.Models.Identity;
 using BookStore.Models.ViewModels.Admin;
 using BookStore.Models.ViewModels.Admin.Book;
 using BookStore.Models.ViewModels.Book;
+using BookStore.Models.ViewModels.Customer.Book;
 using Microsoft.AspNetCore.Identity;
 
 namespace BookStore.Web.Mappers

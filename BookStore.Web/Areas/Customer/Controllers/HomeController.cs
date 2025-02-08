@@ -26,8 +26,6 @@ namespace BookStore.Web.Areas.Customer.Controllers
             books.LastAddedPublishedBooks = (await _bookService.GetLastAddedBooksAsync(5)).ToList();
             books.BestSellingBooks = (await _bookService.GetTopBestSellingBooksAsync(5)).ToList();
 
-
-
             return View(books);
         }
 
@@ -35,7 +33,6 @@ namespace BookStore.Web.Areas.Customer.Controllers
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-
         
     }
 }
