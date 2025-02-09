@@ -223,5 +223,35 @@ namespace BookStore.DataAccess.Repositories
             }
             return null;
         }
+
+
+        public async Task<int?> GetShoppingItemsCountByUserIdAsync(int userId)
+        {
+            int? shippingItemsCount = null;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(_config.GetShoppingItemsCountByUserId, connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@UserID", userId);
+                        await connection.OpenAsync();
+                        var result = await command.ExecuteScalarAsync();
+                        if (result != null && int.TryParse(result.ToString(), out int ItemsCount))
+                           return shippingItemsCount = ItemsCount;
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return shippingItemsCount;
+        }
     }
 }
