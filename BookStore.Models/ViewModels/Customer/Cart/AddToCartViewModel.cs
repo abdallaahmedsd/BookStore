@@ -12,10 +12,11 @@ namespace BookStore.Models.ViewModels.Customer.Cart
         public int BookId { get; set; }
 
         [Range(1, 1000)]
+        [Required]
         public int Quantity { get; set; }
 
         public decimal Price { get; set; }
 
-        public int UserId { get; set; } = -1;
+        public int UserId { get; set; } 
     }
 }

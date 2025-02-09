@@ -66,14 +66,13 @@ namespace BookStore.Web.Areas.Customer.Controllers
                     int userId = int.Parse(claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
 
 
-                    var cartFromDb = (await _shoppingCartService.GetShoppingCardByUserIDAsync(userId)).ToList()[0];
-                    //var cartFromDb = await _unitOfWork.ShoppingCart.GetAsync(x => x.UserId == userId && x.BookId == shoppingCartViewModel.BookId);
+                    var cartFromDb = await _shoppingCartService.GetShoppingCardByUserIDandBookIdAsync(userId,shoppingCartViewModel.BookId);
 
                     if (cartFromDb != null)
                     {
                         // update the quantity
                         cartFromDb.Quantity += shoppingCartViewModel.Quantity;
-                        //_shoppingCartService.UpdateAsync(cartFromDb);
+                        await _shoppingCartService.UpdateAsync(cartFromDb);
                     }
                     else
                     {
@@ -92,7 +91,9 @@ namespace BookStore.Web.Areas.Customer.Controllers
                     return RedirectToAction(nameof(Index));
                 }
 
-                return View("Details", new { shoppingCartViewModel.BookId });
+                BookDetailsViewModel bookDetailsViewModel = await _bookService.GetBookDetailsByIdAsync(id);
+
+                return View("Details",  bookDetailsViewModel);
             }
             catch (Exception ex)
             {

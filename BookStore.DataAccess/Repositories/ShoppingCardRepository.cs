@@ -177,7 +177,11 @@ namespace BookStore.DataAccess.Repositories
             }
             return listEntities;
         }
-
+        /// <summary>
+        /// Retrieves the shopping card items for a specific user by their user ID.
+        /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains an enumerable list of shopping cards, or null if an error occurs.</returns>
         public async Task<IEnumerable<ShoppingCard>?> GetShoppingCardByUserIDAsync(int userId)
         {
             HashSet<ShoppingCard> listShoppingCards = new HashSet<ShoppingCard>();
@@ -202,32 +206,29 @@ namespace BookStore.DataAccess.Repositories
                     }
                 }
             }
-            catch(SqlException ex)
+            catch (SqlException ex)
             {
-
+                // Handle SQL exception
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-
+                // Handle general exception
             }
             return null;
         }
 
-
-<<<<<<< HEAD
-        public async Task<IEnumerable<ShoppingCard>?> GetShoppingCardByUserIDandBookIdsync(int userId, int bookId)
+        /// <summary>
+        /// Retrieves a shopping card item for a specific user and book ID.
+        /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <param name="bookId">The book ID.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a shopping card, or null if an error occurs.</returns>
+        public async Task<ShoppingCard?> GetShoppingCardByUserIDandBookIdAsync(int userId, int bookId)
         {
-            HashSet<ShoppingCard> listShoppingCards = new HashSet<ShoppingCard>();
-=======
-        public async Task<int?> GetShoppingItemsCountByUserIdAsync(int userId)
-        {
-            int? shippingItemsCount = null;
->>>>>>> 1900efa26e0f01ea1ebe898193d345ea319b1f7a
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-<<<<<<< HEAD
                     using (SqlCommand command = new SqlCommand(_config.GetShoppingCardByUserIDandBookId, connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
@@ -236,39 +237,63 @@ namespace BookStore.DataAccess.Repositories
                         await connection.OpenAsync();
                         using (SqlDataReader reader = await command.ExecuteReaderAsync())
                         {
-                            while (reader.Read())
+                            if (reader.Read())
                             {
-                                listShoppingCards.Add(_config.MapEntity(reader));
+                                return _config.MapEntity(reader);
                             }
 
-                            return listShoppingCards;
+
                         }
-=======
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                // Handle SQL exception
+            }
+            catch (Exception ex)
+            {
+                // Handle general exception
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Retrieves the count of shopping items for a specific user by their user ID.
+        /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the count of shopping items, or null if an error occurs.</returns>
+        public async Task<int?> GetShoppingItemsCountByUserIdAsync(int userId)
+        {
+            int? shoppingItemsCount = null;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
                     using (SqlCommand command = new SqlCommand(_config.GetShoppingItemsCountByUserId, connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@UserID", userId);
                         await connection.OpenAsync();
                         var result = await command.ExecuteScalarAsync();
-                        if (result != null && int.TryParse(result.ToString(), out int ItemsCount))
-                           return shippingItemsCount = ItemsCount;
->>>>>>> 1900efa26e0f01ea1ebe898193d345ea319b1f7a
+                        if (result != null && int.TryParse(result.ToString(), out int itemsCount))
+                        {
+                            shoppingItemsCount = itemsCount;
+                        }
                     }
                 }
             }
             catch (SqlException ex)
             {
-
+                // Handle SQL exception
             }
             catch (Exception ex)
             {
-
+                // Handle general exception
             }
-<<<<<<< HEAD
-            return null;
-=======
-            return shippingItemsCount;
->>>>>>> 1900efa26e0f01ea1ebe898193d345ea319b1f7a
+            return shoppingItemsCount;
         }
+
+
     }
 }

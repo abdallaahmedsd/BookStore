@@ -121,28 +121,43 @@ namespace BookStore.BusinessLogic.Services
             return await _shoppingCartRepository.UpdateAsync(shoppingCart);
         }
 
-
+        /// <summary>
+        /// Retrieves the shopping card items for a specific user by their user ID.
+        /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains an enumerable list of shopping cards, or null if the user ID is invalid.</returns>
         public async Task<IEnumerable<ShoppingCard>?> GetShoppingCardByUserIDAsync(int userId)
         {
-             if (userId <= 0) return null;
+            if (userId <= 0) return null;
 
             return await _shoppingCartRepository.GetShoppingCardByUserIDAsync(userId);
         }
 
-<<<<<<< HEAD
-
-        public async Task<IEnumerable<ShoppingCard>?> GetShoppingCardByUserIDandBookIdsync(int userId, int bookId)
+        /// <summary>
+        /// Retrieves a shopping card item for a specific user and book ID.
+        /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <param name="bookId">The book ID.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a shopping card, or null if the user ID is invalid.</returns>
+        public async Task<ShoppingCard?> GetShoppingCardByUserIDandBookIdAsync(int userId, int bookId)
         {
             if (userId <= 0) return null;
 
-            return await _shoppingCartRepository.GetShoppingCardByUserIDandBookIdsync(userId, bookId);
-=======
+            return await _shoppingCartRepository.GetShoppingCardByUserIDandBookIdAsync(userId, bookId);
+        }
+
+        /// <summary>
+        /// Retrieves the count of shopping items for a specific user by their user ID.
+        /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the count of shopping items, or null if the user ID is invalid.</returns>
         public async Task<int?> GetShoppingItemsCountByUserIdAsync(int userId)
         {
-            if(userId <= 0) return null;
-            
+            if (userId <= 0) return null;
+
             return await _shoppingCartRepository.GetShoppingItemsCountByUserIdAsync(userId);
->>>>>>> 1900efa26e0f01ea1ebe898193d345ea319b1f7a
         }
+
+
     }
 }
