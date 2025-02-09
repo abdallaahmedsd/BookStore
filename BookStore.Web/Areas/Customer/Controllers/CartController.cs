@@ -1,15 +1,42 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BookStore.BusinessLogic.Services;
+using BookStore.DataAccess.Repositories;
+using BookStore.Models.Entities;
+using BookStore.Models.ViewModels.Customer.Cart;
+using BookStore.Utilties.BusinessHelpers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BookStore.Web.Areas.Customer.Controllers
 {
     [Area("Customer")]
-    public class ShoppingCardController : Controller
+    public class CartController : Controller
     {
-        // GET: ShoppingCard
-        public ActionResult Index()
+
+        private readonly ShoppingCartServices _shoppingCartService;
+
+        public CartController( ShoppingCartServices shoppingCartService)
         {
-            return View();
+            _shoppingCartService = shoppingCartService;
+        }
+
+
+
+        // GET: ShoppingCard
+        public async Task<IActionResult> Index()
+        {
+            ClaimsIdentity claimsIdentity = (ClaimsIdentity)User?.Identity;
+            int userId = int.Parse(claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            List<ShoppingCard> shoppingCarts = (await _shoppingCartService.GetShoppingCardByUserIDAsync(userId)).ToList();
+
+            ShoppingCartViewModel shoppingCartViewModel = new ShoppingCartViewModel
+            {
+                shoppingCartItems = (await _shoppingCartService.GetShoppingCardByUserIDAsync(userId)).ToList(),
+                Order = new()
+            };
+
+            return View(shoppingCartViewModel);
         }
 
         // GET: ShoppingCard/Details/5

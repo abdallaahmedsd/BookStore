@@ -68,7 +68,10 @@ namespace BookStore.DataAccess.Configurations
         public string GetShoppingCardByUserID => GetStoredProcedureWithSchema("SP_GetShoppingCardByUserID", Schemas.Sales);
         public string GetShoppingCardByUserIDandBookId => GetStoredProcedureWithSchema("SP_GetShoppingCardByUserIDandBookId", Schemas.Sales);
 
+        public string GetShoppingItemsCountByUserId => GetStoredProcedureWithSchema("SP_GetShoppingItemsCountByUserId", Schemas.Sales);
         
+
+
 
         /// <summary>
         /// Stored procedure name for checking if a ShippingCard exists by ID.

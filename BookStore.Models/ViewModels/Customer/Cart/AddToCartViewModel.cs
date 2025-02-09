@@ -13,5 +13,9 @@ namespace BookStore.Models.ViewModels.Customer.Cart
 
         [Range(1, 1000)]
         public int Quantity { get; set; }
+
+        public decimal Price { get; set; }
+
+        public int UserId { get; set; } = -1;
     }
 }

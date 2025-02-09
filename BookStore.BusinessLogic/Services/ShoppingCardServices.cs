@@ -129,12 +129,20 @@ namespace BookStore.BusinessLogic.Services
             return await _shoppingCartRepository.GetShoppingCardByUserIDAsync(userId);
         }
 
+<<<<<<< HEAD
 
         public async Task<IEnumerable<ShoppingCard>?> GetShoppingCardByUserIDandBookIdsync(int userId, int bookId)
         {
             if (userId <= 0) return null;
 
             return await _shoppingCartRepository.GetShoppingCardByUserIDandBookIdsync(userId, bookId);
+=======
+        public async Task<int?> GetShoppingItemsCountByUserIdAsync(int userId)
+        {
+            if(userId <= 0) return null;
+            
+            return await _shoppingCartRepository.GetShoppingItemsCountByUserIdAsync(userId);
+>>>>>>> 1900efa26e0f01ea1ebe898193d345ea319b1f7a
         }
     }
 }

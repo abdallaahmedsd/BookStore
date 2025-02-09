@@ -214,13 +214,20 @@ namespace BookStore.DataAccess.Repositories
         }
 
 
+<<<<<<< HEAD
         public async Task<IEnumerable<ShoppingCard>?> GetShoppingCardByUserIDandBookIdsync(int userId, int bookId)
         {
             HashSet<ShoppingCard> listShoppingCards = new HashSet<ShoppingCard>();
+=======
+        public async Task<int?> GetShoppingItemsCountByUserIdAsync(int userId)
+        {
+            int? shippingItemsCount = null;
+>>>>>>> 1900efa26e0f01ea1ebe898193d345ea319b1f7a
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
+<<<<<<< HEAD
                     using (SqlCommand command = new SqlCommand(_config.GetShoppingCardByUserIDandBookId, connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
@@ -236,6 +243,16 @@ namespace BookStore.DataAccess.Repositories
 
                             return listShoppingCards;
                         }
+=======
+                    using (SqlCommand command = new SqlCommand(_config.GetShoppingItemsCountByUserId, connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@UserID", userId);
+                        await connection.OpenAsync();
+                        var result = await command.ExecuteScalarAsync();
+                        if (result != null && int.TryParse(result.ToString(), out int ItemsCount))
+                           return shippingItemsCount = ItemsCount;
+>>>>>>> 1900efa26e0f01ea1ebe898193d345ea319b1f7a
                     }
                 }
             }
@@ -247,7 +264,11 @@ namespace BookStore.DataAccess.Repositories
             {
 
             }
+<<<<<<< HEAD
             return null;
+=======
+            return shippingItemsCount;
+>>>>>>> 1900efa26e0f01ea1ebe898193d345ea319b1f7a
         }
     }
 }

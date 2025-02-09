@@ -4,6 +4,7 @@ using BookStore.Models.ViewModels.Admin;
 using BookStore.Models.ViewModels.Admin.Book;
 using BookStore.Models.ViewModels.Book;
 using BookStore.Models.ViewModels.Customer.Book;
+using BookStore.Models.ViewModels.Customer.Cart;
 using Microsoft.AspNetCore.Identity;
 
 namespace BookStore.Web.Mappers
@@ -89,6 +90,17 @@ namespace BookStore.Web.Mappers
         }
 
 
+        public static void Map(AddToCartViewModel shoppingCartViewModel, ShoppingCard shoppingCart)
+        {
+            shoppingCart.BookID = shoppingCartViewModel.BookId;
+            shoppingCart.Quantity = shoppingCartViewModel.Quantity;
+            shoppingCart.UserID = shoppingCartViewModel.UserId;
+            shoppingCart.SubTotal = shoppingCartViewModel.Quantity * shoppingCartViewModel.Price;
+        }
+
+
+
+       
 
         //public static void Map(ApplicationUser user, TbOrder order)
         //{
