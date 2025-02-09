@@ -156,7 +156,7 @@ namespace BookStore.DataAccess.Repositories
         /// <param name="PageNumber">The page number for pagination.</param>
         /// <param name="PageSize">The page size for pagination.</param>
         /// <returns>A task representing the asynchronous operation. The task result contains a collection of ShoppingCard items.</returns>
-        public async Task<IEnumerable<ShoppingCard>> GetAllAsync(int CustomerID, int PageNumber = 1, int PageSize = 10)
+        public async Task<IEnumerable<ShoppingCard>> GetShoppingCartByUserIdWithPaginationAsync(int CustomerID, int PageNumber = 1, int PageSize = 10)
         {
             List<ShoppingCard> listEntities = new List<ShoppingCard>();
             try
@@ -187,6 +187,41 @@ namespace BookStore.DataAccess.Repositories
                 throw;
             }
             return listEntities;
+        }
+
+        public async Task<IEnumerable<ShoppingCard>?> GetShoppingCardByUserIDAsync(int userId)
+        {
+            HashSet<ShoppingCard> listShoppingCards = new HashSet<ShoppingCard>();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(_config.GetShoppingCardByUserID, connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@UserID", userId);
+                        await connection.OpenAsync();
+                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                        {
+                            while (reader.Read())
+                            {
+                                listShoppingCards.Add(_config.MapEntity(reader));
+                            }
+
+                            return listShoppingCards;
+                        }
+                    }
+                }
+            }
+            catch(SqlException ex)
+            {
+
+            }
+            catch(Exception ex)
+            {
+
+            }
+            return null;
         }
     }
 }

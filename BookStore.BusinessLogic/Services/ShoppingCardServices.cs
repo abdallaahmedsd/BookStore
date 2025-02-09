@@ -53,7 +53,7 @@ namespace BookStore.BusinessLogic.Services
         /// <param name="pageNumber">The page number for pagination.</param>
         /// <param name="pageSize">The number of items per page.</param>
         /// <returns>A collection of shopping cart items.</returns>
-        public async Task<IEnumerable<ShoppingCard>> GetAllAsync(int customerId, int pageNumber = 1, int pageSize = 10)
+        public async Task<IEnumerable<ShoppingCard>> GetShoppingCartByUserIdWithPaginationAsync(int customerId, int pageNumber = 1, int pageSize = 10)
         {
             if (customerId <= 0)
                 throw new ArgumentOutOfRangeException(nameof(customerId), "Customer ID must be greater than zero.");
@@ -62,7 +62,7 @@ namespace BookStore.BusinessLogic.Services
             if (pageSize <= 0)
                 throw new ArgumentOutOfRangeException(nameof(pageSize), "Page size must be greater than zero.");
 
-            return await _shoppingCartRepository.GetAllAsync(customerId, pageNumber, pageSize);
+            return await _shoppingCartRepository.GetShoppingCartByUserIdWithPaginationAsync(customerId, pageNumber, pageSize);
         }
 
         /// <summary>
@@ -120,5 +120,13 @@ namespace BookStore.BusinessLogic.Services
 
         //    return await _shoppingCartRepository.UpdateAsync(shoppingCart);
         //}
+
+
+        public async Task<IEnumerable<ShoppingCard>?> GetShoppingCardByUserIDAsync(int userId)
+        {
+             if (userId <= 0) return null;
+
+            return await _shoppingCartRepository.GetShoppingCardByUserIDAsync(userId);
+        }
     }
 }
