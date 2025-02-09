@@ -4,6 +4,7 @@ using BookStore.Models.Entities;
 using BookStore.Models.ViewModels.Book;
 using BookStore.Models.ViewModels.Customer.Book;
 using BookStore.Models.ViewModels.Customer.Cart;
+using BookStore.Utilties;
 using BookStore.Web.Mappers;
 using BookstoreBackend.BLL.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -50,63 +51,70 @@ namespace BookStore.Web.Areas.Customer.Controllers
             return View(bookDetailsForCustomerViewModel);
         }
 
-        //[HttpPost]
-        //[Authorize]
-        //[ActionName("Details")]
-        //public async Task<IActionResult> AddToCart(AddToCartViewModel viewModel)
-        //{
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            ClaimsIdentity claimsIdentity = (ClaimsIdentity)User?.Identity;
-        //            int userId = int.Parse(claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
+        [HttpPost]
+        [Authorize]
+        [ActionName("Details")]
+        public async Task<IActionResult> AddToCart(AddToCartViewModel shoppingCartViewModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    //List<ShoppingCard> shoppingCartItems = (await _shoppingCartService.GetShoppingCardByUserIDAsync(userId)).ToList();
+
+                    ClaimsIdentity claimsIdentity = (ClaimsIdentity)User?.Identity;
+                    int userId = int.Parse(claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
 
 
-        //            //ShoppingCard? card = await _shoppingCartService.FindByUserId(userId);
-        //            ShoppingCard? card = new()
+                    var cartFromDb = (await _shoppingCartService.GetShoppingCardByUserIDAsync(userId)).ToList()[0];
+                    //var cartFromDb = await _unitOfWork.ShoppingCart.GetAsync(x => x.UserId == userId && x.BookId == shoppingCartViewModel.BookId);
 
-        //            var cartFromDb = await _unitOfWork.ShoppingCart.GetAsync(x => x.UserId == userId && x.BookId == viewModel.BookId);
+                    if (cartFromDb != null)
+                    {
+                        // update the quantity
+                        cartFromDb.Quantity += shoppingCartViewModel.Quantity;
+                        //_shoppingCartService.UpdateAsync(cartFromDb);
+                    }
+                    else
+                    {
+                        ShoppingCard shoppingCart = new ShoppingCard();
 
-        //            if (cartFromDb != null)
-        //            {
-        //                // update the quantity
-        //                cartFromDb.Quantity += viewModel.Quantity;
-        //                _unitOfWork.ShoppingCart.Update(cartFromDb);
-        //            }
-        //            else
-        //            {
-        //                // create new 
-        //                var shoppingCart = new TbShoppingCart
-        //                {
-        //                    UserId = userId,
-        //                    Quantity = viewModel.Quantity,
-        //                    BookId = viewModel.BookId
-        //                };
+                        shoppingCartViewModel.UserId = userId;
+                        Mapper.Map(shoppingCartViewModel, shoppingCart);
 
-        //                await _unitOfWork.ShoppingCart.AddAsync(shoppingCart);
-        //            }
+                        await _shoppingCartService.AddAsync(shoppingCart);
+                    }
 
-        //            await _unitOfWork.SaveAsync();
+                    // update number of shopping cart items
+                    _SaveCartQuantityInSession(userId);
 
-        //            // update number of shopping cart items
-        //            _SaveCartQuantityInSession(userId);
+                    TempData["success"] = "تم إضافة المنتج للسلة بنجاح!";
+                    return RedirectToAction(nameof(Index));
+                }
 
-        //            TempData["success"] = "Item added to the cart successfully!";
-        //            return RedirectToAction(nameof(Index));
-        //        }
+                return View("Details", new { shoppingCartViewModel.BookId });
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = "حصل خطأ أثناء إضافة المنتج إلى السلة";
+                return View("Error");
+            }
+        }
 
-        //        return View("Details", new { viewModel.BookId });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // _logger.LogError(ex, "An error occurred while adding the book to the cart.");
-        //        TempData["error"] = "An error occurred while adding the book to the cart.";
-        //        return View("Error");
-        //    }
-        //}
+        private async void _SaveCartQuantityInSession(int userId)
+        {
+            try
+            {
+               int cartQuantity = (await _shoppingCartService.GetShoppingCardByUserIDAsync(userId)).ToList().Count();
 
-
+                HttpContext.Session.SetInt32(SessionHelper.SessionCart, cartQuantity);
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = "حصل خطأ أثناء استعادة كمية المنتجات اللتي في السلة";
+                throw;
+            }
+        }
 
 
     }
