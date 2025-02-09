@@ -15,6 +15,6 @@ deleteBtns.forEach(btn => {
             return;
         }
 
-        confirmDelete(id, "Author");
+        confirmDelete(id, "Category");
     });
 });

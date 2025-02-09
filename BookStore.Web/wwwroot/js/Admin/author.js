@@ -1,9 +1,9 @@
-﻿
-const img = document.querySelector(".form-book-cover img"); // fix this naming 
+﻿const img = document.querySelector(".form-book-cover img");
 const imgDeleteBtn = document.querySelector(".input-group .delete-image");
-const imgInput = document.getElementById("ProfileImage");
 
-imgInput.addEventListener("change", function (event) {
+const profileImageInput = document.getElementById("ProfileImage");
+
+profileImageInput.addEventListener("change", function (event) {
 
     const file = event.target.files[0];
     if (file) {
@@ -17,12 +17,8 @@ imgInput.addEventListener("change", function (event) {
 });
 
 imgDeleteBtn.addEventListener("click", function (event) {
-    alert("delete image");
-    imgInput.value = "";
-
-    img.style.display = "none";
-
-    alert("delete image");
-
+    event.preventDefault(); 
+    profileImageInput.value = "";    
+    img.style.display = "none"; 
 });
 

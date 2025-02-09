@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using BookStore.Utilties;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using BookStore.Models.ViewModels.Customer.Book;
 
 namespace BookStore.Web.Areas.Admin.Controllers
 {
@@ -78,7 +79,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                TempData["error"] = "An error occurred while retrieving the book.";
+                TempData["error"] = "حدث خطأ أثناء استرجاع الكتاب";
                 return View("Error");
             }
         }
@@ -106,7 +107,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                TempData["error"] = "An error occurred while retrieving the data.";
+                TempData["error"] = "حدث خطأ أثناء استرجاع المعلومات";
                 return View("Error");
             }
         }
@@ -138,12 +139,12 @@ namespace BookStore.Web.Areas.Admin.Controllers
                     #endregion
 
 
-                    TempData["success"] = "Book created successfully!";
+                    TempData["success"] = "تم إضافة الكتاب بنجاح!";
                     return RedirectToAction(nameof(Index));
                 }
                 catch
                 {
-                    TempData["error"] = "An error occurred while creating the book.";
+                    TempData["error"] = "حدث خطأ أثناء إضافة الكتاب.";
                     return View("Error");
                 }
             }
@@ -199,7 +200,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                TempData["error"] = "An error occurred while retrieving the book for editing.";
+                TempData["error"] = "حدث خطأ أثناء استرجاع الكتاب للتعديل";
                 return View("Error");
             }
         }
@@ -253,14 +254,14 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
                     //later: Save images in folder
 
-                    TempData["success"] = "Book updated successfully!";
+                    TempData["success"] = "تم تحديث الكتاب بنجاح!";
                     return RedirectToAction(nameof(Index));
                 }
                 catch
                 {
                     bookViewModel.Mode = "Edit";
 
-                    TempData["error"] = "An error occurred while updating the book.";
+                    TempData["error"] = " حدث خطأ أثناء تعديل الكتاب";
                     return View("Error");
                 }
             }
@@ -301,8 +302,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                // Log exception (ex) here
-                TempData["error"] = "An error occurred while retrieving the book for deletion.";
+                TempData["error"] = "حدث خطأ أثناء استرجاع الكتاب للحذف";
                 return View("Error");
             }
         }

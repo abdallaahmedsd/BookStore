@@ -7,6 +7,9 @@
     --gray-color: #C2C3CB;
     --strok-color: #9E9BA9;
     --red-color: #DC143C;
+    --nav-heihgt-lg: 75px;
+    --nav-heihgt-md: 70px;
+    --nav-heihgt-sm: 66.75px;
 }
 
 * {
@@ -73,6 +76,32 @@ input {
 
 
 /* Utility Classes */
+
+/*desktop*/
+.page-heihgt {
+    min-height: calc(100vh - var(--nav-heihgt-lg));
+    margin-top: var(--nav-heihgt-lg);
+}
+
+
+/*meduim*/
+@media (min-width: 768px) and (max-width: 900px) {
+    .page-heihgt {
+        min-height: calc(100vh - var(--nav-heihgt-md));
+        margin-top: var(--nav-heihgt-md);
+    }
+}
+
+/*mobile*/
+@media (max-width: 768px) {
+    .page-heihgt {
+        min-height: calc(100vh - var(--nav-heihgt-sm));
+        margin-top: var(--nav-heihgt-sm);
+    }
+}
+
+
+/* Colors */
 .color-main {
     color: var(--main-color);
 }

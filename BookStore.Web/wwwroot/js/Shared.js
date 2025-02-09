@@ -6,8 +6,8 @@ export function confirmDelete(id, controller) {
         text: "لن تتمكن من التراجع عن هذا!",
         icon: "warning",
         showCancelButton: true,
-        //confirmButtonColor: "#3085d6",
-        //cancelButtonColor: "#d33",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
         confirmButtonText: "نعم، احذفه!",
         cancelButtonText: "إلغاء",
         customClass: {

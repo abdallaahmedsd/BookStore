@@ -23,12 +23,9 @@ imgInput.addEventListener("change", function (event) {
 });
 
 imgDeleteBtn.addEventListener("click", function (event) {
-    alert("delete image");
+    event.preventDefault(); 
     imgInput.value = "";
 
     img.style.display = "none";
-
-    alert("delete image");
-
 });
 

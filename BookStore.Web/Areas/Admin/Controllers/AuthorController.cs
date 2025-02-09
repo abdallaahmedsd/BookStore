@@ -23,7 +23,6 @@ namespace BookStore.Web.Areas.Admin.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-
         // GET: AuthorController
         public async Task<ActionResult> Index()
         {
@@ -69,9 +68,8 @@ namespace BookStore.Web.Areas.Admin.Controllers
         // POST: BookController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(AddEditAuthorViewModel authorViewModel, IFormFile authorProfileImage)
+        public async Task<ActionResult> Create(AddEditAuthorViewModel authorViewModel, IFormFile? authorProfileImage)
         {
-
             if (ModelState.IsValid)
             {
                 try
@@ -88,9 +86,15 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
                     #region Save Author iamges 
 
-                    await _HandleAuthorProfileImage(author.Id, authorViewModel, authorProfileImage);
+                    if(authorProfileImage != null)
+                    {
+                           await _HandleAuthorProfileImage(author.Id, authorViewModel, authorProfileImage);
 
-                    await _authorService._UpdateAsync(author);
+                        author.ProfileImage = authorViewModel.ProfileImage;
+
+                        await _authorService._UpdateAsync(author);
+                    }
+                 
 
                     #endregion
 
@@ -110,6 +114,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
         }
 
         // GET: AuthorController/Edit/5
+        [HttpGet]
         public async Task<ActionResult> Edit(int id)
         {
             if (id <= 0)
@@ -136,6 +141,8 @@ namespace BookStore.Web.Areas.Admin.Controllers
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, AddEditAuthorViewModel authorViewModel, IFormFile? authorProfileImage)
         {
             if (ModelState.IsValid)
@@ -150,25 +157,27 @@ namespace BookStore.Web.Areas.Admin.Controllers
                     if (authorModel == null)
                         return NotFound();
 
-
+                    #region Save Author iamges 
                     if (authorProfileImage != null)
                     {
                         // if the image chaneged
-                        // remove the old main image from the database and from the hard desk as well
                         string wwwRootPath = _webHostEnvironment.WebRootPath;
-
-                        string fullPath = Path.Combine(wwwRootPath, authorModel.ProfileImage.Trim('\\'));
-
-                        if (System.IO.File.Exists(fullPath))
+                        if(authorModel.ProfileImage != null)
                         {
-                            System.IO.File.Delete(fullPath);
+                            string fullPath = Path.Combine(wwwRootPath, authorModel.ProfileImage.Trim('\\'));
+
+                            if (System.IO.File.Exists(fullPath))
+                            {
+                                System.IO.File.Delete(fullPath);
+                            }
                         }
+                      
                     }
 
                     await _HandleAuthorProfileImage(id, authorViewModel, authorProfileImage);
+                    #endregion
 
                     Mapper.Map(authorViewModel, authorModel);
-
 
                     await _authorService._UpdateAsync(authorModel);
 
@@ -186,28 +195,32 @@ namespace BookStore.Web.Areas.Admin.Controllers
             }
             else
             {
+                // solve that not storing in the profileimage 
+
                 authorViewModel.Mode = "Edit";
                 return View(authorViewModel);
             }
         }
 
-
-        [HttpDelete("{id:int}")]
-        public async Task<ActionResult> Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(int id)
         {
             if (id <= 0)
                 return NotFound();
 
             try
             {
-                Author? author = await _authorService.FindAsync(id);
+                Author? authorModel = await _authorService.FindAsync(id);
 
-                if (author == null)
+                if (authorModel == null)
                     return NotFound();
 
-                await _authorService.DeleteAsync(id);
+                AddEditAuthorViewModel authorViewModel = new();
 
-                return RedirectToAction(nameof(Index));
+                Mapper.Map(authorModel, authorViewModel);
+                authorViewModel.Mode = "Details";
+
+                // handle it later
+                return View(authorViewModel);
             }
             catch (Exception ex)
             {
