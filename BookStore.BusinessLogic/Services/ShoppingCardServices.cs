@@ -128,5 +128,12 @@ namespace BookStore.BusinessLogic.Services
 
             return await _shoppingCartRepository.GetShoppingCardByUserIDAsync(userId);
         }
+
+        public async Task<int?> GetShoppingItemsCountByUserIdAsync(int userId)
+        {
+            if(userId <= 0) return null;
+            
+            return await _shoppingCartRepository.GetShoppingItemsCountByUserIdAsync(userId);
+        }
     }
 }
