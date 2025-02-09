@@ -223,5 +223,42 @@ namespace BookStore.DataAccess.Repositories
             }
             return null;
         }
+
+
+        public async Task<IEnumerable<ShoppingCard>?> GetShoppingCardByUserIDandBookIdsync(int userId, int bookId)
+        {
+            HashSet<ShoppingCard> listShoppingCards = new HashSet<ShoppingCard>();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(_config.GetShoppingCardByUserIDandBookId, connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@UserID", userId);
+                        command.Parameters.AddWithValue("@BookID", bookId);
+                        await connection.OpenAsync();
+                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                        {
+                            while (reader.Read())
+                            {
+                                listShoppingCards.Add(_config.MapEntity(reader));
+                            }
+
+                            return listShoppingCards;
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return null;
+        }
     }
 }
