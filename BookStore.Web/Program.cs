@@ -1,6 +1,7 @@
 using BookStore.BusinessLogic.Services;
 using BookStore.DataAccess.DbInitializer;
 using BookStore.DataAccess.EntityFrameworkCore.Data;
+using BookStore.DataAccess.Repositories;
 using BookStore.Models.Identity;
 using BookStore.Utilties;
 using BookstoreBackend.BLL.Services;
@@ -42,6 +43,8 @@ builder.Services.AddScoped<BookServices>();
 builder.Services.AddScoped<CategoryServices>();
 builder.Services.AddScoped<AuthorService>();
 builder.Services.AddScoped<LanguageServices>();
+builder.Services.AddScoped<ShoppingCartServices>();
+
 #endregion
 
 #region Session Management

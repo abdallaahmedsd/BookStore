@@ -63,7 +63,7 @@
                 @foreach (var book in Model.BestSellingBooks)
                 {
 
-                    <div class="col">
+                    <div class="col card-box">
                         <div data-state="جديد" class="card card-buy">
                             <div class="card-image">
                                 <img src="@book.CoverImage" class="card-img-top" alt="Book Cover" />
@@ -98,7 +98,7 @@
             <div class="most-recent-books row m-0 flex-wrap row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-5 g-4">
                 @foreach (var book in Model.LastAddedPublishedBooks)
                 {
-                    <div class="col">
+                    <div class="col card-box">
                         <div data-state="جديد" class="card card-buy">
                             <div class="card-image">
                                 <img src="@book.CoverImage" class="card-img-top" alt="Book Cover" />

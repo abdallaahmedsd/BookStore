@@ -1,6 +1,4 @@
-﻿body {
-}
-
-.container {
-    
-}
+﻿
+    .book-details-container .book-img-container img {
+        object-fit: cover;
+    }

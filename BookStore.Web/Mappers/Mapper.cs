@@ -72,6 +72,24 @@ namespace BookStore.Web.Mappers
             authorViewModel.ProfileImage = authorModel.ProfileImage;
         }
 
+        //Customer
+        public static void Map(BookDetailsViewModel bookDetailsModel, BookDetailsForCustomerViewModel BookDetailsForCustomerViewModel)
+        {
+            BookDetailsForCustomerViewModel.Id = bookDetailsModel.Id;
+            BookDetailsForCustomerViewModel.AuthorName = bookDetailsModel.AuthorName;
+            BookDetailsForCustomerViewModel.CategoryName = bookDetailsModel.CategoryName;
+            BookDetailsForCustomerViewModel.LanguageName = bookDetailsModel.LanguageName;
+            BookDetailsForCustomerViewModel.Title = bookDetailsModel.Title;
+            BookDetailsForCustomerViewModel.Price = bookDetailsModel.Price;
+            BookDetailsForCustomerViewModel.Description = bookDetailsModel.Description;
+            BookDetailsForCustomerViewModel.ISBA = bookDetailsModel.ISBA;
+            BookDetailsForCustomerViewModel.PublicationDate = bookDetailsModel.PublicationDate;
+            BookDetailsForCustomerViewModel.CoverImage = bookDetailsModel.CoverImage;
+            BookDetailsForCustomerViewModel.TotalSellingQuantity = bookDetailsModel.TotalSellingQuantity;
+        }
+
+
+
         //public static void Map(ApplicationUser user, TbOrder order)
         //{
         //    order.Name = user.Name;

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BookStore.Web.Areas.Customer.Controllers
 {
     [Area("Customer")]
-    public class ShoppingCard : Controller
+    public class ShoppingCardController : Controller
     {
         // GET: ShoppingCard
         public ActionResult Index()
