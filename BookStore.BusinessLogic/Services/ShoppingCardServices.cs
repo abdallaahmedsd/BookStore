@@ -113,13 +113,13 @@ namespace BookStore.BusinessLogic.Services
         /// </summary>
         /// <param name="shoppingCart">The shopping cart item to update.</param>
         /// <returns>True if the item was updated successfully; otherwise, false.</returns>
-        //public async Task<bool> UpdateAsync(ShoppingCard shoppingCart)
-        //{
-        //    if (shoppingCart == null)
-        //        throw new ArgumentNullException(nameof(shoppingCart));
+        public async Task<bool> UpdateAsync(ShoppingCard shoppingCart)
+        {
+            if (shoppingCart == null)
+                throw new ArgumentNullException(nameof(shoppingCart));
 
-        //    return await _shoppingCartRepository.UpdateAsync(shoppingCart);
-        //}
+            return await _shoppingCartRepository.UpdateAsync(shoppingCart);
+        }
 
 
         public async Task<IEnumerable<ShoppingCard>?> GetShoppingCardByUserIDAsync(int userId)

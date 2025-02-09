@@ -43,7 +43,7 @@ namespace BookStore.DataAccess.Configurations
         /// <summary>
         /// Gets the stored procedure name for updating a ShoppingCard.
         /// </summary>
-        public string UpdateProcedure => throw new NotImplementedException();
+        public string UpdateProcedure => GetStoredProcedureWithSchema("SP_UpdateShoppingCard", Schemas.Sales);
 
         /// <summary>
         /// Gets the stored procedure name for deleting a ShoppingCard.
