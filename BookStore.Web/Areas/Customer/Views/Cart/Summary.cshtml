@@ -2,19 +2,18 @@
 
 @{
 	ViewData["Title"] = "Summary";
+
+    SelectList countries = new SelectList(Model.Countries, "Id", "Name");
 }
 
 @section Styles
 {
     <link rel="stylesheet" href="~/css/Customer/summary.css" />
 }
-<div class="container book-details-container h-page flex-center">
-    <div class="h-100 w-100 row m-0 py-4 p-md-0 text-center text-md-end">
-        <form class=" d-flex flex-column justify-content-between rounded-second bg-opacity shadow p-4" method="post" asp-area="Customer" asp-controller="Book" asp-action="Details">
-            @* <input type="hidden" name="bookId" value="@Model.Id" /> *@
-            @* <input type="hidden" name="Price" value="@Model.Price" /> *@
-
-            <div class="row m-0 mb-4">
+<div class="container cart-summary-container h-page flex-center">
+    <div class="h-page w-100 row m-0 py-4 p-md-0 text-center text-md-end">
+        <form class=" d-flex flex-column rounded-second bg-opacity shadow my-4 p-4 gap-4" method="post" asp-area="Customer" asp-controller="Cart" asp-action="Summary">
+            <div class="row m-0">
                 <div class="col flex-between">
                     <h4>معلومات الشحن</h4>
                     <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="btn shadow">
@@ -25,12 +24,12 @@
                 </div>
             </div>
 
-            <div class="row row-col-3 m-0  align-content-center justify-content-center  gy-5 gy-md-0">
+            <div class="row row-col-3 m-0  justify-content-between  gy-5 gy-md-0 h-100">
                 
-                <div class="col-4 p-0 ">
+                <div class="col-12 col-sm-4 p-0 h-100">
 
-                    <div class="row">
-                        <div class="col-12">
+                    <div class="row m-0 h-100">
+                        <div class="col-12 p-0">
                             <table>
                                 <thead>
                                     <tr>
@@ -53,21 +52,76 @@
                                 </tbody>
                             </table>
                         </div>
+
+                        <div class="col-12 p-0">
                         <hr />
-                        <div class="col-12 m-0 ">
-                            <div class="col flex-end gap-5">
-                                <div> الإجمالي</div>
+
+                            <div class="col-12 d-flex justify-content-end gap-5">
+                                <div class="fw-bold"> الإجمالي</div>
                                 <div>@Model.OrderTotalAmount $</div>
                             </div>
                         </div>
-                        <div class="col-12 m-0 flex-center mt-4">
-                            <a asp-area="Customer" asp-controller="Cart" asp-action="Summary" class="btn btn-input btn-main " type="submit">أضف إلى السلة</a>
+
+                        <div class="col-12 p-0 flex-center mt-auto">
+                            <button type="submit" class="btn btn-input btn-main " type="submit">ادفع الآن</button>
                         </div>
+
                     </div>
 
                     
                 </div>
-                <div class="col-4 p-0 ">
+
+                <div class="col-12 col-sm-5 col-lg-4 p-0 gap-3  h-100">
+
+
+                    <div class="form-entity-box">
+                        <div class="entity-input">
+                            <label asp-for="CountryId"></label>
+                            <select asp-for="CountryId" asp-items="countries" aria-label="Default select example">
+                                <option selected disabled value="0">اختر بلد</option>
+                            </select>
+                        </div>
+                        <span asp-validation-for="CountryId"></span>
+                    </div>
+
+                    <div class=" form-entity-box">
+                        <div class="entity-input">
+                            <label asp-for="State"></label>
+                            <input asp-for="State"
+                                   placeholder="ادخل المحافظة"
+                                   aria-label="default input example" />
+                        </div>
+                        <span asp-validation-for="State"></span>
+                    </div>
+
+                    <div class="form-entity-box">
+                        <div class="entity-input">
+                            <label asp-for="ZipCode"></label>
+                            <input asp-for="ZipCode"
+                                   placeholder="ادخل الرقم البريدي"
+                                   aria-label="default input example" />
+                        </div>
+                        <span asp-validation-for="ZipCode"></span>
+                    </div>
+
+                    <div class="form-entity-box form-entity-box-area">
+                        <div class="entity-input">
+                            <label asp-for="Address"></label>
+                            <textarea asp-for="Address"
+                                      placeholder="ادخل العنوان">
+                                </textarea>
+                        </div>
+                        <span asp-validation-for="Address"></span>
+                    </div>
+                  
+
+
+                    <div class="col-12 d-flex gap-2 fs-6 color-main mt-2">
+                        <small>متوقع وصول الشحنه يوم</small>
+                        <small>@Model.EstimatedDelivery</small>
+                    </div>
+
+            
 
                 </div>
 
@@ -83,5 +137,7 @@
 
 
 @section Scripts {
+    <partial name="_ValidationScriptsPartial"></partial>
+
     <script type="module" src="~/js/Customer/delete-orderItem.js" asp-append-version="true"></script>
 }

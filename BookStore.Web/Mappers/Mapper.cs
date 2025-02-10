@@ -1,10 +1,12 @@
-﻿using BookStore.Models.Entities;
+﻿using BookStore.BusinessLogic.Services;
+using BookStore.Models.Entities;
 using BookStore.Models.Identity;
 using BookStore.Models.ViewModels.Admin;
 using BookStore.Models.ViewModels.Admin.Book;
 using BookStore.Models.ViewModels.Book;
 using BookStore.Models.ViewModels.Customer.Book;
 using BookStore.Models.ViewModels.Customer.Cart;
+using BookStore.Models.ViewModels.Customer.OrderVM;
 using Microsoft.AspNetCore.Identity;
 
 namespace BookStore.Web.Mappers
@@ -98,9 +100,28 @@ namespace BookStore.Web.Mappers
             shoppingCart.SubTotal = shoppingCartViewModel.Quantity * shoppingCartViewModel.Price;
         }
 
+        public static void Map(OrderItemViewModel cartItem, OrderItem orderItem)
+        {
+            orderItem.BookId = orderItem.BookId;
+            orderItem.Quntity = orderItem.Quntity;
+            orderItem.SubTotal = orderItem.SubTotal;
+        }
+        public static void Map(OrderSummaryViewModel orderViewModel, Order order)
+        {
+            order.CreatedDate = DateTime.Now;
+            order.TotalAmoumt = orderViewModel.OrderTotalAmount;
+            order.Status = 1;
+        }
+        public static void Map(OrderSummaryViewModel orderViewModel, Shipping shipping)
+        {
+            shipping.ShippingAddress = $"{orderViewModel.CountryName} - {orderViewModel.State} - {orderViewModel.Address} - {orderViewModel.ZipCode}";
+            shipping.ShippingDate = DateTime.Now; //*****************
+            shipping.TrackingNumber = ""; //***********************
+            shipping.EstimatedDelivery = orderViewModel.EstimatedDelivery;
+            shipping.Status = (int)ShippingServices.enShippingStatus.Ordered;
+        }
 
 
-       
 
         //public static void Map(ApplicationUser user, TbOrder order)
         //{

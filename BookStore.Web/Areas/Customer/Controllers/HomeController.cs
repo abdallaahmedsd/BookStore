@@ -36,13 +36,16 @@ namespace BookStore.Web.Areas.Customer.Controllers
 
             #region Get the Cart items quantity from the db to show it
 
-            ClaimsIdentity claimsIdentity = (ClaimsIdentity)User?.Identity;
-            int userId = int.Parse(claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
+                if (User.Identity.IsAuthenticated)
+                {
 
-            int cartQuantity = (int)(await _shoppingCartService.GetShoppingItemsCountByUserIdAsync(userId));
+                    ClaimsIdentity claimsIdentity = (ClaimsIdentity)User?.Identity;
+                    int userId = int.Parse(claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            _sessionService.SetCartQuantity(cartQuantity);
+                    int cartQuantity = (int)(await _shoppingCartService.GetShoppingItemsCountByUserIdAsync(userId));
 
+                    _sessionService.SetCartQuantity(cartQuantity);
+                }
               #endregion
 
             return View(books);

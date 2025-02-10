@@ -13,7 +13,7 @@ namespace BookStore.Models.ViewModels.Customer.OrderVM
         public int Id { get; set; }
 
         [DisplayName("البلد")]
-        public string Country { get; set; }
+        public int CountryId { get; set; }
 
         [DisplayName("المحافظة")]
         public string State { get; set; }
