@@ -78,6 +78,7 @@
                             <div class="col p-0 gap-3 flex-col-start flex-md-row">
                                 <label asp-for="Quantity" class="fw-bold"></label>
                                 <input asp-for="Quantity" class="bg-text p-2 rounded-second text-center shadow color-strok" />
+                                <span asp-validation-for="Quantity" class="text-danger"></span>
                             </div>
                         </div>
 
@@ -95,3 +96,6 @@
     </div>
 </div>
 
+@* @section Scripts { *@
+@*     <partial name="_ValidationScriptsPartial" /> *@
+@* } *@

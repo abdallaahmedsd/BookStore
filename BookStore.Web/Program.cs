@@ -45,6 +45,8 @@ builder.Services.AddScoped<AuthorService>();
 builder.Services.AddScoped<LanguageServices>();
 builder.Services.AddScoped<ShoppingCartServices>();
 
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped<SessionService>();
 #endregion
 
 #region Session Management
@@ -72,6 +74,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseSession();
 
 app.UseAuthorization();
 
