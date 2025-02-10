@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BookStore.DataAccess.Repositories;
 using BookStore.Models.Entities;
 using BookStore.Utilties.BusinessHelpers;
+using static BookStore.BusinessLogic.Services.ShippingServices;
 
 namespace BookstoreBackend.BLL.Services
 {
@@ -14,7 +15,8 @@ namespace BookstoreBackend.BLL.Services
     public class OrderServices
     {
 
-      
+
+        public enum enOrderStatus { Progress = 1, Complete, Cancel }
 
         private static readonly OrderRepositry _orderrepo;
 
@@ -55,6 +57,13 @@ namespace BookstoreBackend.BLL.Services
         public async Task<bool> _UpdateAsync(Order order)
         {
             return await _orderrepo.UpdateAsync(order);
+        }
+
+   
+        public async Task<bool> UpdateStatus(int OrderId, enOrderStatus status)
+        {
+            if (OrderId <= 0) return false;
+            return await _orderrepo.UpdateOrderStatusAsync(OrderId, (byte)status);
         }
 
     }
