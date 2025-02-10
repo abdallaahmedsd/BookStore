@@ -74,7 +74,7 @@ namespace BookStore.DataAccess.Repositories
         {
             
                 await using SqlConnection connection = new SqlConnection(_connectionString);
-                await using SqlCommand command = new SqlCommand(_config.SP_UpdateOrderStatus, connection)
+                await using SqlCommand command = new SqlCommand(_config.UpdateOrderStatus, connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
