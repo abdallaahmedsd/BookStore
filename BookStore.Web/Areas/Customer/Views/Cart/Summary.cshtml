@@ -3,7 +3,7 @@
 @{
 	ViewData["Title"] = "Summary";
 
-    SelectList countries = new SelectList(Model.Countries, "Id", "Name");
+    SelectList countries = new SelectList(Model.Countries, "Name", "Name");
 }
 
 @section Styles
@@ -13,6 +13,10 @@
 <div class="container cart-summary-container h-page flex-center">
     <div class="h-page w-100 row m-0 py-4 p-md-0 text-center text-md-end">
         <form class=" d-flex flex-column rounded-second bg-opacity shadow my-4 p-4 gap-4" method="post" asp-area="Customer" asp-controller="Cart" asp-action="Summary">
+            <input type="hidden" name="EstimatedDelivery" value="@Model.EstimatedDelivery" />
+            @* <input type="hidden" name="CountryName" value="@Model.CountryName" /> *@
+
+
             <div class="row m-0">
                 <div class="col flex-between">
                     <h4>معلومات الشحن</h4>
@@ -76,12 +80,12 @@
 
                     <div class="form-entity-box">
                         <div class="entity-input">
-                            <label asp-for="CountryId"></label>
-                            <select asp-for="CountryId" asp-items="countries" aria-label="Default select example">
+                            <label asp-for="CountryName"></label>
+                            <select asp-for="CountryName" asp-items="countries" aria-label="Default select example">
                                 <option selected disabled value="0">اختر بلد</option>
                             </select>
                         </div>
-                        <span asp-validation-for="CountryId"></span>
+                        <span asp-validation-for="CountryName"></span>
                     </div>
 
                     <div class=" form-entity-box">

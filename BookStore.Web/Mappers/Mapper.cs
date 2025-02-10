@@ -102,10 +102,11 @@ namespace BookStore.Web.Mappers
 
         public static void Map(OrderItemViewModel cartItem, OrderItem orderItem)
         {
-            orderItem.BookId = orderItem.BookId;
-            orderItem.Quntity = orderItem.Quntity;
-            orderItem.SubTotal = orderItem.SubTotal;
+            orderItem.BookId = cartItem.BookID;
+            orderItem.Quntity = cartItem.Quantity;
+            orderItem.SubTotal = cartItem.SubTotal;
         }
+
         public static void Map(OrderSummaryViewModel orderViewModel, Order order)
         {
             order.CreatedDate = DateTime.Now;
@@ -116,8 +117,8 @@ namespace BookStore.Web.Mappers
         {
             shipping.ShippingAddress = $"{orderViewModel.CountryName} - {orderViewModel.State} - {orderViewModel.Address} - {orderViewModel.ZipCode}";
             shipping.ShippingDate = DateTime.Now; //*****************
-            shipping.TrackingNumber = ""; //***********************
-            shipping.EstimatedDelivery = orderViewModel.EstimatedDelivery;
+            shipping.TrackingNumber = "mmmmmmm"; //***********************
+            shipping.EstimatedDelivery = DateTime.Now.AddDays(10);
             shipping.Status = (int)ShippingServices.enShippingStatus.Ordered;
         }
 

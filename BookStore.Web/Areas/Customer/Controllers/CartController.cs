@@ -128,7 +128,7 @@ namespace BookStore.Web.Areas.Customer.Controllers
 
                     shippng.OrderID = order.Id;
 
-                    orderViewModel.CountryName = (await _countryService.FindAsync(orderViewModel.CountryId)).Name;
+                    //orderViewModel.CountryName = (await _countryService.FindAsync(orderViewModel.CountryId)).Name;
                     Mapper.Map(orderViewModel, shippng);
 
                     await _shippingServices.AddAsync(shippng);
@@ -156,8 +156,6 @@ namespace BookStore.Web.Areas.Customer.Controllers
                 TempData["error"] = "حصل خطأ أثناء إضافة الطلب ";
                 return View("Error");
             }
-
-
         }
 
         private async Task _SaveCartQuantityInSession(int userId)

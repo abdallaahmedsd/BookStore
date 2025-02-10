@@ -14,9 +14,8 @@ namespace BookStore.Models.ViewModels.Customer.OrderVM
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "البلد مطلوب")]
-        [DisplayName("البلد")]
-        public int CountryId { get; set; }
+   
+        //public int CountryId { get; set; }
 
         [Required(ErrorMessage = "المحافظة مطلوبة")]
         [DisplayName("المحافظة")]
@@ -33,7 +32,10 @@ namespace BookStore.Models.ViewModels.Customer.OrderVM
         public List<OrderItemViewModel> CartItems { get; set; } = [];
         public List<Country> Countries { get; set; } = [];
         public decimal OrderTotalAmount { get; set; } = 0;
-        public DateTime EstimatedDelivery { get; set; } = DateTime.Now;
+        public DateTime EstimatedDelivery { get; set; }
+
+        [Required(ErrorMessage = "البلد مطلوب")]
+        [DisplayName("البلد")]
         public string CountryName { get; set; } = "";
 
     }
