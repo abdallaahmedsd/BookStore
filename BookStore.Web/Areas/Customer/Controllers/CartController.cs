@@ -28,9 +28,9 @@ namespace BookStore.Web.Areas.Customer.Controllers
 
             //List<ShoppingCard> shoppingCarts = (await _shoppingCartService.GetShoppingCardByUserIDAsync(userId)).ToList();
 
-            //List<CartViewModel> shoppingCarts = (await _shoppingCartService.GetShoppingCardByUserIDAsync(userId)).ToList();
+            //List<CartViewModel> shoppingCarts = 
 
-            List<CartViewModel> shoppingCarts = new();
+            List<CartViewModel> shoppingCarts = (await _shoppingCartService.GetShoppingCardByUserIDAsync(userId)).ToList();
             CartListViewModel shoppingCartViewModel = new CartListViewModel
             {
                 CartItems = shoppingCarts,

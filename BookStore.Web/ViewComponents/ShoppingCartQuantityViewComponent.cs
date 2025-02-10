@@ -16,6 +16,7 @@ namespace BulkyWeb.ViewComponents
         {
             _shoppingCartService = shoppingCartService;
             _sessionService = sessionService;
+
         }
 
         public ShoppingCartServices ShoppingCartService { get; }
@@ -43,6 +44,7 @@ namespace BulkyWeb.ViewComponents
                         int cartQuantity = (int)(await _shoppingCartService.GetShoppingItemsCountByUserIdAsync(userId));
 
                         _sessionService.SetCartQuantity(cartQuantity);
+
                     }
 
                     cartQuantityFromSession = _sessionService.GetCartQuantity();
