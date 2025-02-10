@@ -8,6 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BookStore.Models.ViewModels.Customer.Cart;
 
 namespace BookStore.DataAccess.Repositories
 {
@@ -56,7 +57,7 @@ namespace BookStore.DataAccess.Repositories
             throw new NotSupportedException("This method is not supported in this repository.");
         }
 
-    
+
 
         // Custom methods //
 
@@ -295,5 +296,45 @@ namespace BookStore.DataAccess.Repositories
         }
 
 
+        public async Task<List<CartViewModel>> GetShoppingCartViewModelAsync(int userId)
+        {
+            List<CartViewModel> shoppingCart = new List<CartViewModel>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("Sales.SP_ShoppingCartViewModel", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@UserID", userId);
+
+                    await connection.OpenAsync();
+
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            CartViewModel item = new CartViewModel
+                            {
+                                Id = (int)reader["Id"],
+                                BookID = (int)reader["BookID"],
+                                BookCoverImage = reader["CoverImage"].ToString(),
+                                BookTitle = reader["Title"].ToString(),
+                                BookPrice = (decimal)reader["Price"],
+                                SubTotal = (decimal)reader["SubTotal"],
+                                Quantity = (int)reader["Quantity"],
+                                UserID = (int)reader["UserID"]
+                                // Ensure all properties are correctly mapped
+                            };
+
+                            shoppingCart.Add(item);
+                        }
+                    }
+                }
+            }
+
+            return shoppingCart;
+
+
+        }
     }
 }

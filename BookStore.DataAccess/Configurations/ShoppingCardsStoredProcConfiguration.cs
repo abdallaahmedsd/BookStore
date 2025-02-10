@@ -69,8 +69,9 @@ namespace BookStore.DataAccess.Configurations
         public string GetShoppingCardByUserIDandBookId => GetStoredProcedureWithSchema("SP_GetShoppingCardByUserIDandBookId", Schemas.Sales);
 
         public string GetShoppingItemsCountByUserId => GetStoredProcedureWithSchema("SP_GetShoppingItemsCountByUserId", Schemas.Sales);
-        
 
+
+        public string ShoppingCartViewModel => GetStoredProcedureWithSchema("SP_ShoppingCartViewModel", Schemas.Sales);
 
 
         /// <summary>

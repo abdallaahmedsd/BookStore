@@ -1,6 +1,7 @@
 ﻿using BookStore.BusinessLogic.Interfaces;
 using BookStore.DataAccess.Repositories;
 using BookStore.Models.Entities;
+using BookStore.Models.ViewModels.Customer.Cart;
 using BookStore.Utilties.BusinessHelpers;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace BookStore.BusinessLogic.Services
     /// <summary>
     /// Provides services for managing shopping carts.
     /// </summary>
-    public class ShoppingCartServices 
+    public class ShoppingCartServices
     {
         private readonly ShoppingCardRepository _shoppingCartRepository;
 
@@ -158,6 +159,11 @@ namespace BookStore.BusinessLogic.Services
             return await _shoppingCartRepository.GetShoppingItemsCountByUserIdAsync(userId);
         }
 
+        public async Task< IEnumerable<CartViewModel>?>GetShoppingCartViewModelAsync(int userId)
+        {
+            if (userId <= 0) return null;
 
+            return await _shoppingCartRepository.GetShoppingCartViewModelAsync(userId);
+        }
     }
 }
