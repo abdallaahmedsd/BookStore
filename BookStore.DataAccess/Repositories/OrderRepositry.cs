@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BookStore.Models.Entities;
+using System.Data;
 
 namespace BookStore.DataAccess.Repositories
 {
@@ -67,6 +68,26 @@ namespace BookStore.DataAccess.Repositories
                 // Log the exception or handle it as needed
             }
             return listOfOrders;
+        }
+
+        public async Task<bool> UpdateOrderStatusAsync(int orderId, byte status)
+        {
+            
+                await using SqlConnection connection = new SqlConnection(_connectionString);
+                await using SqlCommand command = new SqlCommand(_config.UpdateOrderStatus, connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue($"@{_config.IdParameterName}", orderId);
+                command.Parameters.AddWithValue("@Status", status);
+                SqlParameter returnValue = new SqlParameter
+                {
+                    Direction = ParameterDirection.ReturnValue
+                };
+                command.Parameters.Add(returnValue);
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
+                return (int)returnValue.Value == 1;
         }
     }
 }

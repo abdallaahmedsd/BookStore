@@ -36,6 +36,7 @@ namespace BookstoreBackend.DAL.Configurations
         public string DeleteProcedure => GetStoredProcedureWithSchema("SP_DeleteOrder", Schemas.Sales);
         public string GetOrdersByUserID => GetStoredProcedureWithSchema("SP_GetOrdersByUserID", Schemas.Sales);
         public string IsExistsByIdProcedure => GetStoredProcedureWithSchema("Fun_IsOrderExistsById", Schemas.Sales);
+        public string UpdateOrderStatus => GetStoredProcedureWithSchema("SP_UpdateOrderStatus", Schemas.Sales);
 
 
 
