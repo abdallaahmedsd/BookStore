@@ -110,7 +110,6 @@ namespace BookStore.Web.Areas.Customer.Controllers
             try
             {
                int cartQuantity = (int)(await _shoppingCartService.GetShoppingItemsCountByUserIdAsync(userId));
-
                 _sessionService.SetCartQuantity(cartQuantity);
             }
             catch (Exception ex)

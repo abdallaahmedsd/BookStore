@@ -1,7 +1,7 @@
 ﻿using BookStore.BusinessLogic.Interfaces;
 using BookStore.DataAccess.Repositories;
 using BookStore.Models.Entities;
-using BookStore.Models.ViewModels.Customer.Cart;
+using BookStore.Models.ViewModels.Customer.OrderVM;
 using BookStore.Utilties.BusinessHelpers;
 using System;
 using System.Collections.Generic;
@@ -159,7 +159,7 @@ namespace BookStore.BusinessLogic.Services
             return await _shoppingCartRepository.GetShoppingItemsCountByUserIdAsync(userId);
         }
 
-        public async Task< IEnumerable<CartViewModel>?>GetShoppingCartViewModelAsync(int userId)
+        public async Task<IEnumerable<OrderItemViewModel>?>GetShoppingCartViewModelAsync(int userId)
         {
             if (userId <= 0) return null;
 
