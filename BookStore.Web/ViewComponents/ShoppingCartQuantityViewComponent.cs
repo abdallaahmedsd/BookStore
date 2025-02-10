@@ -25,6 +25,11 @@ namespace BulkyWeb.ViewComponents
         {
             try
             {
+                if (User?.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    return View(0); 
+                }
+
                 ClaimsIdentity claimsIdentity = (ClaimsIdentity)User?.Identity;
                 var claim = claimsIdentity?.FindFirst(ClaimTypes.NameIdentifier);
 
