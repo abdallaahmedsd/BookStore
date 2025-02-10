@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace BookStore.Models.ViewModels.Customer.Cart
 {
-    public class ShoppingCartViewModel
+    public class CartListViewModel
     {
-        public List<ShoppingCard> shoppingCartItems { get; set; }
+        public List<CartViewModel> CartItems { get; set; }
 
         public Order? Order { get; set; }
-
     }
 }

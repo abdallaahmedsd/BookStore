@@ -1,7 +1,12 @@
-﻿@* @model ShoppingCartViewModel *@
-@* @{ *@
-@*     ViewData["Title"] = "Index"; *@
-@* } *@
+﻿@model CartListViewModel
+
+@{
+	ViewData["Title"] = "Index";
+}
+
+
+
+
 
 @* <div class="row"> *@
 @* 	<form method="post"> *@
@@ -14,7 +19,6 @@
 @* 							Shopping Cart *@
 @* 						</h5> *@
 @* 					</div> *@
-
 @* 				</div> *@
 @* 			</div> *@
 @* 			<div class="card-body my-3"> *@
@@ -25,14 +29,13 @@
 @* 						<a asp-area="Customer" asp-controller="Book" asp-action="Index" class="btn btn-outline-primary mb-5 btn-sm"><small>Continue Shopping</small></a> *@
 @* 					</div> *@
 @* 					<div class="col-md-10 offset-md-1"> *@
-
-@* 						@foreach (var item in Model.LstShoppingCarts) *@
+@* 						@foreach (var item in Model.CartItems) *@
 @* 						{ *@
 @* 							<div class="row border-bottom pb-3"> *@
 @* 								<div class="d-none d-lg-block col-lg-1 text-center py-2"> *@
 @* 									@if (item.Book.BookImages.Count > 0) *@
 @* 									{ *@
-@* 										<img src="@item.Book.BookImages.FirstOrDefault().ImageUrl" class="card-img-top rounded" /> *@
+@* 										<img src="@item.FirstOrDefault().ImageUrl" class="card-img-top rounded" /> *@
 @* 									} *@
 @* 									else *@
 @* 									{ *@
@@ -59,7 +62,6 @@
 @* 												<i class="bi bi-dash-square"></i> *@
 @* 											</a> *@
 @* 										</div> *@
-
 @* 									</div> *@
 @* 									<div class="col-3 col-sm-4 col-lg-2 offset-lg-1 text-right pt-2"> *@
 @* 										<a asp-area="Customer" asp-controller="Cart" asp-action="Delete" asp-route-cartId="@item.Id" class="btn btn-danger bg-gradient py-2 "> *@
@@ -67,10 +69,8 @@
 @* 										</a> *@
 @* 									</div> *@
 @* 								</div> *@
-
 @* 							</div> *@
 @* 						} *@
-
 @* 					</div> *@
 @* 				</div> *@
 @* 				<div class="card-footer bg-white border-0"> *@
@@ -94,7 +94,3 @@
 @* 		</div> *@
 @* 	</form> *@
 @* </div> *@
-
-
-
-

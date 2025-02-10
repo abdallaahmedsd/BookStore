@@ -19,11 +19,13 @@ namespace BookStore.Web.Areas.Customer.Controllers
     {
         public readonly BookServices _bookService;
         private readonly ShoppingCartServices _shoppingCartService;
+        private readonly SessionService _sessionService;
 
-        public BookController(BookServices bookService, ShoppingCartServices shoppingCartService)
+        public BookController(BookServices bookService, ShoppingCartServices shoppingCartService,SessionService sessionService)
         {
             _bookService = bookService;
             _shoppingCartService = shoppingCartService;
+            _sessionService = sessionService;
         }
        
         public async Task<ActionResult> Index(string? filterSearch)
@@ -60,7 +62,6 @@ namespace BookStore.Web.Areas.Customer.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    //List<ShoppingCard> shoppingCartItems = (await _shoppingCartService.GetShoppingCardByUserIDAsync(userId)).ToList();
 
                     ClaimsIdentity claimsIdentity = (ClaimsIdentity)User?.Identity;
                     int userId = int.Parse(claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
@@ -85,15 +86,17 @@ namespace BookStore.Web.Areas.Customer.Controllers
                     }
 
                     // update number of shopping cart items
-                    _SaveCartQuantityInSession(userId);
+                    await _SaveCartQuantityInSession(userId);
 
                     TempData["success"] = "تم إضافة المنتج للسلة بنجاح!";
                     return RedirectToAction(nameof(Index));
                 }
 
-                BookDetailsViewModel bookDetailsViewModel = await _bookService.GetBookDetailsByIdAsync(id);
+                BookDetailsViewModel bookDetailsViewModel = await _bookService.GetBookDetailsByIdAsync(shoppingCartViewModel.BookId);
+                BookDetailsForCustomerViewModel bookDetailsForCustomerViewModel = new();
 
-                return View("Details",  bookDetailsViewModel);
+                Mapper.Map(bookDetailsViewModel, bookDetailsForCustomerViewModel);
+                return View("Details", bookDetailsForCustomerViewModel);
             }
             catch (Exception ex)
             {
@@ -102,13 +105,13 @@ namespace BookStore.Web.Areas.Customer.Controllers
             }
         }
 
-        private async void _SaveCartQuantityInSession(int userId)
+        private async Task _SaveCartQuantityInSession(int userId)
         {
             try
             {
-               int cartQuantity = (await _shoppingCartService.GetShoppingCardByUserIDAsync(userId)).ToList().Count();
+               int cartQuantity = (int)(await _shoppingCartService.GetShoppingItemsCountByUserIdAsync(userId));
 
-                HttpContext.Session.SetInt32(SessionHelper.SessionCart, cartQuantity);
+                _sessionService.SetCartQuantity(cartQuantity);
             }
             catch (Exception ex)
             {
