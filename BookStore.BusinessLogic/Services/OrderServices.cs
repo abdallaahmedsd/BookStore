@@ -76,10 +76,9 @@ namespace BookstoreBackend.BLL.Services
         }
 
 
-        public async Task<OrderListViewModel?> GetOrderListViewModelAsync(int OrderId)
+        public async Task<IEnumerable<OrderListViewModel>> GetOrderListViewModelAsync()
         {
-            if (OrderId <= 0) return null;
-            return await _orderrepo.GetOrderListViewModelAsync(OrderId);
+            return await _orderrepo.GetOrderListViewModelAsync();
         }
 
     }
