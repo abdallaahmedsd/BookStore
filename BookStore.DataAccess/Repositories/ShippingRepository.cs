@@ -58,11 +58,11 @@ namespace BookStore.DataAccess.Repositories
         /// <param name="entity">The Shipping entity to update.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
         /// <exception cref="NotSupportedException">Thrown always to indicate that this method is not supported.</exception>
-        [Obsolete("This method is not supported in this repository.", error: true)]
-        public override Task<bool> UpdateAsync(Shipping entity)
-        {
-            throw new NotSupportedException();
-        }
+        //[Obsolete("This method is not supported in this repository.", error: true)]
+        //public override Task<bool> UpdateAsync(Shipping entity)
+        //{
+        //    throw new NotSupportedException();
+        //}
 
         /// <summary>
         /// Retrieves a Shipping entity by Order ID.

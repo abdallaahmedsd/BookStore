@@ -59,7 +59,7 @@ namespace BookStore.DataAccess.Configurations
         /// <summary>
         /// Gets the stored procedure name for updating a Shipping.
         /// </summary>
-        public string UpdateProcedure => throw new NotImplementedException();
+        public string UpdateProcedure =>GetStoredProcedureWithSchema("SP_UpdateShipping",Schemas.Sales);
 
         /// <summary>
         /// Gets the stored procedure name for updating Shipping status.
