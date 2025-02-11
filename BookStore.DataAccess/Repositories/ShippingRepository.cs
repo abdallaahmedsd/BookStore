@@ -118,36 +118,36 @@ namespace BookStore.DataAccess.Repositories
             });
         }
 
-        /// <summary>
-        /// Updates the status of a Shipping entity.
-        /// </summary>
-        /// <param name="shippingId">The ID of the Shipping entity to update.</param>
-        /// <param name="status">The new status.</param>
-        /// <returns>A task that represents the asynchronous operation. The task result indicates whether the operation was successful.</returns>
-        /// <exception cref="RepositoryException">
-        /// Thrown when there is a database error while updating the Shipping entity status.
-        /// </exception>
-        public async Task<bool> UpdateShippingStatusAsync(int shippingId, byte status)
-        {
-            return await ExecuteWithExceptionHandling(async () =>
-            {
-                await using SqlConnection connection = new SqlConnection(_connectionString);
-                await using SqlCommand command = new SqlCommand(_config.UpdateShippingStatus, connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.AddWithValue($"@{_config.IdParameterName}", shippingId);
-                command.Parameters.AddWithValue("@Status", status);
-                SqlParameter returnValue = new SqlParameter
-                {
-                    Direction = ParameterDirection.ReturnValue
-                };
-                command.Parameters.Add(returnValue);
-                await connection.OpenAsync();
-                await command.ExecuteNonQueryAsync();
-                return (int)returnValue.Value == 1;
-            });
-        }
+        ///// <summary>
+        ///// Updates the status of a Shipping entity.
+        ///// </summary>
+        ///// <param name="shippingId">The ID of the Shipping entity to update.</param>
+        ///// <param name="status">The new status.</param>
+        ///// <returns>A task that represents the asynchronous operation. The task result indicates whether the operation was successful.</returns>
+        ///// <exception cref="RepositoryException">
+        ///// Thrown when there is a database error while updating the Shipping entity status.
+        ///// </exception>
+        //public async Task<bool> UpdateShippingStatusAsync(int shippingId, byte status)
+        //{
+        //    return await ExecuteWithExceptionHandling(async () =>
+        //    {
+        //        await using SqlConnection connection = new SqlConnection(_connectionString);
+        //        await using SqlCommand command = new SqlCommand(_config.UpdateShippingStatus, connection)
+        //        {
+        //            CommandType = CommandType.StoredProcedure
+        //        };
+        //        command.Parameters.AddWithValue($"@{_config.IdParameterName}", shippingId);
+        //        command.Parameters.AddWithValue("@Status", status);
+        //        SqlParameter returnValue = new SqlParameter
+        //        {
+        //            Direction = ParameterDirection.ReturnValue
+        //        };
+        //        command.Parameters.Add(returnValue);
+        //        await connection.OpenAsync();
+        //        await command.ExecuteNonQueryAsync();
+        //        return (int)returnValue.Value == 1;
+        //    });
+        //}
 
         /// <summary>
         /// Executes an asynchronous operation with exception handling.

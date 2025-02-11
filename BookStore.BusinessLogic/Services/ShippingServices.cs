@@ -19,16 +19,6 @@ namespace BookStore.BusinessLogic.Services
     {
         private readonly ShippingRepository _shippingRepository;
 
-        /// <summary>
-        /// Specifies the various statuses for shipping.
-        /// </summary>
-        public enum enShippingStatus
-        {
-            Ordered = 1,
-            Packed = 2,
-            InTransit = 3,
-            Delivered = 4
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShippingServices"/> class.
@@ -67,25 +57,11 @@ namespace BookStore.BusinessLogic.Services
         /// </summary>
         /// <param name="Id">The ID of the shipping.</param>
         /// <returns>A task that represents the asynchronous operation. The task result indicates whether the shipping exists.</returns>
-        public async Task<bool> IsExist(int Id)
-        {
-            if (Id <= 0) return false;
-            string isExist = (await _shippingRepository.IsExistsAsync(Id)).ToString();
-            return bool.Parse(isExist);
-        }
-
-        /// <summary>
-        /// Updates the status of a shipping.
-        /// </summary>
-        /// <param name="shippingId">The ID of the shipping.</param>
-        /// <param name="status">The new status.</param>
-        /// <returns>A task that represents the asynchronous operation. The task result indicates whether the update was successful.</returns>
-        public async Task<bool> UpdateStatus(int shippingId, enShippingStatus status)
-        {
-            if (shippingId <= 0) return false;
-
-            return await _shippingRepository.UpdateShippingStatusAsync(shippingId, (byte)status);
-        }
+        //public async Task<bool> IsExist(int Id)
+        //{
+        //    if (Id <= 0) return false;
+        //    return await _shippingRepository.IsExistsAsync(Id);
+        //}
 
         /// <summary>
         /// Retrieves all shippings by user ID.
@@ -118,11 +94,16 @@ namespace BookStore.BusinessLogic.Services
             return newShipping.Id > 0;
         }
 
-
+        /// <summary>
+        /// Updates an existing shipping.
+        /// </summary>
+        /// <param name="shipping">The shipping entity to update.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result indicates whether the update was successful.</returns>
         public async Task<bool> UpdateAsync(Shipping shipping)
         {
             if (shipping == null) return false;
             return await _shippingRepository.UpdateAsync(shipping);
         }
+
     }
 }

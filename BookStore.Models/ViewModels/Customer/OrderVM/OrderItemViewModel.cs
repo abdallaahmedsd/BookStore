@@ -10,7 +10,7 @@ namespace BookStore.Models.ViewModels.Customer.OrderVM
     {
         public int Id { get; set; }
         public int BookID { get; set; }
-        public string BookCoverImage { get; set; }
+        public string? BookCoverImage { get; set; }
         public string BookTitle { get; set; }
         public decimal BookPrice { get; set; }
         public decimal SubTotal { get; set; }

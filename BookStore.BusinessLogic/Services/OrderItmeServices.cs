@@ -9,6 +9,7 @@ using BookStore.DataAccess.Repositories;
 using BookStore.Utilties.BusinessHelpers;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System.Diagnostics.Eventing.Reader;
+using BookStore.Models.ViewModels.Customer.OrderVM;
 
 namespace BookstoreBackend.BLL.Services
 {
@@ -69,6 +70,11 @@ namespace BookstoreBackend.BLL.Services
         {
         
             return await _orderitemrepo.UpdateAsync(orderItem);
+        }
+
+        public async Task<IEnumerable<OrderItemViewModel>> GetOrderItemViewModelAsync()
+        {
+            return await _orderitemrepo.GetOrderItemViewModelAsync();
         }
 
     }
