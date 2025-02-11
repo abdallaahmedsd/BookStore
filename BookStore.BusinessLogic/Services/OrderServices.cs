@@ -66,5 +66,13 @@ namespace BookstoreBackend.BLL.Services
             return await _orderrepo.UpdateOrderStatusAsync(OrderId, (byte)status);
         }
 
+
+        public async Task<Order?> GetOrderByIdAsync(int id)
+        {
+            if (id <= 0) return null;
+
+            return await _orderrepo.GetByIdAsync(id);
+        }
+
     }
 }

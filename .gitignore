@@ -373,3 +373,4 @@ FodyWeavers.xsd
 /BookStore.Utilties/BusinessHelpers/ConnectionConfig.cs
 /appsettings.json
 /BookStore.Web/appsettings.Development.json
+/ConsoleApp3/ConsoleApp3.csproj
