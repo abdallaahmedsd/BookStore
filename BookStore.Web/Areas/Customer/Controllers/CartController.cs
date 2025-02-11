@@ -73,7 +73,7 @@ namespace BookStore.Web.Areas.Customer.Controllers
                     CartItems = CartItems,
                     Countries = allCountries,
                     OrderTotalAmount = _CalcOrderTotalAmount(CartItems),
-                    EstimatedDelivery = DateTime.Now // *****************
+                    EstimatedDelivery = DateTime.Now.AddDays(10)// will change acourding to the actual order
                 };
 
                 return View(CartViewModel);
@@ -92,19 +92,20 @@ namespace BookStore.Web.Areas.Customer.Controllers
         {
             try
             {
+                List<OrderItemViewModel> CartItems;
                 ClaimsIdentity claimsIdentity = (ClaimsIdentity)User?.Identity;
                 int userId = int.Parse(claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-                List<OrderItemViewModel> CartItems = (await _shoppingCartService.GetShoppingCartViewModelAsync(userId)).ToList();
-
                 if (ModelState.IsValid)
                 {
+                 
+                    CartItems = (await _shoppingCartService.GetShoppingCartViewModelAsync(userId)).ToList();
                     // Add Order
                     Order order = new();
 
                     Mapper.Map( orderViewModel, order);
                     order.UserID = userId;
-                    order.TotalAmoumt = _CalcOrderTotalAmount(CartItems);
+                    order.TotalAmoumt = orderViewModel.OrderTotalAmount;
 
 
                     await _orderService._AddAsync(order);
@@ -120,8 +121,6 @@ namespace BookStore.Web.Areas.Customer.Controllers
                        await _orderItmeServices._AddAsync(orderItem);
                     }
 
-                    // Clear the cart
-                    await _shoppingCartService.DeleteCustomerItemsAsync(userId);
 
                     // Add Shipping
                     Shipping shippng = new();
@@ -132,12 +131,13 @@ namespace BookStore.Web.Areas.Customer.Controllers
 
                     await _shippingServices.AddAsync(shippng);
 
-                    await _SaveCartQuantityInSession(userId);
 
                     TempData["success"] = "تم إضافة الطلب بنجاح!";
+
                     return RedirectToAction(nameof(Index));
                 }
 
+                 CartItems = (await _shoppingCartService.GetShoppingCartViewModelAsync(userId)).ToList();
                 List<Country> allCountries = (await _countryService.GetCountriesAsync()).ToList();
 
                 OrderSummaryViewModel CartViewModel = new OrderSummaryViewModel
@@ -156,6 +156,22 @@ namespace BookStore.Web.Areas.Customer.Controllers
                 return View("Error");
             }
         }
+        public async Task<IActionResult> OrderConfirmation(int orderId)
+        {
+            //Order? order = await _orderService.FindAsync(orderId);
+            Order order = new();
+
+            if (order != null)
+            {
+                // Clear the cart
+                await _shoppingCartService.DeleteCustomerItemsAsync(order.UserID);
+
+                await _SaveCartQuantityInSession(order.UserID);
+            }
+
+            return View(orderId);
+        }
+
 
         private async Task _SaveCartQuantityInSession(int userId)
         {

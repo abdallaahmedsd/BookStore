@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookStore.Models.ViewModels.Customer.OrderVM
+namespace BookStore.Models.ViewModels.Customer.Cart
 {
-    public class OrderViewModel
+    public class CartItemViewModel
     {
         public int OrderID { get; set; }
         public decimal TotalAmoumt { get; set; } // Typo: Should be "TotalAmount"

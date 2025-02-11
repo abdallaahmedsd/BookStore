@@ -7,6 +7,7 @@ using BookStore.Models.ViewModels.Book;
 using BookStore.Models.ViewModels.Customer.Book;
 using BookStore.Models.ViewModels.Customer.Cart;
 using BookStore.Models.ViewModels.Customer.OrderVM;
+using BookstoreBackend.BLL.Services;
 using Microsoft.AspNetCore.Identity;
 
 namespace BookStore.Web.Mappers
@@ -110,14 +111,14 @@ namespace BookStore.Web.Mappers
         {
             order.CreatedDate = DateTime.Now;
             order.TotalAmoumt = orderViewModel.OrderTotalAmount;
-            order.Status = 1;
+            order.Status = (int)OrderServices.enOrderStatus.Progress;
         }
         public static void Map(OrderSummaryViewModel orderViewModel, Shipping shipping)
         {
             shipping.ShippingAddress = $"{orderViewModel.CountryName} - {orderViewModel.State} - {orderViewModel.Address} - {orderViewModel.ZipCode}";
             //shipping.ShippingDate = DateTime.Now; //*****************
             //shipping.TrackingNumber = ""; //***********************
-            //shipping.EstimatedDelivery = DateTime.Now.AddDays(10);
+            //shipping.EstimatedDelivery = DateTime.Now.AddDays(10);//***********************
             shipping.Status = (int)ShippingServices.enShippingStatus.Ordered;
         }
 
