@@ -53,11 +53,11 @@ namespace BookstoreBackend.DAL.Configurations
         {
             return new OrderItem
             {
-                Id = reader.GetInt32(reader.GetOrdinal("@Id")),
-                OrderId = reader.GetInt32(reader.GetOrdinal("@OrderId")),
-                BookId = reader.GetInt32(reader.GetOrdinal("@BookId")),
-                Quntity = reader.GetInt32(reader.GetOrdinal("@Quntity")),
-                SubTotal = reader.GetDecimal(reader.GetOrdinal("@SubTotal")),
+                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                OrderId = reader.GetInt32(reader.GetOrdinal("OrderId")),
+                BookId = reader.GetInt32(reader.GetOrdinal("BookId")),
+                Quntity = reader.GetInt32(reader.GetOrdinal("Quantity")),
+                SubTotal = reader.GetDecimal(reader.GetOrdinal("SubTotal")),
             };
         }
 

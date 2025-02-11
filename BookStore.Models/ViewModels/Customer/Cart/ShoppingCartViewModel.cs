@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace BookStore.Models.ViewModels.Customer.Cart
 {
-    public class CartListViewModel
+    public class ShoppingCartViewModel
     {
         public List<OrderItemViewModel> CartItems { get; set; }
-        public decimal OrderTotalAmount { get; set; }
+        public Order? Order { get; set; }
     }
 }

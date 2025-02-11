@@ -117,5 +117,12 @@ namespace BookStore.BusinessLogic.Services
             newShipping.Id = shipping.Id;
             return newShipping.Id > 0;
         }
+
+
+        public async Task<bool> UpdateAsync(Shipping shipping)
+        {
+            if (shipping == null) return false;
+            return await _shippingRepository.UpdateAsync(shipping);
+        }
     }
 }

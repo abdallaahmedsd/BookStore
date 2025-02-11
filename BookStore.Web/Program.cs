@@ -44,6 +44,11 @@ builder.Services.AddScoped<CategoryServices>();
 builder.Services.AddScoped<AuthorService>();
 builder.Services.AddScoped<LanguageServices>();
 builder.Services.AddScoped<ShoppingCartServices>();
+builder.Services.AddScoped<CountryService>();
+builder.Services.AddScoped<OrderItmeServices>();
+builder.Services.AddScoped<OrderServices>();
+builder.Services.AddScoped<ShippingServices>();
+builder.Services.AddScoped<PaymentServices>();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<SessionService>();

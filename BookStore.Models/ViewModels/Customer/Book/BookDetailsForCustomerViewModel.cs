@@ -35,7 +35,7 @@ namespace BookStore.Models.ViewModels.Customer.Book
 
         [DisplayName("تاريخ اصدار الكتاب")]
         public DateTime PublicationDate { get; set; }
-        public string? CoverImage { get; set; }
+        public string CoverImage { get; set; }
         [DisplayName("عدد المبيعات")]
         public int TotalSellingQuantity { get; set; }
 

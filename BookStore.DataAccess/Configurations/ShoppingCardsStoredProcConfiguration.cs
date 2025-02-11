@@ -25,6 +25,8 @@ namespace BookStore.DataAccess.Configurations
         /// </summary>
         public static ShoppingCardsStoredProcConfiguration Instance => _instance;
 
+        //public string DoesUserHaveShoppingCartItems => GetStoredProcedureWithSchema("Fun_DoesUserHaveShoppingCartItems(@UserID)", Schemas.Sales);
+
         /// <summary>
         /// Gets the stored procedure name for retrieving a ShoppingCard by ID.
         /// </summary>

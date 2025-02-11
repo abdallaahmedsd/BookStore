@@ -1,7 +1,7 @@
 ﻿using BookStore.BusinessLogic.Interfaces;
 using BookStore.DataAccess.Repositories;
 using BookStore.Models.Entities;
-using BookStore.Models.ViewModels.Customer.Cart;
+using BookStore.Models.ViewModels.Customer.OrderVM;
 using BookStore.Utilties.BusinessHelpers;
 using System;
 using System.Collections.Generic;
@@ -159,11 +159,29 @@ namespace BookStore.BusinessLogic.Services
             return await _shoppingCartRepository.GetShoppingItemsCountByUserIdAsync(userId);
         }
 
-        public async Task< IEnumerable<CartViewModel>?>GetShoppingCartViewModelAsync(int userId)
+        /// <summary>
+        /// Retrieves the shopping cart view model for a given user asynchronously.
+        /// </summary>
+        /// <param name="userId">The unique identifier for the user.</param>
+        /// <returns>A task representing the asynchronous operation. The task result contains an IEnumerable of CartViewModel if the user ID is valid; otherwise, null.</returns>
+        public async Task<IEnumerable<CartViewModel>?> GetShoppingCartViewModelAsync(int userId)
         {
             if (userId <= 0) return null;
 
             return await _shoppingCartRepository.GetShoppingCartViewModelAsync(userId);
         }
+
+        /// <summary>
+        /// Checks if the user has items in their shopping cart asynchronously.
+        /// </summary>
+        /// <param name="userId">The unique identifier for the user.</param>
+        /// <returns>A task representing the asynchronous operation. The task result contains a boolean value indicating whether the user has items in their shopping cart.</returns>
+        public async Task<bool> DoesUserHaveShoppingCartItemsAsync(int userId)
+        {
+            if (userId <= 0) return false;
+
+            return await _shoppingCartRepository.DoesUserHaveShoppingCartItemsAsync(userId);
+        }
+
     }
 }

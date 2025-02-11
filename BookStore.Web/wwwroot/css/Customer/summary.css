@@ -1,0 +1,40 @@
+﻿
+/*.cart-summary-container form {
+    margin: 1rem 0;
+}
+
+*/
+table {
+    font-size: 12px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+tr {
+    text-align: start;
+    box-shadow: var(--main-shadow);
+    border-radius: 0.875rem;
+}
+
+table button {
+    cursor: pointer !important;
+}
+
+th, td {
+    padding: 15px;
+}
+
+th:nth-child(1), td:nth-child(1) {
+    width: 40%;
+}
+
+th:not(:nth-child(1)),
+td:not(:nth-child(1)) {
+    width: 20%;
+}
+
+
+/*This will change*/
+.form-entity-box-area .entity-input {
+    height: 85px !important;
+}

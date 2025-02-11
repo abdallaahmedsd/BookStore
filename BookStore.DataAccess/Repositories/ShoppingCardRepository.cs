@@ -8,7 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BookStore.Models.ViewModels.Customer.Cart;
+using BookStore.Models.ViewModels.Customer.OrderVM;
 
 namespace BookStore.DataAccess.Repositories
 {
@@ -296,9 +296,9 @@ namespace BookStore.DataAccess.Repositories
         }
 
 
-        public async Task<List<CartViewModel>> GetShoppingCartViewModelAsync(int userId)
+        public async Task<List<OrderItemViewModel>> GetShoppingCartViewModelAsync(int userId)
         {
-            List<CartViewModel> shoppingCart = new List<CartViewModel>();
+            List<OrderItemViewModel> shoppingCart = new List<OrderItemViewModel>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -313,7 +313,7 @@ namespace BookStore.DataAccess.Repositories
                     {
                         while (await reader.ReadAsync())
                         {
-                            CartViewModel item = new CartViewModel
+                            OrderItemViewModel item = new OrderItemViewModel
                             {
                                 Id = (int)reader["Id"],
                                 BookID = (int)reader["BookID"],
@@ -335,6 +335,56 @@ namespace BookStore.DataAccess.Repositories
             return shoppingCart;
 
 
+        }
+
+
+
+
+        //public async Task<bool> DoesUserHaveShoppingCartItems(int userId)
+        //{
+        //    bool exists = false;
+
+        //    using (SqlConnection connection = new SqlConnection(_connectionString))
+        //    {
+        //        using (SqlCommand command = new SqlCommand(_config.DoesUserHaveShoppingCartItems, connection))
+        //        {
+        //            command.CommandType = CommandType.Text;
+        //            command.Parameters.AddWithValue("@UserID", userId);
+
+        //            await connection.OpenAsync();
+
+        //            var result = await command.ExecuteScalarAsync();
+        //            exists = result != null && (int)result == 1;
+        //        }
+        //    }
+
+        //    return exists;
+
+        //}
+
+
+        public async Task<bool> DoesUserHaveShoppingCartItemsAsync(int userId)
+        {
+            bool exists = false;
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("SELECT Sales.Fun_DoesUserHaveShoppingCartItems(@UserID)", connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    command.Parameters.AddWithValue("@UserID", userId);
+
+                    await connection.OpenAsync();
+
+                    var result = await command.ExecuteScalarAsync();
+                    if(result != null && bool.TryParse(result.ToString(),out bool isexists))
+                    {
+                        exists = isexists;
+                    }
+                }
+            }
+
+            return exists;
         }
     }
 }

@@ -30,13 +30,13 @@ namespace BookStore.Web.Areas.Customer.Controllers
        
         public async Task<ActionResult> Index(string? filterSearch)
         {
-
             BookListForCustomerViewModel allBooksViewModel = new BookListForCustomerViewModel
             {
-                allBooks = (await _bookService.GetBookListAsync()).ToList(),
+                allBooks = (await _bookService.GetBookListAsync()).OrderBy(book => Guid.NewGuid()).ToList(),
                 filterSearch = filterSearch
             };
 
+           
             return View(allBooksViewModel);
         }
 
@@ -110,7 +110,6 @@ namespace BookStore.Web.Areas.Customer.Controllers
             try
             {
                int cartQuantity = (int)(await _shoppingCartService.GetShoppingItemsCountByUserIdAsync(userId));
-
                 _sessionService.SetCartQuantity(cartQuantity);
             }
             catch (Exception ex)
