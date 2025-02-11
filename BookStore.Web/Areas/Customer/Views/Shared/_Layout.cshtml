@@ -48,7 +48,8 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link p-2 p-lg-3 @Html.IsActive("Customer/Order/Index")" href="#">ادارة المشتريات</a>
+                                <a class="nav-link p-2 p-lg-3 @Html.IsActive("Customer/Order/Index")"
+                                   asp-area="Customer" asp-controller="Order" asp-action="Index">ادارة المشتريات</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link p-2 p-lg-3 @Html.IsActive("Customer/Home/Privacy")"
