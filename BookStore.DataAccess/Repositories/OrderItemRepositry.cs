@@ -9,15 +9,16 @@ using System.Threading.Tasks;
 using BookStore.DataAccess.Repositories;
 using BookStore.Models.Entities;
 using RepoSP.Net.Services;
+using BookStore.Models.ViewModels.Customer.OrderVM;
 
 namespace BookStore.DataAccess.Repositories
 {
-    public class OrderItemRepositry : StoredProcedureRepository<OrderItem> 
+    public class OrderItemRepositry : StoredProcedureRepository<OrderItem>
     {
         private readonly string _connectionString;
         private readonly OrderItemsStoredProcConfiguration _config;
 
-        public OrderItemRepositry(string connectionString):base(connectionString,OrderItemsStoredProcConfiguration.Instance) 
+        public OrderItemRepositry(string connectionString) : base(connectionString, OrderItemsStoredProcConfiguration.Instance)
         {
             _connectionString = connectionString;
             _config = OrderItemsStoredProcConfiguration.Instance;
@@ -31,7 +32,7 @@ namespace BookStore.DataAccess.Repositories
         [Obsolete("This method is not supported in this repository.", error: true)]
         public override Task<IEnumerable<OrderItem>> GetAllAsync()
         {
-            
+
             throw new NotImplementedException();
         }
 
@@ -46,7 +47,7 @@ namespace BookStore.DataAccess.Repositories
         {
             throw new NotImplementedException();
         }
-        
+
         public async Task<IEnumerable<OrderItem>> GetAllAsync(int OrderId)
         {
             var listOfItem = new List<OrderItem>();
@@ -54,10 +55,10 @@ namespace BookStore.DataAccess.Repositories
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    using (SqlCommand command = new SqlCommand(_config.GetAllItemsByOrderId,connection))
+                    using (SqlCommand command = new SqlCommand(_config.GetAllItemsByOrderId, connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@OrderId",OrderId);
+                        command.Parameters.AddWithValue("@OrderId", OrderId);
 
                         connection.Open();
                         using (SqlDataReader reader = await command.ExecuteReaderAsync())
@@ -76,5 +77,49 @@ namespace BookStore.DataAccess.Repositories
 
             return listOfItem;
         }
-    }
+
+        public async Task<IEnumerable<OrderItemViewModel>> GetOrderItemViewModelAsync()
+        {
+            List<OrderItemViewModel> collection = new List<OrderItemViewModel>();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+
+                    using (SqlCommand command = new SqlCommand("Sales.SP_GetOrderItemViewModel", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                        {
+                            if (reader.Read())
+                            {
+                                OrderItemViewModel orderItemViewModler =  new OrderItemViewModel
+                                {
+                                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                    BookID = reader.GetInt32(reader.GetOrdinal("BookID")),
+                                    BookCoverImage = reader.IsDBNull(reader.GetOrdinal("CoverImage")) ? string.Empty : reader.GetString(reader.GetOrdinal("CoverImage")),
+                                    BookTitle = reader.GetString(reader.GetOrdinal("Title")),
+                                    BookPrice = reader.GetDecimal(reader.GetOrdinal("Price")),
+                                    SubTotal = reader.GetDecimal(reader.GetOrdinal("SubTotal")),
+                                    Quantity = reader.GetInt32(reader.GetOrdinal("Quantity")),
+                                    UserID = reader.GetInt32(reader.GetOrdinal("UserID"))
+                                };
+
+                                collection.Add(orderItemViewModler);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception (logging, rethrowing, etc.)
+                throw new ApplicationException("An error occurred while retrieving the order item.");
+            }
+            return collection;
+        }
+
+    } 
 }
