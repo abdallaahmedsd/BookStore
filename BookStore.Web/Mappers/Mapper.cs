@@ -109,31 +109,24 @@ namespace BookStore.Web.Mappers
 
         public static void Map(OrderSummaryViewModel orderViewModel, Order order)
         {
-            order.CreatedDate = DateTime.Now;
+            order.CreatedDate = orderViewModel.CreatedDate;
             order.TotalAmoumt = orderViewModel.OrderTotalAmount;
             order.Status = (int)OrderServices.enOrderStatus.Progress;
         }
+
         public static void Map(OrderSummaryViewModel orderViewModel, Shipping shipping)
         {
-            shipping.ShippingAddress = $"{orderViewModel.CountryName} - {orderViewModel.State} - {orderViewModel.Address} - {orderViewModel.ZipCode}";
-            //shipping.ShippingDate = DateTime.Now; //*****************
-            //shipping.TrackingNumber = ""; //***********************
-            //shipping.EstimatedDelivery = DateTime.Now.AddDays(10);//***********************
-            shipping.Status = (int)ShippingServices.enShippingStatus.Ordered;
+            shipping.CountryID = orderViewModel.CountryId;
+            shipping.City = orderViewModel.City;
+            shipping.Address = orderViewModel.Address;
+            shipping.ZipCode = orderViewModel.ZipCode;
+            shipping.EstimatedDelivery = orderViewModel.EstimatedDelivery;
         }
-
-
-
-        //public static void Map(ApplicationUser user, TbOrder order)
-        //{
-        //    order.Name = user.Name;
-        //    order.PhoneNumber = user.PhoneNumber;
-        //    order.City = user.AddressInfo.City;
-        //    order.StreetAddress = user.AddressInfo.StreetAddress;
-        //    order.State = user.AddressInfo.State;
-        //    order.State = user.AddressInfo.State;
-        //    order.PostalCode = user.AddressInfo.PostalCode;
-        //}
+        public static void Map(OrderSummaryViewModel orderViewModel, Payment payment)
+        {
+            payment.PaymentDate = orderViewModel.CreatedDate;
+            payment.Amount = orderViewModel.OrderTotalAmount;
+        }
 
     }
 }

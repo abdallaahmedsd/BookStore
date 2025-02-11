@@ -10,17 +10,13 @@ namespace BookStore.Utilties
     public static class SessionHelper
     {
         // Order Status
-        public const string StatusProgress = "Progress";
-        public const string StatusComplete = "Complete";
-        public const string StatusCancel = "Cancel";
+        public const string StatusApproved = "Approved";
+        public const string StatusInProcess = "Processing";
+        public const string StatusShipped = "Shipped";
+        public const string StatusCanceled = "Canceled";
 
-        // Shipping Status
-        public const string StatusOrdered = "Ordered";
-        public const string StatusPacked = "Packed";
-        public const string StatusInTransit = "InTransit";
-        public const string StatusDelivered = "Delivered";
-
-
+        // in Session Storage
         public static string SessionCart = "SessionShoppingCart";
+        public static string SessionOrderStatus = "SessionOrderStatus";
     }
 }

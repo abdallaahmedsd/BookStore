@@ -15,13 +15,11 @@ namespace BookStore.Web.Areas.Admin.APIsControllers
         public readonly BookServices _bookService;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-
         public BookController(BookServices bookService, IWebHostEnvironment webHostEnvironment)
         {
             _bookService = bookService;
             _webHostEnvironment = webHostEnvironment;
         }
-
 
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)

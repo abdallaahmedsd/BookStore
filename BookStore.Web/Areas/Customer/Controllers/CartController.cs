@@ -22,17 +22,17 @@ namespace BookStore.Web.Areas.Customer.Controllers
         private readonly ShippingServices _shippingServices;
         private readonly SessionService _sessionService;
 
-        public CartController(ShoppingCartServices shoppingCartService,CountryService countryService, OrderServices orderService, OrderItmeServices orderItmeServices,ShippingServices shippingServices, SessionService sessionService)
+        public readonly PaymentServices _paymentServices ;
+
+        public CartController(ShoppingCartServices shoppingCartService,CountryService countryService, OrderServices orderService, OrderItmeServices orderItmeServices,ShippingServices shippingServices,PaymentServices paymentServices, SessionService sessionService)
         {
             _shoppingCartService = shoppingCartService;
             _countryService = countryService;
             _orderService = orderService;
             _orderItmeServices = orderItmeServices;
             _shippingServices = shippingServices;
+            _paymentServices = paymentServices;
             _sessionService = sessionService;
-
-
-
         }
 
         public async Task<IActionResult> Index()
@@ -134,6 +134,15 @@ namespace BookStore.Web.Areas.Customer.Controllers
                     Mapper.Map(orderViewModel, shippng);
 
                     await _shippingServices.AddAsync(shippng);
+
+                    // Add Payment
+                    Payment payment = new Payment();
+                    Mapper.Map(orderViewModel, payment);
+
+                    payment.OrderId = order.Id;
+                    payment.UserId = userId;
+
+                    await _paymentServices.AddAsync(payment);
 
 
                     TempData["success"] = "تم إضافة الطلب بنجاح!";

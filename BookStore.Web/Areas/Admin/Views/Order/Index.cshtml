@@ -19,15 +19,16 @@
             <tr>
                 <th>رقم الاوردر</th>
                 <th> التاريخ</th>
+                <th> الإجمالي</th>
                 <th>الحالة</th>
                 <th>الإجراءات</th>
             </tr>
         </thead>
         <tbody>
-
             @foreach (OrderListViewModel order in Model)
             {
                 <tr data-id="@order.Id">
+                    <td>@order.Id</td>
                     <td>@order.CreatedDate</td>
                     <td>@order.TotalAmoumt</td>
                     <td class="status" data-status="@order.Status">@order.Status</td>

@@ -57,6 +57,5 @@ namespace BookStore.Models.Entities
         /// Gets or sets the carrier for the shipment. This value is nullable.
         /// </summary>
         public string? Carrier { get; set; }
-
     }
 }

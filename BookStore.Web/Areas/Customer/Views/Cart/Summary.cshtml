@@ -3,13 +3,14 @@
 @{
 	ViewData["Title"] = "Summary";
 
-    SelectList countries = new SelectList(Model.Countries, "Name", "Name");
+    SelectList countries = new SelectList(Model.Countries, "Id", "Name");
 }
 
 @section Styles
 {
     <link rel="stylesheet" href="~/css/Customer/summary.css" />
 }
+
 <div class="container cart-summary-container h-page flex-center">
     <div class="h-page w-100 row m-0 py-4 p-md-0 text-center text-md-end">
         <form class=" d-flex flex-column rounded-second bg-opacity shadow my-4 p-4 gap-4" method="post" asp-area="Customer" asp-controller="Cart" asp-action="Summary">
@@ -81,22 +82,22 @@
 
                     <div class="form-entity-box">
                         <div class="entity-input">
-                            <label asp-for="CountryName"></label>
-                            <select asp-for="CountryName" asp-items="countries" aria-label="Default select example">
+                            <label asp-for="CountryId"></label>
+                            <select asp-for="CountryId" asp-items="countries" aria-label="Default select example">
                                 <option selected disabled value="0">اختر بلد</option>
                             </select>
                         </div>
-                        <span asp-validation-for="CountryName"></span>
+                        <span asp-validation-for="CountryId"></span>
                     </div>
 
                     <div class=" form-entity-box">
                         <div class="entity-input">
-                            <label asp-for="State"></label>
-                            <input asp-for="State"
+                            <label asp-for="City"></label>
+                            <input asp-for="City"
                                    placeholder="ادخل المحافظة"
                                    aria-label="default input example" />
                         </div>
-                        <span asp-validation-for="State"></span>
+                        <span asp-validation-for="City"></span>
                     </div>
 
                     <div class="form-entity-box">
