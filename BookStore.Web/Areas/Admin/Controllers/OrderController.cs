@@ -1,10 +1,18 @@
 ﻿using BookStore.Models.ViewModels.Admin.Order;
+using BookstoreBackend.BLL.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.Web.Areas.Admin.Controllers
 {
     public class OrderController : Controller
     {
+        private readonly OrderItmeServices _orderItmeServices;
+
+        public OrderController(OrderItmeServices orderItmeServices) {
+            _orderItmeServices = orderItmeServices;
+        }
+
+
         [Area("Admin")]
         // GET: OrderController
         public ActionResult Index()

@@ -1,25 +1,22 @@
-﻿
+﻿import { confirmDelete } from '/js/Shared.js';
 
-//const deleteBtns = document.querySelectorAll(".delete-button");
 
-//deleteBtns.forEach(btn => {
-//    btn.addEventListener("click", e => {
-//        let id = btn.dataset.id;
+const deleteBtns = document.querySelectorAll(".delete-button");
 
-//        if (!id) {
-//            Swal.fire("Error", "Invalid ID. Cannot delete.", "error");
-//            return;
-//        }
+deleteBtns.forEach(btn => {
+    btn.addEventListener("click", e => {
+        let id = btn.dataset.id;
 
-//        confirmDelete("item", id);
-//    });
-//});
+        if (!id) {
+            Swal.fire("Error", "Invalid ID. Cannot delete.", "error");
+            return;
+        }
 
-//const deleteCartBtn = document.getElementById("delete-cart");
+        confirmDelete(orderId,"Order");
+    });
+});
 
-//deleteCartBtn.addEventListener("click", e => {
-//    confirmDelete("cart");
-//});
+
 
 
 

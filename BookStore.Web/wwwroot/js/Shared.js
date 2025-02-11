@@ -6,7 +6,6 @@ export function confirmDelete(id, controller) {
     let area = segments[0];
 
 
-
     Swal.fire({
         title: "هل أنت متأكد؟",
         text: "لن تتمكن من التراجع عن هذا!",
