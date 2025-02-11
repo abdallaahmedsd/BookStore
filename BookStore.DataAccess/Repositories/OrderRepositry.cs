@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BookStore.Models.Entities;
 using System.Data;
+using BookStore.Models.ViewModels.Customer.OrderVM;
+using BookStore.Models.ViewModels.Admin.Order;
 
 namespace BookStore.DataAccess.Repositories
 {
@@ -89,5 +91,43 @@ namespace BookStore.DataAccess.Repositories
                 await command.ExecuteNonQueryAsync();
                 return (int)returnValue.Value == 1;
         }
+
+        public async Task<OrderListViewModel?> GetOrderListViewModelAsync(int orderId)
+        {
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("Sales.SP_GetOrderListViewModel", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@OrderID", orderId);
+
+                    try
+                    {
+                        await conn.OpenAsync();
+                        using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                        {
+                            if (await reader.ReadAsync())
+                            {
+                                return new OrderListViewModel()
+                                {
+                                    Id = reader.GetInt32(0),
+                                    CreatedDate = reader.GetDateTime(1),
+                                    TotalAmoumt = reader.GetDecimal(2),
+                                    Status = reader.GetByte(3)
+                                };
+                            }
+                        }
+                    }
+                    catch (SqlException ex)
+                    {
+                        throw new Exception("Database error: " + ex.Message);
+                    }
+                }
+            }
+
+            return null;
+        }
+
     }
 }
