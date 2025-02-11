@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BookStore.Models.ViewModels.Admin.Order;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.Web.Areas.Admin.Controllers
 {
@@ -8,7 +9,9 @@ namespace BookStore.Web.Areas.Admin.Controllers
         // GET: OrderController
         public ActionResult Index()
         {
-            return View();
+            List<OrderListViewModel> allOrders = new();
+
+            return View(allOrders);
         }
 
         // GET: OrderController/Details/5

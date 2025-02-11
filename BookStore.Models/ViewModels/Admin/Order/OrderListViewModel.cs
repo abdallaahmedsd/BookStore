@@ -1,6 +1,4 @@
-﻿using BookStore.Models.Entities;
-using BookStore.Models.ViewModels.Customer.OrderVM;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +8,12 @@ namespace BookStore.Models.ViewModels.Admin.Order
 {
     public class OrderListViewModel
     {
+        public int Id { get; set; }
 
-        List<OrderItemViewModel> OrderItems { get; set; }
+        public DateTime CreatedDate { get; set; }
 
+        public decimal TotalAmoumt { get; set; } // Typo: Should be "TotalAmount"
+
+        public byte Status { get; set; }
     }
 }
