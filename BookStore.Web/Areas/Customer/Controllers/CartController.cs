@@ -128,7 +128,6 @@ namespace BookStore.Web.Areas.Customer.Controllers
 
                     shippng.OrderID = order.Id;
 
-                    //orderViewModel.CountryName = (await _countryService.FindAsync(orderViewModel.CountryId)).Name;
                     Mapper.Map(orderViewModel, shippng);
 
                     await _shippingServices.AddAsync(shippng);

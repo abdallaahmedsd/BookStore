@@ -91,7 +91,6 @@ namespace BookStore.Web.Mappers
             BookDetailsForCustomerViewModel.TotalSellingQuantity = bookDetailsModel.TotalSellingQuantity;
         }
 
-
         public static void Map(AddToCartViewModel shoppingCartViewModel, ShoppingCard shoppingCart)
         {
             shoppingCart.BookID = shoppingCartViewModel.BookId;
@@ -116,9 +115,9 @@ namespace BookStore.Web.Mappers
         public static void Map(OrderSummaryViewModel orderViewModel, Shipping shipping)
         {
             shipping.ShippingAddress = $"{orderViewModel.CountryName} - {orderViewModel.State} - {orderViewModel.Address} - {orderViewModel.ZipCode}";
-            shipping.ShippingDate = DateTime.Now; //*****************
-            shipping.TrackingNumber = "mmmmmmm"; //***********************
-            shipping.EstimatedDelivery = DateTime.Now.AddDays(10);
+            //shipping.ShippingDate = DateTime.Now; //*****************
+            //shipping.TrackingNumber = ""; //***********************
+            //shipping.EstimatedDelivery = DateTime.Now.AddDays(10);
             shipping.Status = (int)ShippingServices.enShippingStatus.Ordered;
         }
 
@@ -135,19 +134,5 @@ namespace BookStore.Web.Mappers
         //    order.PostalCode = user.AddressInfo.PostalCode;
         //}
 
-        //public static void Map(OrderViewModel orderViewModel, TbOrder order)
-        //{
-        //    order.Name = orderViewModel.Order.Name;
-        //    order.StreetAddress = orderViewModel.Order.StreetAddress;
-        //    order.PhoneNumber = orderViewModel.Order.PhoneNumber;
-        //    order.State = orderViewModel.Order.State;
-        //    order.City = orderViewModel.Order.City;
-
-        //    if (!string.IsNullOrEmpty(orderViewModel.Order.Carrier))
-        //        order.Carrier = orderViewModel.Order.Carrier;
-
-        //    if (!string.IsNullOrEmpty(orderViewModel.Order.TrackingNumber))
-        //        order.TrackingNumber = orderViewModel.Order.TrackingNumber;
-        //}
     }
 }

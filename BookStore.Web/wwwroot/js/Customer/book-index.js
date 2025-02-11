@@ -1,17 +1,16 @@
 
 document.addEventListener("DOMContentLoaded", function () {
+
     let searchInput = document.getElementById("bookSearch");
     let books = document.querySelectorAll(".book-item");
-    console.log(searchInput);
-    console.log(books);
     function filterBooks() {
         let filter = searchInput.value.toLowerCase();
 
         books.forEach(function (book) {
-            let title = book.getAttribute("data-title");
+            let title = book.getAttribute("data-title").toLowerCase();
 
             if (title.includes(filter)) {
-                book.style.display = "block";
+                book.style.display = "flex";
             } else {
                 book.style.display = "none";
             }

@@ -525,7 +525,7 @@ input {
 /* Card Components */
 .card-box {
 
-    display: flex !important;
+    display: flex;
     justify-content: center !important;
     align-items: center !important;
 }

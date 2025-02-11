@@ -25,17 +25,17 @@ namespace BookStore.Models.Entities
         /// <summary>
         /// Gets or sets the date and time when the shipping was initiated.
         /// </summary>
-        public DateTime ShippingDate { get; set; }
+        public DateTime? ShippingDate { get; set; } 
 
         /// <summary>
         /// Gets or sets the tracking number for the shipment.
         /// </summary>
-        public string TrackingNumber { get; set; }
+        public string? TrackingNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the estimated delivery date and time.
         /// </summary>
-        public DateTime EstimatedDelivery { get; set; }
+        public DateTime? EstimatedDelivery { get; set; }
 
         /// <summary>
         /// Gets or sets the status of the shipping.

@@ -1,6 +1,12 @@
 ﻿import '../lib/toastr.js/toastr.min.js';
 
 export function confirmDelete(id, controller) {
+
+    const segments = window.location.pathname.split('/').filter(segment => segment !== '');
+    let area = segments[0];
+
+
+
     Swal.fire({
         title: "هل أنت متأكد؟",
         text: "لن تتمكن من التراجع عن هذا!",
@@ -18,7 +24,7 @@ export function confirmDelete(id, controller) {
         if (result.isConfirmed) {
             // Send DELETE request
             $.ajax({
-                url: `/api/admin/${controller}/${id}`,
+                url: `/api/${area}/${controller}/${id}`,
                 type: "DELETE",
                 success: function (response) {
 
@@ -27,24 +33,11 @@ export function confirmDelete(id, controller) {
                         sessionStorage.setItem('toastr-success-message', response.message);
 
                         // Redirect to the categories list page
-                        window.location.href = '/admin/category/index';
+                        window.location.href = `/${area}/${controller}/index`;
                     } else {
                         // Handle case where success is false but not a server error
                         toastr.error(response.message || "حدث خطأ غير متوقع.");
                     }
-
-                    //Swal.fire({
-                    //    title: "تم الحذف!",
-                    //    text: "تم حذف السجل بنجاح.",
-                    //    icon: "success",
-                    //    confirmButtonText: "حسنًا",
-                    //    customClass: {
-                    //        confirmButton: "btn btn-main"
-                    //    }
-                    //}).then(() => {
-
-                    //    window.location.href = `/admin/${controller}/index`;
-                    //});
                 },
                 error: function (xhr, status, error) {
                     // Handle server-side error (status 500, etc.)
@@ -54,8 +47,7 @@ export function confirmDelete(id, controller) {
                     } else {
                         toastr.error("حدث خطأ غير معروف."); // Fallback message
                     }
-                    //console.error("Error:", xhr.responseText);
-                    //Swal.fire("خطأ", "فشل في حذف السجل.", "error");
+                
                 }
             });
         }

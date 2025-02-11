@@ -105,9 +105,9 @@ namespace BookStore.DataAccess.Configurations
                 Id = reader.GetInt32(reader.GetOrdinal("Id")),
                 OrderID = reader.GetInt32(reader.GetOrdinal("OrderID")),
                 ShippingAddress = reader.GetString(reader.GetOrdinal("ShippingAddress")),
-                ShippingDate = reader.GetDateTime(reader.GetOrdinal("ShippingDate")),
-                TrackingNumber = reader.GetString(reader.GetOrdinal("TrackingNumber")),
-                EstimatedDelivery = reader.GetDateTime(reader.GetOrdinal("EstimatedDelivery")),
+                ShippingDate = (reader["ShippingDate"] != DBNull.Value) ? reader.GetDateTime(reader.GetOrdinal("ShippingDate")) : null,
+                TrackingNumber = (reader["TrackingNumber"] != DBNull.Value) ? reader.GetString(reader.GetOrdinal("TrackingNumber")) : null,
+                EstimatedDelivery = (reader["EstimatedDelivery"] != DBNull.Value) ? reader.GetDateTime(reader.GetOrdinal("EstimatedDelivery")) : null,
                 Status = reader.GetByte(reader.GetOrdinal("Status"))
             };
         }
