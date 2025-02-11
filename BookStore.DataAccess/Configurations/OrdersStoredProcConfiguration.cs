@@ -29,7 +29,7 @@ namespace BookstoreBackend.DAL.Configurations
 
         public string IdParameterName => "Id";
         public string Id_Output_ParameterName => "NewId_output";
-        public string GetByIdProcedure => GetStoredProcedureWithSchema("SP_GetOrdersByID", Schemas.Sales);
+        public string GetByIdProcedure => GetStoredProcedureWithSchema("SP_GetOrderByID", Schemas.Sales);
         public string GetAllProcedure => GetStoredProcedureWithSchema("SP_GetOrders", Schemas.Sales);
         public string InsertProcedure => GetStoredProcedureWithSchema("SP_CreateOrder", Schemas.Sales);
         public string UpdateProcedure => GetStoredProcedureWithSchema("SP_UpdateOrder", Schemas.Sales);

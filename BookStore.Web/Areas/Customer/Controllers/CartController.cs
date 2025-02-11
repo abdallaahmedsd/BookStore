@@ -121,6 +121,10 @@ namespace BookStore.Web.Areas.Customer.Controllers
                        await _orderItmeServices._AddAsync(orderItem);
                     }
 
+                    // Clear the cart
+                    await _shoppingCartService.DeleteCustomerItemsAsync(order.UserID);
+
+                    await _SaveCartQuantityInSession(order.UserID);
 
                     // Add Shipping
                     Shipping shippng = new();
@@ -134,7 +138,7 @@ namespace BookStore.Web.Areas.Customer.Controllers
 
                     TempData["success"] = "تم إضافة الطلب بنجاح!";
 
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(OrderConfirmation), new { orderId = order.Id });
                 }
 
                  CartItems = (await _shoppingCartService.GetShoppingCartViewModelAsync(userId)).ToList();
@@ -158,18 +162,17 @@ namespace BookStore.Web.Areas.Customer.Controllers
         }
         public async Task<IActionResult> OrderConfirmation(int orderId)
         {
-            //Order? order = await _orderService.FindAsync(orderId);
-            Order order = new();
+            Order? order = await _orderService.GetOrderByIdAsync(orderId);
 
             if (order != null)
             {
-                // Clear the cart
-                await _shoppingCartService.DeleteCustomerItemsAsync(order.UserID);
-
-                await _SaveCartQuantityInSession(order.UserID);
-            }
-
             return View(orderId);
+            }
+            else
+            {
+                TempData["error"] = "حصل خطأ أثناء إضافة الطلب ";
+                return View("Error");
+            }
         }
 
 
