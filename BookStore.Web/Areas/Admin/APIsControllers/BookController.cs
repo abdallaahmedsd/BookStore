@@ -12,7 +12,6 @@ namespace BookStore.Web.Areas.Admin.APIsControllers
     [ApiController]
     public class BookController : ControllerBase
     {
-
         public readonly BookServices _bookService;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
@@ -21,9 +20,7 @@ namespace BookStore.Web.Areas.Admin.APIsControllers
         {
             _bookService = bookService;
             _webHostEnvironment = webHostEnvironment;
-
         }
-
 
 
         [HttpDelete("{id:int}")]

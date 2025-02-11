@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BookStore.Models.ViewModels.Customer.OrderVM;
+using BookStore.Models.ViewModels.Customer.Cart;
 
 namespace BookStore.DataAccess.Repositories
 {

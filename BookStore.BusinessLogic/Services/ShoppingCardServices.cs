@@ -164,7 +164,7 @@ namespace BookStore.BusinessLogic.Services
         /// </summary>
         /// <param name="userId">The unique identifier for the user.</param>
         /// <returns>A task representing the asynchronous operation. The task result contains an IEnumerable of CartViewModel if the user ID is valid; otherwise, null.</returns>
-        public async Task<IEnumerable<CartViewModel>?> GetShoppingCartViewModelAsync(int userId)
+        public async Task<IEnumerable<OrderItemViewModel>?> GetShoppingCartViewModelAsync(int userId)
         {
             if (userId <= 0) return null;
 
