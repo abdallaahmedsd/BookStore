@@ -336,5 +336,55 @@ namespace BookStore.DataAccess.Repositories
 
 
         }
+
+
+
+
+        //public async Task<bool> DoesUserHaveShoppingCartItems(int userId)
+        //{
+        //    bool exists = false;
+
+        //    using (SqlConnection connection = new SqlConnection(_connectionString))
+        //    {
+        //        using (SqlCommand command = new SqlCommand(_config.DoesUserHaveShoppingCartItems, connection))
+        //        {
+        //            command.CommandType = CommandType.Text;
+        //            command.Parameters.AddWithValue("@UserID", userId);
+
+        //            await connection.OpenAsync();
+
+        //            var result = await command.ExecuteScalarAsync();
+        //            exists = result != null && (int)result == 1;
+        //        }
+        //    }
+
+        //    return exists;
+
+        //}
+
+
+        public async Task<bool> DoesUserHaveShoppingCartItemsAsync(int userId)
+        {
+            bool exists = false;
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("SELECT Sales.Fun_DoesUserHaveShoppingCartItems(@UserID)", connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    command.Parameters.AddWithValue("@UserID", userId);
+
+                    await connection.OpenAsync();
+
+                    var result = await command.ExecuteScalarAsync();
+                    if(result != null && bool.TryParse(result.ToString(),out bool isexists))
+                    {
+                        exists = isexists;
+                    }
+                }
+            }
+
+            return exists;
+        }
     }
 }
