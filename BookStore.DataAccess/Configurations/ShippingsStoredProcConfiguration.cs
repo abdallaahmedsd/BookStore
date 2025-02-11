@@ -59,12 +59,12 @@ namespace BookStore.DataAccess.Configurations
         /// <summary>
         /// Gets the stored procedure name for updating a Shipping.
         /// </summary>
-        public string UpdateProcedure =>GetStoredProcedureWithSchema("SP_UpdateShipping",Schemas.Sales);
+        public string UpdateProcedure => GetStoredProcedureWithSchema("SP_UpdateShipping", Schemas.Sales);
 
-        /// <summary>
-        /// Gets the stored procedure name for updating Shipping status.
-        /// </summary>
-        public string UpdateShippingStatus => GetStoredProcedureWithSchema("SP_UpdateShippingStatus", Schemas.Sales);
+        ///// <summary>
+        ///// Gets the stored procedure name for updating Shipping status.
+        ///// </summary>
+        //public string UpdateShippingStatus => GetStoredProcedureWithSchema("SP_UpdateShippingStatus", Schemas.Sales);
 
         // Delete stored procedures //
 
@@ -78,7 +78,7 @@ namespace BookStore.DataAccess.Configurations
         /// <summary>
         /// Gets the stored procedure name for checking if a Shipping exists by ID.
         /// </summary>
-        public string IsExistsByIdProcedure => GetStoredProcedureWithSchema("Fun_IsShippingExistsById",Schemas.Sales);
+        public string IsExistsByIdProcedure => GetStoredProcedureWithSchema("Fun_IsShippingExistsById", Schemas.Sales);
 
 
         // Parameter Names //
@@ -93,6 +93,7 @@ namespace BookStore.DataAccess.Configurations
         /// </summary>
         public string Id_Output_ParameterName => "NewId_output";
 
+
         /// <summary>
         /// Maps a SqlDataReader to a Shipping entity.
         /// </summary>
@@ -104,11 +105,14 @@ namespace BookStore.DataAccess.Configurations
             {
                 Id = reader.GetInt32(reader.GetOrdinal("Id")),
                 OrderID = reader.GetInt32(reader.GetOrdinal("OrderID")),
-                ShippingAddress = reader.GetString(reader.GetOrdinal("ShippingAddress")),
-                ShippingDate = (reader["ShippingDate"] != DBNull.Value) ? reader.GetDateTime(reader.GetOrdinal("ShippingDate")) : null,
-                TrackingNumber = (reader["TrackingNumber"] != DBNull.Value) ? reader.GetString(reader.GetOrdinal("TrackingNumber")) : null,
-                EstimatedDelivery = (reader["EstimatedDelivery"] != DBNull.Value) ? reader.GetDateTime(reader.GetOrdinal("EstimatedDelivery")) : null,
-                Status = reader.GetByte(reader.GetOrdinal("Status"))
+                ShippingDate = reader["ShippingDate"] != DBNull.Value ? (DateTime?)reader.GetDateTime(reader.GetOrdinal("ShippingDate")) : null,
+                TrackingNumber = reader["TrackingNumber"] != DBNull.Value ? reader.GetString(reader.GetOrdinal("TrackingNumber")) : null,
+                EstimatedDelivery = reader["EstimatedDelivery"] != DBNull.Value ? (DateTime?)reader.GetDateTime(reader.GetOrdinal("EstimatedDelivery")) : null,
+                CountryID = reader.GetInt32(reader.GetOrdinal("CountryID")),
+                City = reader.GetString(reader.GetOrdinal("City")),
+                Address = reader.GetString(reader.GetOrdinal("Address")),
+                ZipCode = reader.GetString(reader.GetOrdinal("ZipCode")),
+                Carrier = reader["Carrier"] != DBNull.Value ? reader.GetString(reader.GetOrdinal("Carrier")) : null
             };
         }
 
@@ -119,11 +123,17 @@ namespace BookStore.DataAccess.Configurations
         /// <param name="entity">The Shipping entity.</param>
         public void SetInsertParameters(SqlCommand command, Shipping entity)
         {
-            SqlParameter[] paramsShipping = {
+            SqlParameter[] paramsShipping =
+            {
                 new SqlParameter("@OrderID", SqlDbType.Int) { Value = entity.OrderID },
-                new SqlParameter("@ShippingAddress", SqlDbType.NVarChar, 500) { Value = entity.ShippingAddress },
-                new SqlParameter("@TrackingNumber", SqlDbType.NVarChar, 100) { Value = entity.TrackingNumber },
-                new SqlParameter("@EstimatedDelivery", SqlDbType.DateTime) { Value = entity.EstimatedDelivery }
+                new SqlParameter("@CountryID", SqlDbType.Int) { Value = entity.CountryID },
+                new SqlParameter("@City", SqlDbType.NVarChar, 100) { Value = entity.City },
+                new SqlParameter("@Address", SqlDbType.NVarChar, 255) { Value = entity.Address },
+                new SqlParameter("@ZipCode", SqlDbType.NVarChar, 20) { Value = entity.ZipCode },
+                new SqlParameter("@ShippingDate", SqlDbType.DateTime) { Value = entity.ShippingDate ?? (object)DBNull.Value },
+                new SqlParameter("@TrackingNumber", SqlDbType.NVarChar, 100) { Value = entity.TrackingNumber ?? (object)DBNull.Value },
+                new SqlParameter("@EstimatedDelivery", SqlDbType.DateTime) { Value = entity.EstimatedDelivery ?? (object)DBNull.Value },
+                new SqlParameter("@Carrier", SqlDbType.NVarChar, 100) { Value = entity.Carrier ?? (object)DBNull.Value }
             };
             command.Parameters.AddRange(paramsShipping);
             SqlParameter idParameter = command.Parameters.Add($"@{Id_Output_ParameterName}", SqlDbType.Int);
@@ -137,16 +147,21 @@ namespace BookStore.DataAccess.Configurations
         /// <param name="entity">The Shipping entity.</param>
         public void SetUpdateParameters(SqlCommand command, Shipping entity)
         {
-            SqlParameter[] paramsShipping = {
+            SqlParameter[] paramsShipping =
+            {
                 new SqlParameter("@Id", SqlDbType.Int) { Value = entity.Id },
                 new SqlParameter("@OrderID", SqlDbType.Int) { Value = entity.OrderID },
-                new SqlParameter("@ShippingAddress", SqlDbType.NVarChar, 500) { Value = entity.ShippingAddress },
-                new SqlParameter("@ShippingDate", SqlDbType.DateTime) { Value = entity.ShippingDate },
-                new SqlParameter("@TrackingNumber", SqlDbType.NVarChar, 100) { Value = entity.TrackingNumber },
-                new SqlParameter("@EstimatedDelivery", SqlDbType.DateTime) { Value = entity.EstimatedDelivery },
-                new SqlParameter("@Status", SqlDbType.TinyInt) { Value = entity.Status }
+                new SqlParameter("@CountryID", SqlDbType.Int) { Value = entity.CountryID },
+                new SqlParameter("@City", SqlDbType.NVarChar, 100) { Value = entity.City },
+                new SqlParameter("@Address", SqlDbType.NVarChar, 255) { Value = entity.Address },
+                new SqlParameter("@ZipCode", SqlDbType.NVarChar, 20) { Value = entity.ZipCode },
+                new SqlParameter("@ShippingDate", SqlDbType.DateTime) { Value = entity.ShippingDate ?? (object)DBNull.Value },
+                new SqlParameter("@TrackingNumber", SqlDbType.NVarChar, 100) { Value = entity.TrackingNumber ?? (object)DBNull.Value },
+                new SqlParameter("@EstimatedDelivery", SqlDbType.DateTime) { Value = entity.EstimatedDelivery ?? (object)DBNull.Value },
+                new SqlParameter("@Carrier", SqlDbType.NVarChar, 100) { Value = entity.Carrier ?? (object)DBNull.Value }
             };
             command.Parameters.AddRange(paramsShipping);
         }
+
     }
 }
