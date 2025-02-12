@@ -153,7 +153,7 @@ namespace BookStore.DataAccess.Repositories
                     ZipCode = reader.GetString(reader.GetOrdinal("ZipCode")),
                     Address = reader.GetString(reader.GetOrdinal("ShippingAddress")),
                     City = reader.GetString(reader.GetOrdinal("City")),
-                    CountryID = reader.GetInt32(reader.GetOrdinal("CountryID")),
+                    CountryName = reader.GetString(reader.GetOrdinal("CountryName")),
                     FullName = reader.GetString(reader.GetOrdinal("FullName")),
                     Email = reader.GetString(reader.GetOrdinal("Email"))
                     
