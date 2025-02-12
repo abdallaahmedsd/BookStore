@@ -29,17 +29,17 @@ namespace BookStore.DataAccess.Repositories
             _config = ShippingsStoredProcConfiguration.Instance;
         }
 
-        /// <summary>
-        /// Deletes a Shipping entity. This method is not supported.
-        /// </summary>
-        /// <param name="Id">The ID of the Shipping entity to delete.</param>
-        /// <returns>A task that represents the asynchronous operation.</returns>
-        /// <exception cref="NotSupportedException">Thrown always to indicate that this method is not supported.</exception>
-        [Obsolete("This method is not supported in this repository.", error: true)]
-        public override Task<bool> Delete(int Id)
-        {
-            throw new NotSupportedException();
-        }
+        ///// <summary>
+        ///// Deletes a Shipping entity. This method is not supported.
+        ///// </summary>
+        ///// <param name="Id">The ID of the Shipping entity to delete.</param>
+        ///// <returns>A task that represents the asynchronous operation.</returns>
+        ///// <exception cref="NotSupportedException">Thrown always to indicate that this method is not supported.</exception>
+        //[Obsolete("This method is not supported in this repository.", error: true)]
+        //public override Task<bool> Delete(int Id)
+        //{
+        //    throw new NotSupportedException();
+        //}
 
         /// <summary>
         /// Retrieves all Shipping entities. This method is not supported.
@@ -52,12 +52,12 @@ namespace BookStore.DataAccess.Repositories
             throw new NotSupportedException();
         }
 
-        /// <summary>
-        /// Updates a Shipping entity. This method is not supported.
-        /// </summary>
-        /// <param name="entity">The Shipping entity to update.</param>
-        /// <returns>A task that represents the asynchronous operation.</returns>
-        /// <exception cref="NotSupportedException">Thrown always to indicate that this method is not supported.</exception>
+        ///// <summary>
+        ///// Updates a Shipping entity. This method is not supported.
+        ///// </summary>
+        ///// <param name="entity">The Shipping entity to update.</param>
+        ///// <returns>A task that represents the asynchronous operation.</returns>
+        ///// <exception cref="NotSupportedException">Thrown always to indicate that this method is not supported.</exception>
         //[Obsolete("This method is not supported in this repository.", error: true)]
         //public override Task<bool> UpdateAsync(Shipping entity)
         //{
@@ -171,6 +171,27 @@ namespace BookStore.DataAccess.Repositories
             catch (Exception ex)
             {
                 throw new RepositoryException($"Unexpected error: {ex.Message}", ex);
+            }
+        }
+
+        public async Task<bool> DeleteShippingByUserIdAsync(int userId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(_config.DeleteShippingByUserId, connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@UserID", userId);
+                    SqlParameter returnValue = new SqlParameter()
+                    {
+                        Direction = ParameterDirection.ReturnValue
+                    };
+                    command.Parameters.Add(returnValue);
+                    await connection.OpenAsync();
+                     await command.ExecuteNonQueryAsync();
+
+                    return (int)returnValue.Value > 0;
+                }
             }
         }
     }

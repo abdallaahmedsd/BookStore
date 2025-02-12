@@ -105,5 +105,18 @@ namespace BookStore.BusinessLogic.Services
             return await _shippingRepository.UpdateAsync(shipping);
         }
 
+
+
+        public async Task<bool> DeleteAsync(int  id)
+        {
+            if(id <= 0) return false;
+            return await _shippingRepository.Delete(id);
+        }
+
+        public async Task<bool> DeleteShippingByUserIdAsync(int userId)
+        {
+            if (userId <= 0) return false;
+            return await _shippingRepository.DeleteShippingByUserIdAsync(userId);
+        }
     }
 }

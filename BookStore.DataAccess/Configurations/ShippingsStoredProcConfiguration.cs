@@ -71,7 +71,12 @@ namespace BookStore.DataAccess.Configurations
         /// <summary>
         /// Gets the stored procedure name for deleting a Shipping.
         /// </summary>
-        public string DeleteProcedure => throw new NotImplementedException();
+        public string DeleteProcedure => GetStoredProcedureWithSchema("SP_DeleteShipping", Schemas.Sales);
+
+
+
+        public string DeleteShippingByUserId => GetStoredProcedureWithSchema("SP_DeleteShippingByUserId", Schemas.Sales);
+
 
         // Check if exists stored procedures //
 
