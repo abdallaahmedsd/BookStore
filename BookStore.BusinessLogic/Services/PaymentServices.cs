@@ -30,10 +30,9 @@ namespace BookStore.BusinessLogic.Services
         /// </summary>
         /// <param name="userId">The user ID.</param>
         /// <returns>A collection of <see cref="Payment"/> entities.</returns>
-        public async Task<IEnumerable<Payment>> GetPaymentsByUserIdAsync(int userId)
+        public async Task<IEnumerable<Payment>?> GetPaymentsByUserIdAsync(int userId)
         {
-            if (userId <= 0)
-                throw new ArgumentOutOfRangeException(nameof(userId), "User ID must be greater than zero.");
+            if (userId <= 0) return null;
 
             return await _paymentRepository.GetPaymentsByUserIDAsync(userId);
         }
@@ -45,8 +44,7 @@ namespace BookStore.BusinessLogic.Services
         /// <returns>The <see cref="Payment"/> entity if found; otherwise, null.</returns>
         public async Task<Payment?> GetPaymentByOrderIdAsync(int orderId)
         {
-            if (orderId <= 0)
-                throw new ArgumentOutOfRangeException(nameof(orderId), "Order ID must be greater than zero.");
+            if (orderId <= 0) return null;
 
             return await _paymentRepository.GetPaymentByOrderIDAsync(orderId);
         }
@@ -79,11 +77,11 @@ namespace BookStore.BusinessLogic.Services
             return await _paymentRepository.IsExistsAsync(id);
         }
 
-        /// <summary>
-        /// Updates an existing payment asynchronously.
-        /// </summary>
-        /// <param name="payment">The payment to update.</param>
-        /// <returns>True if the payment is updated successfully; otherwise, false.</returns>
+        ///// <summary>
+        ///// Updates an existing payment asynchronously.
+        ///// </summary>
+        ///// <param name="payment">The payment to update.</param>
+        ///// <returns>True if the payment is updated successfully; otherwise, false.</returns>
         //public async Task<bool> UpdateAsync(Payment payment)
         //{
         //    if (payment == null)
