@@ -570,9 +570,9 @@ input {
 .form-input-box {
 }
 
-.form-input-box label {
-    color: var(--black-color);
-}
+    .form-input-box label {
+        color: var(--black-color);
+    }
     .form-input-box span {
         color: var(--red-color);
         font-size: .75rem;
@@ -597,16 +597,15 @@ input {
 /*    width: 50%  !important;*/
 }
 
-.input-box input,
-.input-box input:focus {
-    height: 50px !important;
+.input-box input {
+    height: 3rem;
     width: 100% !important;
     color: #C2C3CB !important;
     background-color: var(--opacity-color) !important;
     font-size: .875rem !important;
-    padding: 0 2.5rem !important;
+    padding: 0 2rem !important;
     border: none !important;
-    box-shadow: var(--main-shadow) !important;
+/*    box-shadow: var(--main-shadow) !important;*/
     border-radius: .875rem !important;
     -webkit-border-radius: .875rem !important;
     -moz-border-radius: .875rem !important;
@@ -624,14 +623,14 @@ input {
 
 .input-box svg:first-of-type {
     position: absolute !important;
-    right: 10px;
+    right: .5rem;
     top: 25% !important;
 }
 
 /* Password Box */
 .password-box svg:nth-of-type(2) {
     position: absolute;
-    left: 10px;
+    left: .5rem;
     top: 25%;
     cursor: pointer;
 }

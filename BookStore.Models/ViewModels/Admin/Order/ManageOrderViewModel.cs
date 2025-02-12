@@ -23,7 +23,7 @@ namespace BookStore.Models.ViewModels.Admin.Order
 
         // Shipping Info:
         [DisplayName("البلد")]
-        public int CountryID { get; set; }
+        public int CountryName { get; set; }
         [DisplayName("المحافظة")]
         public string City { get; set; }
         [DisplayName("العنوان")]
