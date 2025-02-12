@@ -15,7 +15,7 @@ namespace BookstoreBackend.BLL.Services
     /// </summary>
     public class OrderServices
     {
-        public enum enOrderStatus { Progress = 1, Complete, Cancel }
+        public enum enOrderStatus { Approved = 1, Process, Shipped, Cancel }
 
         private static readonly OrderRepositry _orderrepo;
 
