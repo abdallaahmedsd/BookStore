@@ -79,5 +79,14 @@ namespace BookstoreBackend.BLL.Services
             return await _orderrepo.GetOrderListViewModelAsync();
         }
 
+
+
+        public async Task<OrderDetailsViewModel?> GetOrderDetailsViewModleByOrderId(int OrderID)
+        {
+            if (OrderID <= 0) return null;
+            return await _orderrepo.GetOrderDetailsViewModleByOrderId(OrderID);
+        }
+
+
     }
 }
