@@ -31,17 +31,17 @@ namespace BookStore.DataAccess.Repositories
 
         // Not Implemented methods //
 
-        /// <summary>
-        /// Deletes a Payment entity. This method is not supported and will always throw a <see cref="NotSupportedException"/>.
-        /// </summary>
-        /// <param name="Id">The ID of the Payment entity to delete.</param>
-        /// <returns>A task that represents the asynchronous operation.</returns>
-        /// <exception cref="NotSupportedException">Thrown always to indicate that this method is not supported.</exception>
-        [Obsolete("This method is not supported in this repository.", error: true)]
-        public override async Task<bool> Delete(int Id)
-        {
-            throw new NotSupportedException();
-        }
+        ///// <summary>
+        ///// Deletes a Payment entity. This method is not supported and will always throw a <see cref="NotSupportedException"/>.
+        ///// </summary>
+        ///// <param name="Id">The ID of the Payment entity to delete.</param>
+        ///// <returns>A task that represents the asynchronous operation.</returns>
+        ///// <exception cref="NotSupportedException">Thrown always to indicate that this method is not supported.</exception>
+        //[Obsolete("This method is not supported in this repository.", error: true)]
+        //public override async Task<bool> Delete(int Id)
+        //{
+        //    throw new NotSupportedException();
+        //}
 
         /// <summary>
         /// Retrieves all Payment entities. This method is not supported and will always throw a <see cref="NotSupportedException"/>.
@@ -138,6 +138,30 @@ namespace BookStore.DataAccess.Repositories
             }
             return payment;
         }
+
+
+        public async Task<bool> DeletePaymentByUserIdAsync(int userId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(_config.DeletePaymentByUserId, connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@UserID", userId);
+
+                    // Add a return value parameter
+                    SqlParameter returnValue = new SqlParameter();
+                    returnValue.Direction = ParameterDirection.ReturnValue;
+                    command.Parameters.Add(returnValue);
+
+                    await connection.OpenAsync();
+                    await command.ExecuteNonQueryAsync();
+
+                    return (int)returnValue.Value == 1;
+                }
+            }
+        }
+
 
     }
 }
