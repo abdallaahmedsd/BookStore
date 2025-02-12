@@ -55,7 +55,10 @@ namespace BookStore.DataAccess.Configurations
         /// <summary>
         /// Gets the name of the stored procedure for deleting an entity.
         /// </summary>
-        public string DeleteProcedure => throw new NotImplementedException();
+        public string DeleteProcedure => GetStoredProcedureWithSchema("SP_DeletePayment", Schemas.Sales);
+
+        public string DeletePaymentByUserId => GetStoredProcedureWithSchema("SP_DeletePaymentByUserId", Schemas.Sales);
+
 
         /// <summary>
         /// Gets the name of the stored procedure for checking if an entity exists by ID.
