@@ -15,9 +15,7 @@ namespace BookstoreBackend.BLL.Services
     /// </summary>
     public class OrderServices
     {
-
-
-        public enum enOrderStatus { Progress = 1, Complete, Cancel }
+        public enum enOrderStatus { Approved = 1, Process, Shipped, Cancel }
 
         private static readonly OrderRepositry _orderrepo;
 
@@ -76,11 +74,19 @@ namespace BookstoreBackend.BLL.Services
         }
 
 
-        public async Task<OrderListViewModel?> GetOrderListViewModelAsync(int OrderId)
+        public async Task<IEnumerable<OrderListViewModel>> GetOrderListViewModelAsync()
         {
-            if (OrderId <= 0) return null;
-            return await _orderrepo.GetOrderListViewModelAsync(OrderId);
+            return await _orderrepo.GetOrderListViewModelAsync();
         }
+
+
+
+        public async Task<OrderDetailsViewModel?> GetOrderDetailsViewModleByOrderId(int OrderID)
+        {
+            if (OrderID <= 0) return null;
+            return await _orderrepo.GetOrderDetailsViewModleByOrderId(OrderID);
+        }
+
 
     }
 }

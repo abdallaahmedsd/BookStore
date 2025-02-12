@@ -4,16 +4,14 @@
 	ViewData["Title"] = "Order Confirmation";
 }
 
-<div class="container cart-summary-container h-page flex-center">
-    <div class="row h-page w-100 m-0 py-4 p-md-0 text-center text-md-end">
-		<div class="col-12 text-center">
-			<h1 class="text-primary text-center">تم الطلب بنجاح!</h1>
-			Your Order Number is : @Model <br /><br />
-			<img src="~/images/OrderConfirmed.jpeg" width="50%" />
-		</div>
-		<div class="col-12 text-center fs-3 fw-bold px-3 py-2 border bg-text color-second">
-			<br />
-			تم إضافة طلبك بنجاح! <br/>
+<div class="container cart-summary-container h-page flex-center flex-column">
+    <div class="row w-80 m-0 py-4 p-md-0 text-center text-md-end">
+		<div class="col-12 text-center flex-center flex-column">
+			<h1 class="color-red text-center">تم الطلب بنجاح!</h1>
+			 رقم طلبك هو: @Model <br /><br />
+			<div style="width:50%;overflow:hidden;">
+				<img class="size-100" src="~/images/order.jpeg" />
+			</div>
 		</div>
 	</div>
 </div>

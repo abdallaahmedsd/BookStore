@@ -92,30 +92,31 @@ namespace BookStore.DataAccess.Repositories
                 return (int)returnValue.Value == 1;
         }
 
-        public async Task<OrderListViewModel?> GetOrderListViewModelAsync(int orderId)
+        public async Task<IEnumerable<OrderListViewModel>> GetOrderListViewModelAsync()
         {
-
+            List<OrderListViewModel> collection = new List<OrderListViewModel>();
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("Sales.SP_GetOrderListViewModel", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@OrderID", orderId);
 
                     try
                     {
                         await conn.OpenAsync();
                         using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                         {
-                            if (await reader.ReadAsync())
+                            while (await reader.ReadAsync())
                             {
-                                return new OrderListViewModel()
+                                var orderListViewmodel = new OrderListViewModel()
                                 {
                                     Id = reader.GetInt32(0),
                                     CreatedDate = reader.GetDateTime(1),
                                     TotalAmoumt = reader.GetDecimal(2),
                                     Status = reader.GetByte(3)
                                 };
+
+                                collection.Add(orderListViewmodel);
                             }
                         }
                     }
@@ -126,8 +127,41 @@ namespace BookStore.DataAccess.Repositories
                 }
             }
 
+            return collection;
+        }
+
+        public async Task<OrderDetailsViewModel?> GetOrderDetailsViewModleByOrderId(int orderId)
+        {
+            using SqlConnection connection = new SqlConnection(_connectionString);
+
+            using SqlCommand command = new SqlCommand("Sales.SP_GetOrderDetailsViewModleByOrderId", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter("@OrderID", SqlDbType.Int) { Value = orderId });
+
+            await connection.OpenAsync();
+            using SqlDataReader reader = await command.ExecuteReaderAsync();
+            if (await reader.ReadAsync())
+            {
+                return new OrderDetailsViewModel
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                    UserID = reader.GetInt32(reader.GetOrdinal("UserID")),
+                    CreatedDate = reader.GetDateTime(reader.GetOrdinal("OrderDate")),
+                    TotalAmoumt = reader.GetDecimal(reader.GetOrdinal("TotalAmoumt")),
+                    Status = reader.GetByte(reader.GetOrdinal("Status")),
+                    EstimatedDelivery = reader.GetDateTime(reader.GetOrdinal("EstimatedDelivery")),
+                    ZipCode = reader.GetString(reader.GetOrdinal("ZipCode")),
+                    Address = reader.GetString(reader.GetOrdinal("ShippingAddress")),
+                    City = reader.GetString(reader.GetOrdinal("City")),
+                    CountryID = reader.GetInt32(reader.GetOrdinal("CountryID")),
+                    FullName = reader.GetString(reader.GetOrdinal("FullName")),
+                    Email = reader.GetString(reader.GetOrdinal("Email"))
+                    
+                };
+            }
             return null;
         }
+
 
     }
 }

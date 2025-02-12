@@ -14,12 +14,13 @@ namespace BookStore.Models.ViewModels.Customer.OrderVM
     {
         public int Id { get; set; }
 
-   
-        //public int CountryId { get; set; }
+        [Required(ErrorMessage = "البلد مطلوب")]
+        [DisplayName("البلد")]
+        public int CountryId { get; set; } 
 
         [Required(ErrorMessage = "المحافظة مطلوبة")]
         [DisplayName("المحافظة")]
-        public string State { get; set; }
+        public string City { get; set; }
 
         [Required(ErrorMessage = "العنوان مطلوب")]
         [DisplayName("العنوان")]
@@ -31,12 +32,9 @@ namespace BookStore.Models.ViewModels.Customer.OrderVM
         
         public List<OrderItemViewModel> CartItems { get; set; } = [];
         public List<Country> Countries { get; set; } = [];
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
         public decimal OrderTotalAmount { get; set; } = 0;
         public DateTime EstimatedDelivery { get; set; }
-
-        [Required(ErrorMessage = "البلد مطلوب")]
-        [DisplayName("البلد")]
-        public string CountryName { get; set; } = "";
 
     }
 }
