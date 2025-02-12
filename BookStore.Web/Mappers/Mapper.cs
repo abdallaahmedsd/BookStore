@@ -111,7 +111,7 @@ namespace BookStore.Web.Mappers
         {
             order.CreatedDate = orderViewModel.CreatedDate;
             order.TotalAmoumt = orderViewModel.OrderTotalAmount;
-            order.Status = (int)OrderServices.enOrderStatus.Progress;
+            order.Status = (int)OrderServices.enOrderStatus.Approved;
         }
 
         public static void Map(OrderSummaryViewModel orderViewModel, Shipping shipping)

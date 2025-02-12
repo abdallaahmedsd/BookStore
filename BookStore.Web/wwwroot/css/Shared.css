@@ -291,86 +291,6 @@ input {
 
 
 
-/* Input Box */
-
-.table-search-box {
-    position: relative;
-}
-
-.table-search-box svg {
-    position: absolute;
-    left: 2rem;
-    top: 30%;
-}
-
-.input-box {
-    position: relative;
-    width: 282px;
-}
-
-.input-box-sm {
-    width: 135.5px !important;
-}
-
-.input-box input,
-.input-box input:focus {
-    height: 50px;
-    color: #C2C3CB;
-    background-color: var(--opacity-color);
-    font-size: .875rem;
-    padding: 0 2.5rem;
-    border: none;
-    box-shadow: var(--main-shadow);
-    border-radius: .875rem !important;
-    -webkit-border-radius: .875rem !important;
-    -moz-border-radius: .875rem !important;
-    -ms-border-radius: .875rem !important;
-    -o-border-radius: .875rem !important;
-}
-
-    .input-box input:focus {
-        color: var(--main-color);
-    }
-
-.input-box:has(input:focus) svg path {
-    stroke: var(--main-color);
-}
-
-.input-box svg:first-of-type {
-    position: absolute;
-    right: 10px;
-    top: 25%;
-}
-
-.password-box svg:nth-of-type(2) {
-    position: absolute;
-    left: 10px;
-    top: 25%;
-    cursor: pointer;
-}
-
-/* Serach box*/
-
-.input-search {
-    padding: 1rem 2rem;
-    box-shadow: var(--main-shadow);
-    border-radius: .875rem !important;
-    -webkit-border-radius: .875rem !important;
-    -moz-border-radius: .875rem !important;
-    -ms-border-radius: .875rem !important;
-    -o-border-radius: .875rem !important;
-}
-
-.input-search:focus {
-    color: var(--main-color);
-}
-
-.input-search:focus + svg path {
-    stroke: var(--main-color);
-}
-
-
-
 
 /* Buttons */
 .btn {
@@ -631,7 +551,111 @@ input {
 
 
 
+
 /* Components */
+
+/* Input Box */
+
+
+.table-search-box {
+    position: relative;
+}
+
+    .table-search-box svg {
+        position: absolute;
+        left: 2rem;
+        top: 30%;
+    }
+
+.form-input-box {
+}
+
+.form-input-box label {
+    color: var(--black-color);
+}
+    .form-input-box span {
+        color: var(--red-color);
+        font-size: .75rem;
+    }
+.form-input-box .input-box {
+
+}
+
+.form-input-box .input-box input {
+}
+.form-input-box .input-box svg {
+}
+
+
+
+.input-box {
+    position: relative !important;
+/*    width: 100% !important;*/
+}
+
+.input-box-sm {
+/*    width: 50%  !important;*/
+}
+
+.input-box input,
+.input-box input:focus {
+    height: 50px !important;
+    width: 100% !important;
+    color: #C2C3CB !important;
+    background-color: var(--opacity-color) !important;
+    font-size: .875rem !important;
+    padding: 0 2.5rem !important;
+    border: none !important;
+    box-shadow: var(--main-shadow) !important;
+    border-radius: .875rem !important;
+    -webkit-border-radius: .875rem !important;
+    -moz-border-radius: .875rem !important;
+    -ms-border-radius: .875rem !important;
+    -o-border-radius: .875rem !important;
+}
+
+    .input-box input:focus {
+        color: var(--main-color) !important;
+    }
+
+.input-box:has(input:focus) svg path {
+    stroke: var(--main-color) !important;
+}
+
+.input-box svg:first-of-type {
+    position: absolute !important;
+    right: 10px;
+    top: 25% !important;
+}
+
+/* Password Box */
+.password-box svg:nth-of-type(2) {
+    position: absolute;
+    left: 10px;
+    top: 25%;
+    cursor: pointer;
+}
+
+/* Serach box*/
+.input-search {
+    padding: 1rem 2rem;
+    box-shadow: var(--main-shadow);
+    border-radius: .875rem !important;
+    -webkit-border-radius: .875rem !important;
+    -moz-border-radius: .875rem !important;
+    -ms-border-radius: .875rem !important;
+    -o-border-radius: .875rem !important;
+}
+
+    .input-search:focus {
+        color: var(--main-color);
+    }
+
+        .input-search:focus + svg path {
+            stroke: var(--main-color);
+        }
+
+
 
 .form-entity-box {
     margin-top: 1rem;
@@ -650,7 +674,7 @@ input {
     flex-direction: column;
 }
 
-.entity-inputt label {
+.entity-input label {
     width: 100%;
     height: 17px;
     color: var(--black-color);
