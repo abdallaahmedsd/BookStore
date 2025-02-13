@@ -117,11 +117,11 @@ namespace BookStore.DataAccess.Configurations
         {
             SqlParameter[] paramsPayment =
             {
-        new SqlParameter("@Id", SqlDbType.Int) { Value = entity.Id },
-        new SqlParameter("@OrderID", SqlDbType.Int) { Value = (object)entity.UserId ?? DBNull.Value },
-        new SqlParameter("@PaymentDate", SqlDbType.DateTime) { Value = (object)entity.PaymentDate ?? DBNull.Value },
-        new SqlParameter("@Amount", SqlDbType.Decimal) { Value = (object)entity.Amount ?? DBNull.Value },
-        new SqlParameter("@UserID", SqlDbType.Int) { Value = (object)entity.UserId ?? DBNull.Value }
+                new SqlParameter("@Id", SqlDbType.Int) { Value = entity.Id },
+                new SqlParameter("@OrderID", SqlDbType.Int) { Value = (object)entity.UserId ?? DBNull.Value },
+                new SqlParameter("@PaymentDate", SqlDbType.DateTime) { Value = (object)entity.PaymentDate ?? DBNull.Value },
+                new SqlParameter("@Amount", SqlDbType.Decimal) { Value = (object)entity.Amount ?? DBNull.Value },
+                new SqlParameter("@UserID", SqlDbType.Int) { Value = (object)entity.UserId ?? DBNull.Value }
           };
             command.Parameters.AddRange(paramsPayment);
         }
