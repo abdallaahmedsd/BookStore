@@ -55,17 +55,17 @@ namespace BookStore.DataAccess.Repositories
         }
 
 
-        /// <summary>
-        /// Updates a Payment entity. This method is not supported and will always throw a <see cref="NotSupportedException"/>.
-        /// </summary>
-        /// <param name="entity">The Payment entity to update.</param>
-        /// <returns>A task that represents the asynchronous operation.</returns>
-        /// <exception cref="NotSupportedException">Thrown always to indicate that this method is not supported.</exception>
-        [Obsolete("This method is not supported in this repository.", error: true)]
-        public override async Task<bool> UpdateAsync(Payment entity)
-        {
-            throw new NotSupportedException();
-        }
+        ///// <summary>
+        ///// Updates a Payment entity. This method is not supported and will always throw a <see cref="NotSupportedException"/>.
+        ///// </summary>
+        ///// <param name="entity">The Payment entity to update.</param>
+        ///// <returns>A task that represents the asynchronous operation.</returns>
+        ///// <exception cref="NotSupportedException">Thrown always to indicate that this method is not supported.</exception>
+        //[Obsolete("This method is not supported in this repository.", error: true)]
+        //public override async Task<bool> UpdateAsync(Payment entity)
+        //{
+        //    throw new NotSupportedException();
+        //}
 
         // Custom methods //
 
@@ -162,6 +162,35 @@ namespace BookStore.DataAccess.Repositories
             }
         }
 
+        public async Task<bool> DeletePaymentByOrderIDAsync(int orderId)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                try
+                {
 
+                    using (var command = new SqlCommand("Sales.DeletePaymentsByOrderId", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add(new SqlParameter("@Id", SqlDbType.Int) { Value = orderId });
+                        // Add a return value parameter
+                        SqlParameter returnValue = new SqlParameter();
+                        returnValue.Direction = ParameterDirection.ReturnValue;
+                        command.Parameters.Add(returnValue);
+                        
+                        await connection.OpenAsync();
+                        await command.ExecuteNonQueryAsync();
+                        
+                        return (int)returnValue.Value == 1;
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    // Handle SQL exceptions here, for example, logging the error
+                    throw new Exception($"Error occurred while deleting payments: {ex.Message}", ex);
+                }
+            }
+        }
+        
     }
 }

@@ -50,7 +50,7 @@ namespace BookStore.DataAccess.Configurations
         /// <summary>
         /// Gets the name of the stored procedure for updating an entity.
         /// </summary>
-        public string UpdateProcedure => throw new NotImplementedException();
+        public string UpdateProcedure => GetStoredProcedureWithSchema("SP_UpdatePayment", Schemas.Sales);
 
         /// <summary>
         /// Gets the name of the stored procedure for deleting an entity.
@@ -115,7 +115,16 @@ namespace BookStore.DataAccess.Configurations
         /// <param name="entity">The Payment entity.</param>
         public void SetUpdateParameters(SqlCommand command, Payment entity)
         {
-            throw new NotImplementedException();
+            SqlParameter[] paramsPayment =
+            {
+                new SqlParameter("@Id", SqlDbType.Int) { Value = entity.Id },
+                new SqlParameter("@OrderID", SqlDbType.Int) { Value = (object)entity.UserId ?? DBNull.Value },
+                new SqlParameter("@PaymentDate", SqlDbType.DateTime) { Value = (object)entity.PaymentDate ?? DBNull.Value },
+                new SqlParameter("@Amount", SqlDbType.Decimal) { Value = (object)entity.Amount ?? DBNull.Value },
+                new SqlParameter("@UserID", SqlDbType.Int) { Value = (object)entity.UserId ?? DBNull.Value }
+          };
+            command.Parameters.AddRange(paramsPayment);
         }
+
     }
 }
