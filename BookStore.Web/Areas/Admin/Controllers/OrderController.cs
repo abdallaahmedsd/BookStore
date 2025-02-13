@@ -38,6 +38,36 @@ namespace BookStore.Web.Areas.Admin.Controllers
             return View(allOrders);
         }
 
+        public async Task<ActionResult> Details(int id)
+        {
+            // Should have the shipping details also with it and make them take null in OrderDetailsViewModel
+
+            if (id <= 0)
+                return NotFound();
+
+            try
+            {
+                OrderDetailsViewModel orderDetailsViewModel = await _orderServices.GetOrderDetailsViewModleByOrderId(id);
+
+                ManageOrderViewModel manageOrderViewModel = new ManageOrderViewModel();
+                manageOrderViewModel.OrderItems = (await _orderItmeServices.GetOrderItemViewModelAsync()).ToList();
+                Mapper.Map(orderDetailsViewModel, manageOrderViewModel);
+
+                // will change this later
+                Shipping shippingModel = await _shippingServices.FindByOrderIdAsync(id);
+                Mapper.Map(shippingModel, manageOrderViewModel);
+
+                manageOrderViewModel.IsDetails = true;
+
+                return View(manageOrderViewModel);
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = "حدث خطأ أثناء استرجاع الطلب للتعديل";
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
 
         public async Task<ActionResult> Edit(int id)
         {
@@ -59,7 +89,12 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 Mapper.Map(shippingModel,manageOrderViewModel);
 
 
-                return View(manageOrderViewModel);
+                if (manageOrderViewModel.Status == SessionHelper.StatusCanceled || manageOrderViewModel.Status == SessionHelper.StatusShipped)
+                    return View("Details",manageOrderViewModel);
+                else
+                    return View(manageOrderViewModel);
+
+
             }
             catch (Exception ex)
             {
@@ -138,12 +173,12 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
                 TempData["success"] = "تم تحديث الطلب بنجاح!";
                 //return View("Edit", new { orderId = manageOrderViewModel.Id });
-                return RedirectToAction(nameof(Edit), manageOrderViewModel);
+                return RedirectToAction(nameof(Details), manageOrderViewModel.Id);
             }
             catch (Exception ex)
             {
                 TempData["error"] = " حدث خطأ أثناء تعديل الطلب";
-                return RedirectToAction(nameof(Edit), manageOrderViewModel);
+                return RedirectToAction(nameof(Edit), manageOrderViewModel.Id);
             }
         }
 

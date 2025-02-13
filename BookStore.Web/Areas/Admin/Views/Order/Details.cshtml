@@ -1,9 +1,243 @@
-﻿
+﻿@using BookStore.Utilties
+@model ManageOrderViewModel
+
 @{
     ViewData["Title"] = "Details";
     ViewData["Section"] = "الطلبات";
-
 }
 
-<h1>Details</h1>
+@section Styles {
+    <link rel="stylesheet" href="~/css/Admin/order.css" />
 
+    <style>
+        input,select,textarea {
+            color: var(--main-color) !important;
+        }
+    </style>
+}
+
+
+<form class="h-100" method="post" asp-area="Admin" asp-controller="Order">
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="UserID" />
+    <input type="hidden" asp-for="Status" />
+    <input type="hidden" asp-for="TotalAmoumt" />
+
+    <div class="row m-0">
+        <div class="col flex-start">
+            <h4>معلومات الشحن</h4>
+        </div>
+    </div>
+
+    <div class="row row-col-3 mx-0 mt-1 h-100 justify-content-between">
+
+        <div class="col-5 order-form p-0 h-100">
+            <div class="row m-0 bg-main color-text header-div">
+                <div class="col p-0">معلومات الشحن</div>
+            </div>
+            <div class="row m-0 gap-3 ">
+                <div class="col-12 p-0">
+                    <div class="form-input-box ">
+                        <label asp-for="FullName"></label>
+
+                        <div class="input-box">
+                            <input asp-for="FullName" disabled>
+                        </div>
+
+                        <span asp-validation-for="FullName"></span>
+                    </div>
+            </div>
+
+                <div class="col-12 p-0">
+                    <div class="form-input-box ">
+                        <label asp-for="Email"></label>
+
+                        <div class="input-box">
+                            <input asp-for="Email" readonly>
+                        </div>
+
+                        <span asp-validation-for="Email"></span>
+                    </div>
+            </div>
+
+                <div class="col-12 p-0">
+                <div class="row m-0 gap-3">
+                    <div class="col p-0">
+                        <div class="form-input-box ">
+                            <label asp-for="CountryName"></label>
+
+                            <div class="input-box">
+                                <input asp-for="CountryName">
+                            </div>
+
+                            <span asp-validation-for="CountryName"></span>
+                        </div>
+                    </div>
+                    <div class="col p-0">
+                        <div class="form-input-box ">
+                            <label asp-for="City"></label>
+
+                            <div class="input-box">
+                                <input asp-for="City">
+                            </div>
+
+                            <span asp-validation-for="City"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                 <div class="col-12 p-0">
+                <div class="row m-0 gap-3">
+                    <div class="col p-0">
+                        <div class="form-input-box ">
+                            <label asp-for="ZipCode"></label>
+
+                            <div class="input-box">
+                                <input asp-for="ZipCode">
+                            </div>
+
+                            <span asp-validation-for="ZipCode"></span>
+                        </div>
+                    </div>
+                    <div class="col p-0">
+                        <div class="form-input-box ">
+                            <label asp-for="Address"></label>
+
+                            <div class="input-box">
+                                <input asp-for="Address">
+                            </div>
+
+                            <span asp-validation-for="Address"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                 <div class="col-12 p-0">
+                <div class="row m-0 gap-3">
+                    <div class="col p-0">
+                        <div class="form-input-box ">
+                            <label asp-for="Carrier"></label>
+
+                            <div class="input-box">
+                                <input asp-for="Carrier">
+                            </div>
+
+                            <span asp-validation-for="Carrier"></span>
+                        </div>
+                    </div>
+                    <div class="col p-0">
+                        <div class="form-input-box ">
+                            <label asp-for="TrackingNumber"></label>
+
+                            <div class="input-box">
+                                <input asp-for="TrackingNumber">
+                            </div>
+
+                            <span asp-validation-for="TrackingNumber"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                 <div class="col-12 p-0">
+
+                 <div class="row m-0 gap-3">
+                    <div class="col p-0">
+                        <div class="form-input-box ">
+                            <label asp-for="ShippingDate"></label>
+                            <div class="input-box">
+                                <input type="date" asp-for="ShippingDate">
+                            </div>
+                            <span asp-validation-for="ShippingDate"></span>
+                        </div>
+                    </div>
+                    <div class="col p-0">
+                        <div class="form-input-box ">
+                            <label asp-for="EstimatedDelivery"></label>
+
+                            <div class="input-box">
+                                <input  type="date" asp-for="EstimatedDelivery">
+                            </div>
+
+                            <span asp-validation-for="EstimatedDelivery"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+
+            <div class="row m-0 gap-5 mt-4">
+                <div class="flex-start gap-4">
+                    <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="me-2 btn btn-sm btn-red-open ">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.17001 14.8299L14.83 9.16992" stroke="#DB4B4E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M14.83 14.8299L9.17001 9.16992" stroke="#DB4B4E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#DB4B4E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <span class="me-2">الرجوع</span>
+                    </a>
+                </div>
+            </div>
+    </div>
+
+        <div class="col-5 p-0">
+            <div class="row m-0 bg-main color-text header-div">
+                <div class="col p-0  flex-between">
+                    <div>حالة الطلب</div>
+                <div>@Model.Status</div>
+             </div>
+            </div>
+            <div class="row m-0 gap-5">
+                <div class="col-12 p-0">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>عنوان الكتاب</th>
+                                <th>السعر</th>
+                                <th>الكمية</th>
+                                <th>الإجمالي</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.OrderItems)
+                            {
+                                <tr>
+                                    <td>@item.BookTitle</td>
+                                    <td>@item.BookPrice</td>
+                                    <td>@item.Quantity</td>
+                                    <td>@item.SubTotal</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-12 p-0">
+                    <hr />
+
+                    <div class="col-12 d-flex justify-content-end gap-5">
+                        <div class="fw-bold"> الإجمالي</div>
+                        <div>@Model.TotalAmoumt $</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"></partial>
+    <script>
+
+        document.querySelectorAll('input, select, textarea').forEach(element => {
+            element.disabled = true;
+        });
+
+</script>
+
+
+}

@@ -11,7 +11,7 @@
 
 <div class="row-col-2 gap-5 flex-grow-6 flex-between mx-0 px-3">
 
-    <partial name="_AdminSearchAddPartail" />
+    <partial name="_SearchPartial" />
 
 </div>
 <div class="row mx-0 flex-grow-1 bg-text pt-2">
@@ -34,7 +34,7 @@
                     <td>@order.CreatedDate</td>
                     <td>@order.TotalAmoumt</td>
                     <td class="status" data-status="@order.Status">@order.Status</td>
-                    <td class="flex-center  gap-2">
+                    <td class="flex-start  gap-2">
                         <a class="btn btn-icon btn-second" asp-area="Admin" asp-controller="Order" asp-action="Edit" asp-route-id="@order.Id">
                             <svg width="24" height="24" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M8.19345 1.72583H6.83862C3.45152 1.72583 2.09668 3.08067 2.09668 6.46777V10.5323C2.09668 13.9194 3.45152 15.2742 6.83862 15.2742H10.9031C14.2902 15.2742 15.6451 13.9194 15.6451 10.5323V9.17744" stroke="#F9F9F9" stroke-width="1.01613" stroke-linecap="round" stroke-linejoin="round" />
@@ -44,7 +44,7 @@
                         </a>
 
 
-                        @if (order.Status != (byte)OrderServices.enOrderStatus.Cancel && order.Status != (byte)OrderServices.enOrderStatus.Shipped)
+                        @if (order.Status != SessionHelper.StatusCanceled && order.Status != SessionHelper.StatusShipped)
                          { 
                             <button data-id="@order.Id" class="btn btn-icon btn-red cancel-button">
                                 <svg width="24" height="24" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">

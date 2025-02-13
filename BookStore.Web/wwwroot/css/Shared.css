@@ -600,7 +600,7 @@ input {
 .input-box input {
     height: 3rem;
     width: 100% !important;
-    color: #C2C3CB !important;
+    color: var(--strok-color) ;
     background-color: var(--opacity-color) !important;
     font-size: .875rem !important;
     padding: 0 2rem !important;
@@ -613,9 +613,9 @@ input {
     -o-border-radius: .875rem !important;
 }
 
-    .input-box input:focus {
-        color: var(--main-color) !important;
-    }
+.input-box input:focus {
+    color: var(--main-color) !important;
+}
 
 .input-box:has(input:focus) svg path {
     stroke: var(--main-color) !important;

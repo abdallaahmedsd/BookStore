@@ -14,6 +14,6 @@ namespace BookStore.Models.ViewModels.Admin.Order
 
         public decimal TotalAmoumt { get; set; } // Typo: Should be "TotalAmount"
 
-        public byte Status { get; set; }
+        public string Status { get; set; }
     }
 }

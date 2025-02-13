@@ -113,7 +113,7 @@ namespace BookStore.DataAccess.Repositories
                                     Id = reader.GetInt32(0),
                                     CreatedDate = reader.GetDateTime(1),
                                     TotalAmoumt = reader.GetDecimal(2),
-                                    Status = reader.GetByte(3)
+                                    Status = (reader.GetByte(3) == 1) ? "تم الموافقة" : (reader.GetByte(3) == 2) ? "قيد الانتظار" : (reader.GetByte(3) == 3) ? "تم شحنه" : "تم إلغائه"
                                 };
 
                                 collection.Add(orderListViewmodel);

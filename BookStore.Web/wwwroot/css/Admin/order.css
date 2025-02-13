@@ -45,3 +45,8 @@ th, td {
         width: 20%;
     }
 
+
+
+.status {
+    color:var(--text-color) !important;
+}

@@ -1,4 +1,27 @@
 ﻿
+const StatusCells = document.querySelectorAll(".status");
+
+StatusCells.forEach(cell => {
+    const status = cell.dataset.status;
+    switch (status) {
+        case SessionHelper.StatusApproved:
+            cell.classList.add("bg-second");
+
+        case SessionHelper.StatusInProcess:
+            cell.classList.add("bg-main");
+
+        case SessionHelper.StatusShipped:
+            cell.classList.add("bg-text");
+
+        case SessionHelper.StatusCanceled:
+            cell.classList.add("bg-red");
+        default:
+            cell.classList.add("bg-gray");
+
+    }
+})
+
+
 const cancelBtns = document.querySelectorAll(".cancel-button");
 
 cancelBtns.forEach(btn => {
@@ -63,24 +86,3 @@ export function confirmOrderAction(operationType, id) {
         }
     });
 }
-
-
-const StatusCells = document.querySelectorAll(".status");
-
-StatusCells.forEach(cell => {
-    const status = cell.dataset.status; 
-    switch (status) {
-        case "Progress":
-            cell.classList.add("bg-second");
-            break;
-        case "Complete":
-            cell.classList.add("bg-main");
-            break;
-        case "Cancel":
-            cell.classList.add("bg-red");
-            break;
-        default:
-            // Optionally, handle unexpected status values
-            break;
-    }
-})

@@ -44,5 +44,7 @@ namespace BookStore.Models.ViewModels.Admin.Order
         // User Info:
         public string? FullName { get; set; }
         public string? Email { get; set; }
+
+        public bool? IsDetails { get; set; } = false;
     }
 }

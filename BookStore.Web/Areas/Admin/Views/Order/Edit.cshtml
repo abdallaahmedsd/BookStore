@@ -15,6 +15,7 @@
     <input type="hidden" asp-for="Id" />
     <input type="hidden" asp-for="UserID" />
     <input type="hidden" asp-for="Status" />
+    <input type="hidden" asp-for="TotalAmoumt" />
 
     <div class="row m-0">
         <div class="col flex-start">
@@ -34,7 +35,7 @@
                         <label asp-for="FullName"></label>
 
                         <div class="input-box">
-                            <input asp-for="FullName" disabled>
+                            <input asp-for="FullName" readonly>
                         </div>
 
                         <span asp-validation-for="FullName"></span>
@@ -174,7 +175,7 @@
                     </a>
                     @if (Model.Status != SessionHelper.StatusCanceled && Model.Status != SessionHelper.StatusShipped)
                     {
-                        <button type="submit" class="btn btn-lg btn-main">
+                        <button asp-action="Edit" type="submit" class="btn btn-lg btn-main">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M8 12H16" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 <path d="M12 16V8" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -236,7 +237,7 @@
                     }
                     else if (Model.Status == SessionHelper.StatusInProcess)
                     {
-                        <button asp-action="ShipOrder" onclick="return ValidateInput()" class="btn btn-main">اشحن الطلب</button>
+                        <button onclick="ValidateInput()" asp-action="ShipOrder" class="btn btn-main">اشحن الطلب</button>
                     }
 
                     @if (Model.Status != SessionHelper.StatusCanceled && Model.Status != SessionHelper.StatusShipped)
@@ -250,13 +251,55 @@
 </form>
 
 
-
 @section Scripts {
     <partial name="_ValidationScriptsPartial"></partial>
     <script type="module" src="~/js/Admin/edit-order.js" asp-append-version="true"></script>
-
     <script>
-       
-    </script>
+                function ValidateInput() {
+            let carrier = document.getElementById("Carrier");
+            let shippingDate = document.getElementById("ShippingDate");
+            let trackingNumber = document.getElementById("TrackingNumber");
+            let estimatedDate = document.getElementById("EstimatedDelivery");
+            if (!carrier.value) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: "Please enter carrier!"
+                });
 
+                return false;
+            }
+            if (!shippingDate.value) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: "Please enter shipping Date!"
+                });
+
+                return false;
+            }
+
+            if (!trackingNumber.value) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: "Please enter tracking number!"
+                });
+
+                return false;
+            }
+            if (!estimatedDate.value) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: "Please enter estimated Date!"
+                });
+
+                return false;
+            }
+
+            return true;
+        }
+
+    </script>
 }
