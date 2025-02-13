@@ -125,9 +125,9 @@ namespace BookStore.Web.Areas.Admin.Controllers
                     await _shippingServices.UpdateAsync(shippingModel);
 
 
-                //Payment paymentModel = await _paymentServices.GetPaymentByOrderIdAsync(id);
-                //Mapper.Map(manageOrderViewModel, paymentModel);
-                //await _paymentServices.UpdateAsync(paymentModel);
+                Payment paymentModel = await _paymentServices.GetPaymentByOrderIdAsync(id);
+                Mapper.Map(manageOrderViewModel, paymentModel);
+                await _paymentServices.UpdateAsync(paymentModel);
 
 
                 TempData["success"] = "تم تحديث الطلب بنجاح!";

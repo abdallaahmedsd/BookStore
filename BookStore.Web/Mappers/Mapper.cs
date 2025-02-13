@@ -179,6 +179,12 @@ namespace BookStore.Web.Mappers
             shippingModel.Carrier = manageOrderViewModel.Carrier;
         }
 
+        public static void Map(ManageOrderViewModel manageOrderViewModel, Payment payment)
+        {
+            payment.PaymentDate = manageOrderViewModel.CreatedDate;
+            payment.Amount = manageOrderViewModel.TotalAmoumt;
+        }
+
         private static string _SetOrderStatus(byte Status)
         {
             switch (Status)
