@@ -55,17 +55,17 @@ namespace BookStore.DataAccess.Repositories
         }
 
 
-        /// <summary>
-        /// Updates a Payment entity. This method is not supported and will always throw a <see cref="NotSupportedException"/>.
-        /// </summary>
-        /// <param name="entity">The Payment entity to update.</param>
-        /// <returns>A task that represents the asynchronous operation.</returns>
-        /// <exception cref="NotSupportedException">Thrown always to indicate that this method is not supported.</exception>
-        [Obsolete("This method is not supported in this repository.", error: true)]
-        public override async Task<bool> UpdateAsync(Payment entity)
-        {
-            throw new NotSupportedException();
-        }
+        ///// <summary>
+        ///// Updates a Payment entity. This method is not supported and will always throw a <see cref="NotSupportedException"/>.
+        ///// </summary>
+        ///// <param name="entity">The Payment entity to update.</param>
+        ///// <returns>A task that represents the asynchronous operation.</returns>
+        ///// <exception cref="NotSupportedException">Thrown always to indicate that this method is not supported.</exception>
+        //[Obsolete("This method is not supported in this repository.", error: true)]
+        //public override async Task<bool> UpdateAsync(Payment entity)
+        //{
+        //    throw new NotSupportedException();
+        //}
 
         // Custom methods //
 

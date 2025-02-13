@@ -79,18 +79,26 @@ namespace BookStore.BusinessLogic.Services
             return await _paymentRepository.IsExistsAsync(id);
         }
 
+
+        public async Task<Payment?> FindAsync(int id)
+        {
+            if (id <= 0) return null;
+
+            return await _paymentRepository.GetByIdAsync(id);
+        }
+
         /// <summary>
         /// Updates an existing payment asynchronously.
         /// </summary>
         /// <param name="payment">The payment to update.</param>
         /// <returns>True if the payment is updated successfully; otherwise, false.</returns>
-        //public async Task<bool> UpdateAsync(Payment payment)
-        //{
-        //    if (payment == null)
-        //        throw new ArgumentNullException(nameof(payment));
+        public async Task<bool> UpdateAsync(Payment payment)
+        {
+            if (payment == null)
+                return false;
 
-        //    return await _paymentRepository.UpdateAsync(payment);
-        //}
+            return await _paymentRepository.UpdateAsync(payment);
+        }
 
         /// <summary>
         /// Deletes a payment by ID asynchronously.
