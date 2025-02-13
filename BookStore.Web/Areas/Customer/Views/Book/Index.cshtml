@@ -1,23 +1,85 @@
-﻿
+﻿@using BookStore.Models.ViewModels.Book
+@model BookListForCustomerViewModel
+
 @{
-    Layout = "_Layout";
-    ViewData["Title"] = "Index";
+    // Layout = "_Layout";
+    ViewData["Title"] = "Books";
 }
 
-<h1>Index</h1>
-<h1>Index</h1>
-<h1>Index</h1>
-<h1>Index</h1>
-<h1>Index</h1>
-<h1>Index</h1>
-<h1>Index</h1>
-<h1>Index</h1>
-<h1>Index</h1>
-<h1>Index</h1>
-<h1>Index</h1>
-<h1>Index</h1>
-<h1>Index</h1>
-<h1>Index</h1>
-<h1>Index</h1>
-<h1>Index</h1>
+@section Styles
+{
+    <link rel="stylesheet" href="~/css/Customer/book.css" />
+}
 
+
+<div class="container h-page">
+    <div class="row m-0 my-4">
+
+        <!--  Search m-0  mt-4-->
+        <div class="row m-0 my-4 flex-center">
+            <div class="table-search-box col-10">
+                <input id="bookSearch"
+                       class="form-control input-search"
+                       type="text"
+                       placeholder="البحث عن المنتج"
+                       value="@Model.filterSearch"
+                       aria-label="default input example" />
+                <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.9166 21.6666C17.3014 21.6666 21.6666 17.3014 21.6666 11.9166C21.6666 6.53185 17.3014 2.16663 11.9166 2.16663C6.53185 2.16663 2.16663 6.53185 2.16663 11.9166C2.16663 17.3014 6.53185 21.6666 11.9166 21.6666Z"
+                          stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M20.5074 22.4139C21.0815 24.1473 22.3924 24.3206 23.3999 22.8039C24.3207 21.4173 23.714 20.2798 22.0457 20.2798C20.8107 20.2689 20.1174 21.2331 20.5074 22.4139Z"
+                          stroke="#CFD0D6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+
+        </div>
+
+        <div class="row m-0  flex-wrap row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-5 g-4">
+            @foreach (var book in Model.allBooks)
+            {
+                <div data-title="@book.Title.ToLower()" class="col card-box book-item">
+                    <div data-state="جديد" class="card card-buy">
+                        <div class="card-image">
+                            <img src="@book.CoverImage" class="card-img-top" alt="Book Cover" />
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">@book.Title</h5>
+                            <p class="card-text">@book.AuthorName</p>
+                            <div class="card-price">
+                                <p>السعر</p>
+                                <p>@book.Price<span>$</span></p>
+                            </div>
+                            <a asp-area="Customer" asp-controller="Book" asp-action="Details" asp-route-id="@book.Id" class="btn card-btn">تفاصيل</a>
+                        </div>
+                    </div>
+                </div>
+            }
+            @foreach (var book in Model.allBooks)
+            {
+
+                <div data-title="@book.Title.ToLower()" class="col card-box book-item">
+                    <div data-state="جديد" class="card card-buy">
+                        <div class="card-image">
+                            <img src="@book.CoverImage" class="card-img-top" alt="Book Cover" />
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">@book.Title</h5>
+                            <p class="card-text">@book.AuthorName</p>
+                            <div class="card-price">
+                                <p>السعر</p>
+                                <p>@book.Price<span>$</span></p>
+                            </div>
+                            <a href="#" class="btn card-btn">تفاصيل</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script src="/js/Customer/book-index.js"></script>
+}

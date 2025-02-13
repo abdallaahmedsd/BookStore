@@ -25,6 +25,8 @@ namespace BookStore.DataAccess.Configurations
         /// </summary>
         public static ShoppingCardsStoredProcConfiguration Instance => _instance;
 
+        //public string DoesUserHaveShoppingCartItems => GetStoredProcedureWithSchema("Fun_DoesUserHaveShoppingCartItems(@UserID)", Schemas.Sales);
+
         /// <summary>
         /// Gets the stored procedure name for retrieving a ShoppingCard by ID.
         /// </summary>
@@ -43,7 +45,7 @@ namespace BookStore.DataAccess.Configurations
         /// <summary>
         /// Gets the stored procedure name for updating a ShoppingCard.
         /// </summary>
-        public string UpdateProcedure => throw new NotImplementedException();
+        public string UpdateProcedure => GetStoredProcedureWithSchema("SP_UpdateShoppingCard", Schemas.Sales);
 
         /// <summary>
         /// Gets the stored procedure name for deleting a ShoppingCard.
@@ -64,6 +66,15 @@ namespace BookStore.DataAccess.Configurations
         /// Gets the stored procedure name for retrieving ShoppingCard items.
         /// </summary>
         public string GetShoppingCardItems => GetStoredProcedureWithSchema("SP_GetShoppingCardItems", Schemas.Sales);
+
+        public string GetShoppingCardByUserID => GetStoredProcedureWithSchema("SP_GetShoppingCardByUserID", Schemas.Sales);
+        public string GetShoppingCardByUserIDandBookId => GetStoredProcedureWithSchema("SP_GetShoppingCardByUserIDandBookId", Schemas.Sales);
+
+        public string GetShoppingItemsCountByUserId => GetStoredProcedureWithSchema("SP_GetShoppingItemsCountByUserId", Schemas.Sales);
+
+
+        public string ShoppingCartViewModel => GetStoredProcedureWithSchema("SP_ShoppingCartViewModel", Schemas.Sales);
+
 
         /// <summary>
         /// Stored procedure name for checking if a ShippingCard exists by ID.

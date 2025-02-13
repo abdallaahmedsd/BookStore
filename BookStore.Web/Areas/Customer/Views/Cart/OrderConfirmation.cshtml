@@ -1,0 +1,18 @@
+﻿@model int
+
+@{
+	ViewData["Title"] = "Order Confirmation";
+}
+
+<div class="container cart-summary-container h-page flex-center flex-column">
+    <div class="row w-80 m-0 py-4 p-md-0 text-center text-md-end">
+		<div class="col-12 text-center flex-center flex-column">
+			<h1 class="color-red text-center">تم الطلب بنجاح!</h1>
+			 رقم طلبك هو: @Model <br /><br />
+			<div style="width:50%;overflow:hidden;">
+				<img class="size-100" src="~/images/order.jpeg" />
+			</div>
+		</div>
+	</div>
+</div>
+

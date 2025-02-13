@@ -35,5 +35,6 @@ namespace BookStore.Models.Entities
         /// Gets or sets the identifier of the user who placed the order.
         /// </summary>
         public int UserID { get; set; }
+
     }
 }

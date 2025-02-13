@@ -1,0 +1,35 @@
+﻿table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+tr {
+    text-align: start;
+    box-shadow: var(--main-shadow);
+    border-radius: 0.875rem;
+}
+
+table img {
+    width: 62px;
+    height: 62px;
+    border-radius: .75rem;
+    border: .5px solid var(--strok-color);
+}
+
+table button {
+    cursor: pointer !important;
+}
+
+th, td {
+    padding: 15px;
+/*    text-align: start;*/
+}
+
+th:nth-child(2), td:nth-child(2) {
+    width: 50%;
+}
+th:not(:nth-child(2)),
+td:not(:nth-child(2)) {
+    width: 10%;
+}
+

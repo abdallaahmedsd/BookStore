@@ -33,6 +33,7 @@ namespace BookStore.Models.ViewModels.Book;
         public string? CoverImage { get; set; }
 
         [DisplayName("عدد المبيعات")]
-        public int TotalSellingQuantity { get; set; } // sales
-    }
+        public int TotalSellingQuantity { get; set; } 
+
+}
 

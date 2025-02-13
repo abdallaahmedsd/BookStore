@@ -30,4 +30,11 @@
     <Folder Include="wwwroot\uploads\images\books\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\css\Admin\order.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

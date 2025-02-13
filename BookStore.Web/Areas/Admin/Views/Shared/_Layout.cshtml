@@ -124,25 +124,6 @@
             <nav class="navbar header-nav navbar-expand-lg bg-opacity ">
                 <h3 class="navbar-nav p-2 fw-bold">@ViewData["Section"]</h3>
                 <ul class="navbar-nav me-auto mb-0">
-                    <li class="nav-item">
-                        <a class="nav-link active p-2 color-black"
-                            aria-current="page"
-                            asp-area="Customer" asp-controller="Home" asp-action="Index">
-                            <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M11.9166 21.6666C17.3014 21.6666 21.6666 17.3014 21.6666 11.9166C21.6666 6.53185 17.3014 2.16663 11.9166 2.16663C6.53185 2.16663 2.16663 6.53185 2.16663 11.9166C2.16663 17.3014 6.53185 21.6666 11.9166 21.6666Z" stroke="#110F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M20.5074 22.4139C21.0815 24.1473 22.3924 24.3206 23.3999 22.8039C24.3207 21.4173 23.714 20.2798 22.0457 20.2798C20.8107 20.2689 20.1174 21.2331 20.5074 22.4139Z" stroke="#110F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link p-2 color-black" href="#">
-                            <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M13.0216 3.15247C9.43581 3.15247 6.52164 6.06663 6.52164 9.65247V12.7833C6.52164 13.4441 6.23997 14.4516 5.90414 15.015L4.65831 17.0841C3.88914 18.3625 4.41997 19.7816 5.82831 20.2583C10.4975 21.8183 15.535 21.8183 20.2041 20.2583C21.515 19.825 22.0891 18.2758 21.3741 17.0841L20.1283 15.015C19.8033 14.4516 19.5216 13.4441 19.5216 12.7833V9.65247C19.5216 6.07747 16.5966 3.15247 13.0216 3.15247Z" stroke="#110F0F" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" />
-                                <path d="M15.0258 3.46668C14.69 3.36918 14.3433 3.29335 13.9858 3.25002C12.9458 3.12002 11.9491 3.19585 11.0175 3.46668C11.3316 2.66502 12.1116 2.10168 13.0216 2.10168C13.9316 2.10168 14.7116 2.66502 15.0258 3.46668Z" stroke="#110F0F" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M16.2717 20.6483C16.2717 22.4358 14.8092 23.8983 13.0217 23.8983C12.1334 23.8983 11.3101 23.53 10.7251 22.945C10.1401 22.36 9.77173 21.5366 9.77173 20.6483" stroke="#110F0F" stroke-width="1.5" stroke-miterlimit="10" />
-                            </svg>
-                        </a>
-                    </li>
                     <li class="nav-item dropdown">
                         <a id="manageDropdown" class="nav-link dropdown-toggle p-2 text-black pointer" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                             <svg class="ms-1" width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -165,7 +146,7 @@
             </nav>
 
             <main class="container col-10 d-flex flex-column h-100 p-0">
-               
+                  <partial name="_NotificationsPartial" />
                     @RenderBody()
                  
             </main>
@@ -176,14 +157,11 @@
 
 
 
-
-
+    <!-- Validations JS Scripts -->
+    <partial name="_ValidationScriptsPartial"></partial>
 
 <partial name="_ScriptsPartial"></partial>
-
 <script src="~/js/Admin/dashboardLayout.js" asp-append-version="true"></script>
-
-    <partial name="_ValidationScriptsPartial"></partial>
 
 @await RenderSectionAsync("Scripts", required: false)
 

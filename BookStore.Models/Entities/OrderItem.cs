@@ -35,7 +35,5 @@ namespace BookStore.Models.Entities
         /// Gets or sets the subtotal cost for this order item.
         /// </summary>
         public decimal SubTotal { get; set; }
-
-       
     }
 }

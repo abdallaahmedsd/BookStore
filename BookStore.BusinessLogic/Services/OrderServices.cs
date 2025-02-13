@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using BookStore.DataAccess.Repositories;
 using BookStore.Models.Entities;
+using BookStore.Models.ViewModels.Admin.Order;
 using BookStore.Utilties.BusinessHelpers;
+using static BookStore.BusinessLogic.Services.ShippingServices;
 
 namespace BookstoreBackend.BLL.Services
 {
@@ -13,8 +15,7 @@ namespace BookstoreBackend.BLL.Services
     /// </summary>
     public class OrderServices
     {
-
-      
+        public enum enOrderStatus { Approved = 1, Process, Shipped, Cancel }
 
         private static readonly OrderRepositry _orderrepo;
 
@@ -56,6 +57,36 @@ namespace BookstoreBackend.BLL.Services
         {
             return await _orderrepo.UpdateAsync(order);
         }
+
+   
+        public async Task<bool> UpdateStatus(int OrderId, enOrderStatus status)
+        {
+            if (OrderId <= 0) return false;
+            return await _orderrepo.UpdateOrderStatusAsync(OrderId, (byte)status);
+        }
+
+
+        public async Task<Order?> GetOrderByIdAsync(int id)
+        {
+            if (id <= 0) return null;
+
+            return await _orderrepo.GetByIdAsync(id);
+        }
+
+
+        public async Task<IEnumerable<OrderListViewModel>> GetOrderListViewModelAsync()
+        {
+            return await _orderrepo.GetOrderListViewModelAsync();
+        }
+
+
+
+        public async Task<OrderDetailsViewModel?> GetOrderDetailsViewModleByOrderId(int OrderID)
+        {
+            if (OrderID <= 0) return null;
+            return await _orderrepo.GetOrderDetailsViewModleByOrderId(OrderID);
+        }
+
 
     }
 }

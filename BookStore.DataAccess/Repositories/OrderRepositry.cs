@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BookStore.Models.Entities;
+using System.Data;
+using BookStore.Models.ViewModels.Customer.OrderVM;
+using BookStore.Models.ViewModels.Admin.Order;
 
 namespace BookStore.DataAccess.Repositories
 {
@@ -68,5 +71,97 @@ namespace BookStore.DataAccess.Repositories
             }
             return listOfOrders;
         }
+
+        public async Task<bool> UpdateOrderStatusAsync(int orderId, byte status)
+        {
+            
+                await using SqlConnection connection = new SqlConnection(_connectionString);
+                await using SqlCommand command = new SqlCommand(_config.UpdateOrderStatus, connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue($"@{_config.IdParameterName}", orderId);
+                command.Parameters.AddWithValue("@Status", status);
+                SqlParameter returnValue = new SqlParameter
+                {
+                    Direction = ParameterDirection.ReturnValue
+                };
+                command.Parameters.Add(returnValue);
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
+                return (int)returnValue.Value == 1;
+        }
+
+        public async Task<IEnumerable<OrderListViewModel>> GetOrderListViewModelAsync()
+        {
+            List<OrderListViewModel> collection = new List<OrderListViewModel>();
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("Sales.SP_GetOrderListViewModel", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    try
+                    {
+                        await conn.OpenAsync();
+                        using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                var orderListViewmodel = new OrderListViewModel()
+                                {
+                                    Id = reader.GetInt32(0),
+                                    CreatedDate = reader.GetDateTime(1),
+                                    TotalAmoumt = reader.GetDecimal(2),
+                                    Status = reader.GetByte(3)
+                                };
+
+                                collection.Add(orderListViewmodel);
+                            }
+                        }
+                    }
+                    catch (SqlException ex)
+                    {
+                        throw new Exception("Database error: " + ex.Message);
+                    }
+                }
+            }
+
+            return collection;
+        }
+
+        public async Task<OrderDetailsViewModel?> GetOrderDetailsViewModleByOrderId(int orderId)
+        {
+            using SqlConnection connection = new SqlConnection(_connectionString);
+
+            using SqlCommand command = new SqlCommand("Sales.SP_GetOrderDetailsViewModleByOrderId", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter("@OrderID", SqlDbType.Int) { Value = orderId });
+
+            await connection.OpenAsync();
+            using SqlDataReader reader = await command.ExecuteReaderAsync();
+            if (await reader.ReadAsync())
+            {
+                return new OrderDetailsViewModel
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                    UserID = reader.GetInt32(reader.GetOrdinal("UserID")),
+                    CreatedDate = reader.GetDateTime(reader.GetOrdinal("OrderDate")),
+                    TotalAmoumt = reader.GetDecimal(reader.GetOrdinal("TotalAmoumt")),
+                    Status = reader.GetByte(reader.GetOrdinal("Status")),
+                    EstimatedDelivery = reader.GetDateTime(reader.GetOrdinal("EstimatedDelivery")),
+                    ZipCode = reader.GetString(reader.GetOrdinal("ZipCode")),
+                    Address = reader.GetString(reader.GetOrdinal("ShippingAddress")),
+                    City = reader.GetString(reader.GetOrdinal("City")),
+                    CountryName = reader.GetString(reader.GetOrdinal("CountryName")),
+                    FullName = reader.GetString(reader.GetOrdinal("FullName")),
+                    Email = reader.GetString(reader.GetOrdinal("Email"))
+                    
+                };
+            }
+            return null;
+        }
+
+
     }
 }

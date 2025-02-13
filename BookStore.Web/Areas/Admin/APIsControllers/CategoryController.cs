@@ -23,23 +23,23 @@ namespace BookStore.Web.Areas.Admin.APIsControllers
         public async Task<IActionResult> Delete(int id)
         {
             if (id <= 0)
-                return BadRequest(new { success = false, message = $"({id}) is an invalid Id" });
+                return BadRequest(new { success = false, message = $"({id}) رقم المعرف غير صالح" });
 
             try
             {
                 Category? categoryModel = await _categoryServices.FindAsync(id);
 
                 if (categoryModel == null)
-                    return NotFound();
+                    return NotFound(new { success = false, message = $"لا يوجد فئة برقم المعرف ({id})"});
 
                 await _categoryServices.DeleteAsync(id);
 
-                return Ok(new { success = true, message = "Category deleted successfully!" });
+                return Ok(new { success = true, message = "تم حذف الفئة بنجاح!" });
             }
             catch (Exception ex)
             {
                 // Log exception details (optional) for debugging
-                return StatusCode(500, new { success = false, message = "An error occurred while processing your request.", error = ex.Message });
+                return StatusCode(500, new { success = false, message = "حدث خطأ أثناء معالجة طلبك.", error = ex.Message });
             }
         }
     }

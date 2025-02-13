@@ -1,6 +1,7 @@
 using BookStore.BusinessLogic.Services;
 using BookStore.DataAccess.DbInitializer;
 using BookStore.DataAccess.EntityFrameworkCore.Data;
+using BookStore.DataAccess.Repositories;
 using BookStore.Models.Identity;
 using BookStore.Utilties;
 using BookstoreBackend.BLL.Services;
@@ -25,6 +26,15 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = $"/Identity/Account/Login";
+    options.LogoutPath = $"/Identity/Account/Logout";
+    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+});
+
+
 #region Custom Services
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
@@ -33,9 +43,31 @@ builder.Services.AddScoped<BookServices>();
 builder.Services.AddScoped<CategoryServices>();
 builder.Services.AddScoped<AuthorService>();
 builder.Services.AddScoped<LanguageServices>();
+builder.Services.AddScoped<ShoppingCartServices>();
+builder.Services.AddScoped<CountryService>();
+builder.Services.AddScoped<OrderItmeServices>();
+builder.Services.AddScoped<OrderServices>();
+builder.Services.AddScoped<ShippingServices>();
+builder.Services.AddScoped<PaymentServices>();
+
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped<SessionService>();
 #endregion
 
+#region Session Management
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(100);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+#endregion
+
+
 var app = builder.Build();
+
+SeedDatabase();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -43,11 +75,12 @@ if (!app.Environment.IsDevelopment())
 	app.UseExceptionHandler("/Home/Error");
 }
 
-SeedDatabase();
-
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseSession();
 
 app.UseAuthorization();
 

@@ -1,0 +1,110 @@
+﻿@model BookDetailsForCustomerViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+@section Styles
+{
+    <link rel="stylesheet" href="~/css/Customer/book.css" />
+}
+
+<div class="container book-details-container h-page flex-center">
+    <div class="h-100 row m-0 py-4 p-md-0 text-center text-md-end">
+        <form class=" d-flex flex-column justify-content-between rounded-second bg-opacity shadow p-4" method="post" asp-area="Customer" asp-controller="Book" asp-action="Details">
+
+            <input type="hidden" name="bookId" value="@Model.Id" />
+            <input type="hidden" name="Price" value="@Model.Price" />
+
+            <div class="row flex-grow-0 m-0">
+                <div class="col flex-between">
+                    <h4>تفاصيل الكتاب</h4>
+                    <a asp-area="Customer" asp-controller="Book" asp-action="Index" class="btn shadow">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.9998 19.92L8.47984 13.4C7.70984 12.63 7.70984 11.37 8.47984 10.6L14.9998 4.08" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+              </div>
+            </div>
+
+            <div class="row flex-grow-8 m-0  align-content-center justify-content-center  gy-5 gy-md-0">
+
+                <div class="col-12 col-md-6  col-lg-3  book-img-container p-sm-0 shadow rounded-second overflow-hidden">
+                    @if (!string.IsNullOrEmpty(Model.CoverImage))
+                    {
+                        <img class="w-100 h-100 object-fit-cover" src="@Model.CoverImage" />
+                    }
+                    else
+                    {
+                    <img src="https://placehold.co/500x600/png" class="card-img-top rounded" />
+                    }
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-9 pe-lg-5">
+                    <div class="row m-0 gap-5">
+
+                        <div class="row m-0 mb-4 text-end">
+                            <h1>معجزات الذكر اوجه الاعجاز فى ذكر الله</h1>
+                        </div>
+
+                        <div class="row m-0 gap-2">
+                            <div class="col p-0 gap-3 d-flex align-content-center flex-column flex-md-row ">
+                                <div class="fw-bold">المؤلف:</div>
+                                <div>@Model.AuthorName</div>
+                            </div>
+                            <div class="col p-0  gap-3 d-flex align-content-center flex-column flex-md-row ">
+                                <div class="fw-bold">للغة:</div>
+                                <div>@Model.LanguageName</div>
+                            </div>
+                        </div>
+                        <div class="row m-0 ">
+                            <div class="col p-0 d-flex align-content-center flex-column flex-md-row ">
+                                <div class="fw-bold">نبذة عن الكتاب:</div>
+                                <div>@Model.Description</div>
+                            </div>
+                        </div>
+                        <div class="row m-0 align-content-center ">
+                            <div class="col-12 col-sm-6 col-md-4 p-0 flex-col-end ">
+                                <div class="fw-bold">فئة الكتاب</div>
+                                <div class="rounded-second bg-second color-text flex-center ms-auto py-1 px-2">@Model.CategoryName</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 p-0 flex-col-end mt-4">
+                                <div class="fw-bold">تاريخ اصدار الكتاب:</div>
+                                <div>@Model.PublicationDate</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 p-0 flex-col-end mt-4">
+                                <div class="fw-bold">المعرف العالمى للكتاب (ISBA)</div>
+                                <div>@Model.ISBA</div>
+                            </div>
+                        </div>
+
+                        <div class="row m-0 gap-2 align-items-center">
+                            <div class="col p-0 gap-3 d-flex align-content-center flex-column flex-md-row ">
+                                <div class="fw-bold">سعر الكتاب:</div>
+                                <div>@Model.Price</div>
+                            </div>
+                            <div class="col p-0 d-flex flex-column">
+                                <div class="gap-3 d-flex align-items-center flex-column flex-md-row ">
+                                    <label asp-for="Quantity" class="fw-bold"></label>
+                                    <input asp-for="Quantity" class="bg-text p-2 rounded-second text-center shadow color-strok" />
+                                </div>
+                                <span asp-validation-for="Quantity" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row flex-grow-1 m-0 flex-center mt-4">
+                <button class="btn btn-input btn-main " type="submit">أضف إلى السلة</button>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"></partial>
+}

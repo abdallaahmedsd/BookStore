@@ -1,6 +1,7 @@
 ﻿using BookStore.BusinessLogic.Interfaces;
 using BookStore.DataAccess.Repositories;
 using BookStore.Models.Entities;
+using BookStore.Models.ViewModels.Customer.OrderVM;
 using BookStore.Utilties.BusinessHelpers;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace BookStore.BusinessLogic.Services
     /// <summary>
     /// Provides services for managing shopping carts.
     /// </summary>
-    public class ShoppingCartServices 
+    public class ShoppingCartServices
     {
         private readonly ShoppingCardRepository _shoppingCartRepository;
 
@@ -53,7 +54,7 @@ namespace BookStore.BusinessLogic.Services
         /// <param name="pageNumber">The page number for pagination.</param>
         /// <param name="pageSize">The number of items per page.</param>
         /// <returns>A collection of shopping cart items.</returns>
-        public async Task<IEnumerable<ShoppingCard>> GetAllAsync(int customerId, int pageNumber = 1, int pageSize = 10)
+        public async Task<IEnumerable<ShoppingCard>> GetShoppingCartByUserIdWithPaginationAsync(int customerId, int pageNumber = 1, int pageSize = 10)
         {
             if (customerId <= 0)
                 throw new ArgumentOutOfRangeException(nameof(customerId), "Customer ID must be greater than zero.");
@@ -62,7 +63,7 @@ namespace BookStore.BusinessLogic.Services
             if (pageSize <= 0)
                 throw new ArgumentOutOfRangeException(nameof(pageSize), "Page size must be greater than zero.");
 
-            return await _shoppingCartRepository.GetAllAsync(customerId, pageNumber, pageSize);
+            return await _shoppingCartRepository.GetShoppingCartByUserIdWithPaginationAsync(customerId, pageNumber, pageSize);
         }
 
         /// <summary>
@@ -113,12 +114,74 @@ namespace BookStore.BusinessLogic.Services
         /// </summary>
         /// <param name="shoppingCart">The shopping cart item to update.</param>
         /// <returns>True if the item was updated successfully; otherwise, false.</returns>
-        //public async Task<bool> UpdateAsync(ShoppingCard shoppingCart)
-        //{
-        //    if (shoppingCart == null)
-        //        throw new ArgumentNullException(nameof(shoppingCart));
+        public async Task<bool> UpdateAsync(ShoppingCard shoppingCart)
+        {
+            if (shoppingCart == null)
+                throw new ArgumentNullException(nameof(shoppingCart));
 
-        //    return await _shoppingCartRepository.UpdateAsync(shoppingCart);
-        //}
+            return await _shoppingCartRepository.UpdateAsync(shoppingCart);
+        }
+
+        /// <summary>
+        /// Retrieves the shopping card items for a specific user by their user ID.
+        /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains an enumerable list of shopping cards, or null if the user ID is invalid.</returns>
+        public async Task<IEnumerable<ShoppingCard>?> GetShoppingCardByUserIDAsync(int userId)
+        {
+            if (userId <= 0) return null;
+
+            return await _shoppingCartRepository.GetShoppingCardByUserIDAsync(userId);
+        }
+
+        /// <summary>
+        /// Retrieves a shopping card item for a specific user and book ID.
+        /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <param name="bookId">The book ID.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a shopping card, or null if the user ID is invalid.</returns>
+        public async Task<ShoppingCard?> GetShoppingCardByUserIDandBookIdAsync(int userId, int bookId)
+        {
+            if (userId <= 0) return null;
+
+            return await _shoppingCartRepository.GetShoppingCardByUserIDandBookIdAsync(userId, bookId);
+        }
+
+        /// <summary>
+        /// Retrieves the count of shopping items for a specific user by their user ID.
+        /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the count of shopping items, or null if the user ID is invalid.</returns>
+        public async Task<int?> GetShoppingItemsCountByUserIdAsync(int userId)
+        {
+            if (userId <= 0) return null;
+
+            return await _shoppingCartRepository.GetShoppingItemsCountByUserIdAsync(userId);
+        }
+
+        /// <summary>
+        /// Retrieves the shopping cart view model for a given user asynchronously.
+        /// </summary>
+        /// <param name="userId">The unique identifier for the user.</param>
+        /// <returns>A task representing the asynchronous operation. The task result contains an IEnumerable of CartViewModel if the user ID is valid; otherwise, null.</returns>
+        public async Task<IEnumerable<OrderItemViewModel>?> GetShoppingCartViewModelAsync(int userId)
+        {
+            if (userId <= 0) return null;
+
+            return await _shoppingCartRepository.GetShoppingCartViewModelAsync(userId);
+        }
+
+        /// <summary>
+        /// Checks if the user has items in their shopping cart asynchronously.
+        /// </summary>
+        /// <param name="userId">The unique identifier for the user.</param>
+        /// <returns>A task representing the asynchronous operation. The task result contains a boolean value indicating whether the user has items in their shopping cart.</returns>
+        public async Task<bool> DoesUserHaveShoppingCartItemsAsync(int userId)
+        {
+            if (userId <= 0) return false;
+
+            return await _shoppingCartRepository.DoesUserHaveShoppingCartItemsAsync(userId);
+        }
+
     }
 }

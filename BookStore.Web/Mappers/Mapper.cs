@@ -1,8 +1,13 @@
-﻿using BookStore.Models.Entities;
+﻿using BookStore.BusinessLogic.Services;
+using BookStore.Models.Entities;
 using BookStore.Models.Identity;
 using BookStore.Models.ViewModels.Admin;
 using BookStore.Models.ViewModels.Admin.Book;
 using BookStore.Models.ViewModels.Book;
+using BookStore.Models.ViewModels.Customer.Book;
+using BookStore.Models.ViewModels.Customer.Cart;
+using BookStore.Models.ViewModels.Customer.OrderVM;
+using BookstoreBackend.BLL.Services;
 using Microsoft.AspNetCore.Identity;
 
 namespace BookStore.Web.Mappers
@@ -71,30 +76,57 @@ namespace BookStore.Web.Mappers
             authorViewModel.ProfileImage = authorModel.ProfileImage;
         }
 
-        //public static void Map(ApplicationUser user, TbOrder order)
-        //{
-        //    order.Name = user.Name;
-        //    order.PhoneNumber = user.PhoneNumber;
-        //    order.City = user.AddressInfo.City;
-        //    order.StreetAddress = user.AddressInfo.StreetAddress;
-        //    order.State = user.AddressInfo.State;
-        //    order.State = user.AddressInfo.State;
-        //    order.PostalCode = user.AddressInfo.PostalCode;
-        //}
+        //Customer
+        public static void Map(BookDetailsViewModel bookDetailsModel, BookDetailsForCustomerViewModel BookDetailsForCustomerViewModel)
+        {
+            BookDetailsForCustomerViewModel.Id = bookDetailsModel.Id;
+            BookDetailsForCustomerViewModel.AuthorName = bookDetailsModel.AuthorName;
+            BookDetailsForCustomerViewModel.CategoryName = bookDetailsModel.CategoryName;
+            BookDetailsForCustomerViewModel.LanguageName = bookDetailsModel.LanguageName;
+            BookDetailsForCustomerViewModel.Title = bookDetailsModel.Title;
+            BookDetailsForCustomerViewModel.Price = bookDetailsModel.Price;
+            BookDetailsForCustomerViewModel.Description = bookDetailsModel.Description;
+            BookDetailsForCustomerViewModel.ISBA = bookDetailsModel.ISBA;
+            BookDetailsForCustomerViewModel.PublicationDate = bookDetailsModel.PublicationDate;
+            BookDetailsForCustomerViewModel.CoverImage = bookDetailsModel.CoverImage;
+            BookDetailsForCustomerViewModel.TotalSellingQuantity = bookDetailsModel.TotalSellingQuantity;
+        }
 
-        //public static void Map(OrderViewModel orderViewModel, TbOrder order)
-        //{
-        //    order.Name = orderViewModel.Order.Name;
-        //    order.StreetAddress = orderViewModel.Order.StreetAddress;
-        //    order.PhoneNumber = orderViewModel.Order.PhoneNumber;
-        //    order.State = orderViewModel.Order.State;
-        //    order.City = orderViewModel.Order.City;
+        public static void Map(AddToCartViewModel shoppingCartViewModel, ShoppingCard shoppingCart)
+        {
+            shoppingCart.BookID = shoppingCartViewModel.BookId;
+            shoppingCart.Quantity = shoppingCartViewModel.Quantity;
+            shoppingCart.UserID = shoppingCartViewModel.UserId;
+            shoppingCart.SubTotal = shoppingCartViewModel.Quantity * shoppingCartViewModel.Price;
+        }
 
-        //    if (!string.IsNullOrEmpty(orderViewModel.Order.Carrier))
-        //        order.Carrier = orderViewModel.Order.Carrier;
+        public static void Map(OrderItemViewModel cartItem, OrderItem orderItem)
+        {
+            orderItem.BookId = cartItem.BookID;
+            orderItem.Quntity = cartItem.Quantity;
+            orderItem.SubTotal = cartItem.SubTotal;
+        }
 
-        //    if (!string.IsNullOrEmpty(orderViewModel.Order.TrackingNumber))
-        //        order.TrackingNumber = orderViewModel.Order.TrackingNumber;
-        //}
+        public static void Map(OrderSummaryViewModel orderViewModel, Order order)
+        {
+            order.CreatedDate = orderViewModel.CreatedDate;
+            order.TotalAmoumt = orderViewModel.OrderTotalAmount;
+            order.Status = (int)OrderServices.enOrderStatus.Approved;
+        }
+
+        public static void Map(OrderSummaryViewModel orderViewModel, Shipping shipping)
+        {
+            shipping.CountryID = orderViewModel.CountryId;
+            shipping.City = orderViewModel.City;
+            shipping.Address = orderViewModel.Address;
+            shipping.ZipCode = orderViewModel.ZipCode;
+            shipping.EstimatedDelivery = orderViewModel.EstimatedDelivery;
+        }
+        public static void Map(OrderSummaryViewModel orderViewModel, Payment payment)
+        {
+            payment.PaymentDate = orderViewModel.CreatedDate;
+            payment.Amount = orderViewModel.OrderTotalAmount;
+        }
+
     }
 }

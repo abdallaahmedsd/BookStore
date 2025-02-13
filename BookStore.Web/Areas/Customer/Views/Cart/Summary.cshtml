@@ -1,0 +1,149 @@
+﻿@model OrderSummaryViewModel
+
+@{
+	ViewData["Title"] = "Summary";
+
+    SelectList countries = new SelectList(Model.Countries, "Id", "Name");
+}
+
+@section Styles
+{
+    <link rel="stylesheet" href="~/css/Customer/summary.css" />
+}
+
+<div class="container cart-summary-container h-page flex-center">
+    <div class="h-page w-100 row m-0 py-4 p-md-0 text-center text-md-end">
+        <form class=" d-flex flex-column rounded-second bg-opacity shadow my-4 p-4 gap-4" method="post" asp-area="Customer" asp-controller="Cart" asp-action="Summary">
+            @* <input type="hidden" name="EstimatedDelivery" value="@Model.EstimatedDelivery" /> *@
+           <input type="hidden" name="OrderTotalAmount" value="@Model.OrderTotalAmount" />
+
+
+
+            <div class="row m-0">
+                <div class="col flex-between">
+                    <h4>معلومات الشحن</h4>
+                    <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="btn shadow">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.9998 19.92L8.47984 13.4C7.70984 12.63 7.70984 11.37 8.47984 10.6L14.9998 4.08" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="row row-col-3 m-0  justify-content-between  gy-5 gy-md-0 h-100">
+                
+                <div class="col-12 col-sm-4 p-0 h-100">
+
+                    <div class="row m-0 h-100">
+                        <div class="col-12 p-0">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>عنوان الكتاب</th>
+                                        <th>السعر</th>
+                                        <th>الكمية</th>
+                                        <th>الإجمالي</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.CartItems)
+                                    {
+                                        <tr>
+                                            <td>@item.BookTitle</td>
+                                            <td>@item.BookPrice</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@item.SubTotal</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="col-12 p-0">
+                        <hr />
+
+                            <div class="col-12 d-flex justify-content-end gap-5">
+                                <div class="fw-bold"> الإجمالي</div>
+                                <div>@Model.OrderTotalAmount $</div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 p-0 flex-center mt-auto">
+                            <button type="submit" class="btn btn-input btn-main">ادفع الآن</button>
+                        </div>
+
+                    </div>
+
+                    
+                </div>
+
+                <div class="col-12 col-sm-5 col-lg-4 p-0 gap-3  h-100">
+
+
+                    <div class="form-entity-box">
+                        <div class="entity-input">
+                            <label asp-for="CountryId"></label>
+                            <select asp-for="CountryId" asp-items="countries" aria-label="Default select example">
+                                <option selected disabled value="0">اختر بلد</option>
+                            </select>
+                        </div>
+                        <span asp-validation-for="CountryId"></span>
+                    </div>
+
+                    <div class=" form-entity-box">
+                        <div class="entity-input">
+                            <label asp-for="City"></label>
+                            <input asp-for="City"
+                                   placeholder="ادخل المحافظة"
+                                   aria-label="default input example" />
+                        </div>
+                        <span asp-validation-for="City"></span>
+                    </div>
+
+                    <div class="form-entity-box">
+                        <div class="entity-input">
+                            <label asp-for="ZipCode"></label>
+                            <input asp-for="ZipCode"
+                                   placeholder="ادخل الرقم البريدي"
+                                   aria-label="default input example" />
+                        </div>
+                        <span asp-validation-for="ZipCode"></span>
+                    </div>
+
+                    <div class="form-entity-box form-entity-box-area">
+                        <div class="entity-input">
+                            <label asp-for="Address"></label>
+                            <textarea asp-for="Address"
+                                      placeholder="ادخل العنوان">
+                                </textarea>
+                        </div>
+                        <span asp-validation-for="Address"></span>
+                    </div>
+                  
+
+
+                    <div class="col-12 d-flex gap-2 fs-6 color-main mt-2">
+                        <small>متوقع وصول الشحنه يوم</small>
+                        <small>@Model.EstimatedDelivery</small>
+                    </div>
+
+            
+
+                </div>
+
+
+            </div>
+
+          
+
+
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"></partial>
+
+    <script type="module" src="~/js/Customer/delete-orderItem.js" asp-append-version="true"></script>
+}
