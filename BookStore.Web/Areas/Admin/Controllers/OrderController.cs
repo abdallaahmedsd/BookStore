@@ -11,6 +11,8 @@ using System.Security.Claims;
 
 namespace BookStore.Web.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+
     public class OrderController : Controller
     {
         private readonly OrderItmeServices _orderItmeServices;
@@ -21,7 +23,6 @@ namespace BookStore.Web.Areas.Admin.Controllers
             _orderServices = orderServices;
         }
 
-        [Area("Admin")]
         // GET: OrderController
         public async Task<ActionResult> Index()
         {
@@ -33,14 +34,27 @@ namespace BookStore.Web.Areas.Admin.Controllers
             // #Process the order 
             //             alert
             //             change order status to Process 
-            //              needs the carrier and TrackingNumber and ShippingDate
             //                     yes => ajax success find the carrier
             //                            Update the partial summary page
             //                                                           title of the order state
             //                                                           button of action from process to ship
+            //                                                           button of Cancel 
             //                     
             //                     No => ajax fail alert 
-            //                           ask for the carrier
+            //                           
+
+            // #Ship the order 
+            //             alert
+            //             change order status to Shipped 
+            //              needs the carrier and TrackingNumber and ShippingDate
+            //                     yes => ajax success find the carrier
+            //                            Update the partial summary page
+            //                                                           title of the order state
+            //                                                           (delete) button of action 
+            //                                                           button of Cancel 
+            //                     
+            //                     No => ajax fail alert 
+            //                           ask for the carrier and TrackingNumber and ShippingDate
 
 
             // 
@@ -49,6 +63,8 @@ namespace BookStore.Web.Areas.Admin.Controllers
             //           2- from the list
             //                       alert
             //                       change order status to cancel
+            //                        (delete) button of action 
+            //                        (delete) button of cancel 
 
 
         }
