@@ -151,7 +151,7 @@ namespace BookStore.DataAccess.Repositories
                     Status = reader.GetByte(reader.GetOrdinal("Status")),
                     EstimatedDelivery = reader.GetDateTime(reader.GetOrdinal("EstimatedDelivery")),
                     ZipCode = reader.GetString(reader.GetOrdinal("ZipCode")),
-                    Address = reader.GetString(reader.GetOrdinal("ShippingAddress")),
+                    Address = reader.GetString(reader.GetOrdinal("Address")),
                     City = reader.GetString(reader.GetOrdinal("City")),
                     CountryName = reader.GetString(reader.GetOrdinal("CountryName")),
                     FullName = reader.GetString(reader.GetOrdinal("FullName")),

@@ -27,7 +27,7 @@ namespace BookStore.Web.Areas.Admin.APIsControllers
         }
 
 
-        [HttpDelete("{id:int}")]
+        [HttpPost("cancel/{id:int}")]
         public async Task<ActionResult> Cancel(int id)
         {
             if (id <= 0)
@@ -43,11 +43,13 @@ namespace BookStore.Web.Areas.Admin.APIsControllers
                    await _orderItmeServices.DeleteAsync(item.Id);
                 }
 
-                // delete Order's shipping 
-                //await _shippingServices.DeleteAsync(id);
+                int UserId = (await _orderServices.GetOrderByIdAsync(id)).UserID;
 
-                // delete Order's payment 
-                //await _paymentServices.DeleteAsync(id); 
+                // delete Order's shipping 
+                //await _shippingServices.DeleteShippingByUserIdAsync(UserId); //fix
+
+                 //delete Order's payment 
+                //await _paymentServices.DeletePaymentByUserIdAsync(UserId); //fix
 
                 // Cancel Order
                 await _orderServices.UpdateStatus(id,OrderServices.enOrderStatus.Cancel);
@@ -59,42 +61,5 @@ namespace BookStore.Web.Areas.Admin.APIsControllers
                 return StatusCode(500, new { success = false, message = "حدث خطأ أثناء معالجة طلبك.", error = ex.Message });
             }
         }
-
-        // This for filtering on status
-
-        //[HttpGet]
-        //public IActionResult GetAll(string status = "all")
-        //{
-        //    try
-        //    {
-                
-
-        //        switch (status)
-        //        {
-        //            case "pending":
-        //                lstOrders = lstOrders.Where(x => x.PaymentStatus == SD.PaymentStatusDelayedPayment);
-        //                break;
-        //            case "inProcess":
-        //                lstOrders = lstOrders.Where(x => x.OrderStatus == SD.StatusInProcess);
-        //                break;
-        //            case "completed":
-        //                lstOrders = lstOrders.Where(x => x.OrderStatus == SD.StatusShipped);
-        //                break;
-        //            case "approved":
-        //                lstOrders = lstOrders.Where(x => x.OrderStatus == SD.StatusApproved);
-        //                break;
-        //            default:
-        //                break;
-        //        }
-
-        //        return Ok(new { success = true, data = lstOrders });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Log the exception details (optional)
-        //        return StatusCode(500, new { success = false, message = "An error occurred while retrieving orders." });
-        //    }
-        //}
-
     }
 }

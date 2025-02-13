@@ -3,10 +3,12 @@ using BookStore.Models.Entities;
 using BookStore.Models.Identity;
 using BookStore.Models.ViewModels.Admin;
 using BookStore.Models.ViewModels.Admin.Book;
+using BookStore.Models.ViewModels.Admin.Order;
 using BookStore.Models.ViewModels.Book;
 using BookStore.Models.ViewModels.Customer.Book;
 using BookStore.Models.ViewModels.Customer.Cart;
 using BookStore.Models.ViewModels.Customer.OrderVM;
+using BookStore.Utilties;
 using BookstoreBackend.BLL.Services;
 using Microsoft.AspNetCore.Identity;
 
@@ -76,10 +78,9 @@ namespace BookStore.Web.Mappers
             authorViewModel.ProfileImage = authorModel.ProfileImage;
         }
 
-        //Customer
         public static void Map(BookDetailsViewModel bookDetailsModel, BookDetailsForCustomerViewModel BookDetailsForCustomerViewModel)
         {
-            BookDetailsForCustomerViewModel.Id = bookDetailsModel.Id;
+            BookDetailsForCustomerViewModel.Id = bookDetailsModel.Id; ///////////solve this why sometime is null and sometimes not
             BookDetailsForCustomerViewModel.AuthorName = bookDetailsModel.AuthorName;
             BookDetailsForCustomerViewModel.CategoryName = bookDetailsModel.CategoryName;
             BookDetailsForCustomerViewModel.LanguageName = bookDetailsModel.LanguageName;
@@ -111,7 +112,7 @@ namespace BookStore.Web.Mappers
         {
             order.CreatedDate = orderViewModel.CreatedDate;
             order.TotalAmoumt = orderViewModel.OrderTotalAmount;
-            order.Status = (int)OrderServices.enOrderStatus.Approved;
+            order.Status = (byte)OrderServices.enOrderStatus.Approved;
         }
 
         public static void Map(OrderSummaryViewModel orderViewModel, Shipping shipping)
@@ -122,11 +123,96 @@ namespace BookStore.Web.Mappers
             shipping.ZipCode = orderViewModel.ZipCode;
             shipping.EstimatedDelivery = orderViewModel.EstimatedDelivery;
         }
+
+        public static void Map(Shipping shipping, ManageOrderViewModel manageOrderViewModel)
+        {
+            manageOrderViewModel.TrackingNumber = shipping?.TrackingNumber;
+            manageOrderViewModel.EstimatedDelivery = (DateTime)shipping.EstimatedDelivery;
+            manageOrderViewModel.ShippingDate = shipping.ShippingDate;
+            manageOrderViewModel.City = shipping.City;
+            manageOrderViewModel.Address = shipping.Address;
+            manageOrderViewModel.ZipCode = shipping.ZipCode;
+            manageOrderViewModel.Carrier = shipping.Carrier;
+        }
+
         public static void Map(OrderSummaryViewModel orderViewModel, Payment payment)
         {
             payment.PaymentDate = orderViewModel.CreatedDate;
             payment.Amount = orderViewModel.OrderTotalAmount;
         }
 
+        public static void Map(OrderDetailsViewModel orderDetailsViewModel, ManageOrderViewModel manageOrderViewModel)
+        {
+            manageOrderViewModel.Id = orderDetailsViewModel.Id;
+            manageOrderViewModel.UserID = orderDetailsViewModel.UserID;
+            manageOrderViewModel.CreatedDate = orderDetailsViewModel.CreatedDate;
+            manageOrderViewModel.TotalAmoumt = orderDetailsViewModel.TotalAmoumt;
+            manageOrderViewModel.CountryName = orderDetailsViewModel.CountryName;
+            manageOrderViewModel.Status = _SetOrderStatus(orderDetailsViewModel.Status);
+            manageOrderViewModel.City = orderDetailsViewModel.City;
+            manageOrderViewModel.Address = orderDetailsViewModel.Address;
+            manageOrderViewModel.ZipCode = orderDetailsViewModel.ZipCode;
+            manageOrderViewModel.EstimatedDelivery = orderDetailsViewModel.EstimatedDelivery;
+            manageOrderViewModel.FullName = orderDetailsViewModel.FullName;
+            manageOrderViewModel.Email = orderDetailsViewModel.Email;
+        }
+
+        public static void Map(ManageOrderViewModel manageOrderViewModel, Order orderModel)
+        {
+            orderModel.CreatedDate = manageOrderViewModel.CreatedDate;
+            orderModel.TotalAmoumt = manageOrderViewModel.TotalAmoumt;
+            orderModel.Status = _SetOrderStatus(manageOrderViewModel.Status);
+            orderModel.UserID = manageOrderViewModel.UserID;
+        }
+
+        public static void Map(ManageOrderViewModel manageOrderViewModel, Shipping shippingModel)
+        {
+            shippingModel.OrderID = manageOrderViewModel.Id;
+            shippingModel.ShippingDate = manageOrderViewModel.ShippingDate;
+            shippingModel.TrackingNumber = manageOrderViewModel.TrackingNumber;
+            shippingModel.EstimatedDelivery = manageOrderViewModel.EstimatedDelivery;
+            shippingModel.Carrier = manageOrderViewModel.Carrier;
+            shippingModel.CountryID = 4; // ******************************
+            shippingModel.City = manageOrderViewModel.City;
+            shippingModel.Address = manageOrderViewModel.Address;
+            shippingModel.ZipCode = manageOrderViewModel.ZipCode;
+            shippingModel.Carrier = manageOrderViewModel.Carrier;
+        }
+
+        private static string _SetOrderStatus(byte Status)
+        {
+            switch (Status)
+            {
+                case 1:
+                    return SessionHelper.StatusApproved;
+                case 2:
+                    return SessionHelper.StatusInProcess;
+                case 3:
+                    return SessionHelper.StatusShipped;
+                case 4:
+                    return SessionHelper.StatusCanceled;
+                default:
+                    return "غير معروف"; 
+            }
+
+        }
+
+        private static byte _SetOrderStatus(string Status)
+        {
+            switch (Status)
+            {
+                case SessionHelper.StatusApproved:
+                    return 1;
+                case SessionHelper.StatusInProcess:
+                    return 2;
+                case SessionHelper.StatusShipped:
+                    return 3;
+                case SessionHelper.StatusCanceled:
+                    return 4;
+                default:
+                    return 0;
+            }
+
+        }
     }
 }

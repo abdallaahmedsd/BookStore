@@ -4,6 +4,7 @@ using BookStore.Models.ViewModels.Book;
 using BookStore.Models.ViewModels.Customer.Book;
 using BookStore.Models.ViewModels.Customer.Cart;
 using BookStore.Models.ViewModels.Customer.OrderVM;
+using BookStore.Utilties;
 using BookStore.Web.Mappers;
 using BookstoreBackend.BLL.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -73,7 +74,7 @@ namespace BookStore.Web.Areas.Customer.Controllers
                     CartItems = CartItems,
                     Countries = allCountries,
                     OrderTotalAmount = _CalcOrderTotalAmount(CartItems),
-                    EstimatedDelivery = DateTime.Now.AddDays(10)// will change acourding to the actual order
+                    EstimatedDelivery = DateTime.Now.AddDays(SessionHelper.EstimatedDeliveryPeriod)// will change acourding to the actual order
                 };
 
                 return View(CartViewModel);
@@ -98,15 +99,14 @@ namespace BookStore.Web.Areas.Customer.Controllers
 
                 if (ModelState.IsValid)
                 {
-                 
                     CartItems = (await _shoppingCartService.GetShoppingCartViewModelAsync(userId)).ToList();
                     // Add Order
                     Order order = new();
 
-                    Mapper.Map( orderViewModel, order);
+                    Mapper.Map(orderViewModel, order);
                     order.UserID = userId;
-                    order.TotalAmoumt = orderViewModel.OrderTotalAmount;
-
+                    order.TotalAmoumt = _CalcOrderTotalAmount(CartItems);
+                        
 
                     await _orderService._AddAsync(order);
 
@@ -144,9 +144,7 @@ namespace BookStore.Web.Areas.Customer.Controllers
 
                     await _paymentServices.AddAsync(payment);
 
-
                     TempData["success"] = "تم إضافة الطلب بنجاح!";
-
                     return RedirectToAction(nameof(OrderConfirmation), new { orderId = order.Id });
                 }
 
@@ -169,6 +167,7 @@ namespace BookStore.Web.Areas.Customer.Controllers
                 return View("Error");
             }
         }
+
         public async Task<IActionResult> OrderConfirmation(int orderId)
         {
             Order? order = await _orderService.GetOrderByIdAsync(orderId);
@@ -183,7 +182,6 @@ namespace BookStore.Web.Areas.Customer.Controllers
                 return View("Error");
             }
         }
-
 
         private async Task _SaveCartQuantityInSession(int userId)
         {

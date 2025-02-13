@@ -14,7 +14,7 @@
 <div class="container cart-summary-container h-page flex-center">
     <div class="h-page w-100 row m-0 py-4 p-md-0 text-center text-md-end">
         <form class=" d-flex flex-column rounded-second bg-opacity shadow my-4 p-4 gap-4" method="post" asp-area="Customer" asp-controller="Cart" asp-action="Summary">
-            @* <input type="hidden" name="EstimatedDelivery" value="@Model.EstimatedDelivery" /> *@
+            <input type="hidden" name="EstimatedDelivery" value="@Model.EstimatedDelivery" />
            <input type="hidden" name="OrderTotalAmount" value="@Model.OrderTotalAmount" />
 
 

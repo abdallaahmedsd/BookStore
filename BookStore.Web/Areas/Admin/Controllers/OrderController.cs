@@ -8,6 +8,8 @@ using BookstoreBackend.BLL.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using System.Security.Claims;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
+using BookStore.Utilties;
 
 namespace BookStore.Web.Areas.Admin.Controllers
 {
@@ -17,240 +19,150 @@ namespace BookStore.Web.Areas.Admin.Controllers
     {
         private readonly OrderItmeServices _orderItmeServices;
         private readonly OrderServices _orderServices;
+        private readonly ShippingServices _shippingServices;
+        private readonly CountryService _countryService;
+        private readonly PaymentServices _paymentServices;
 
-        public OrderController(OrderItmeServices orderItmeServices, OrderServices orderServices) {
+        public OrderController(OrderItmeServices orderItmeServices, OrderServices orderServices,ShippingServices shippingServices,CountryService countryService,PaymentServices paymentServices) {
             _orderItmeServices = orderItmeServices;
             _orderServices = orderServices;
+            _shippingServices = shippingServices;
+            _countryService = countryService;
+            _paymentServices = paymentServices;
         }
 
-        // GET: OrderController
         public async Task<ActionResult> Index()
         {
             List<OrderListViewModel> allOrders = (await _orderServices.GetOrderListViewModelAsync()).ToList();
 
             return View(allOrders);
-
-            // Edit Order:
-            // #Process the order 
-            //             alert
-            //             change order status to Process 
-            //                     yes => ajax success find the carrier
-            //                            Update the partial summary page
-            //                                                           title of the order state
-            //                                                           button of action from process to ship
-            //                                                           button of Cancel 
-            //                     
-            //                     No => ajax fail alert 
-            //                           
-
-            // #Ship the order 
-            //             alert
-            //             change order status to Shipped 
-            //              needs the carrier and TrackingNumber and ShippingDate
-            //                     yes => ajax success find the carrier
-            //                            Update the partial summary page
-            //                                                           title of the order state
-            //                                                           (delete) button of action 
-            //                                                           button of Cancel 
-            //                     
-            //                     No => ajax fail alert 
-            //                           ask for the carrier and TrackingNumber and ShippingDate
-
-
-            // 
-            // #Cancel Order:
-            //           1- from the form
-            //           2- from the list
-            //                       alert
-            //                       change order status to cancel
-            //                        (delete) button of action 
-            //                        (delete) button of cancel 
-
-
         }
 
 
-        // GET: OrderController/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
+            // Should have the shipping details also with it and make them take null in OrderDetailsViewModel
+
             if (id <= 0)
                 return NotFound();
 
             try
             {
-                // Take the viewModel from db
-                ManageOrderViewModel orderViewModel = new ManageOrderViewModel();
+                OrderDetailsViewModel orderDetailsViewModel = await _orderServices.GetOrderDetailsViewModleByOrderId(id);
 
-                orderViewModel.OrderItems = (await _orderItmeServices.GetOrderItemViewModelAsync()).ToList();
+                ManageOrderViewModel manageOrderViewModel = new ManageOrderViewModel();
+                manageOrderViewModel.OrderItems = (await _orderItmeServices.GetOrderItemViewModelAsync()).ToList();
+                Mapper.Map(orderDetailsViewModel, manageOrderViewModel);
 
-                return View(orderViewModel);
+                // will change this later
+                Shipping shippingModel = await _shippingServices.FindByOrderIdAsync(id);
+                Mapper.Map(shippingModel,manageOrderViewModel);
+
+
+                return View(manageOrderViewModel);
             }
             catch (Exception ex)
             {
                 TempData["error"] = "حدث خطأ أثناء استرجاع الطلب للتعديل";
-                return View("Error");
+                return RedirectToAction(nameof(Index));
             }
         }
 
-        // POST: OrderController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, ManageOrderViewModel orderViewModel)
+        public async Task<ActionResult> Edit(int id, ManageOrderViewModel manageOrderViewModel)
         {
             if (id <= 0)
                 return NotFound();
 
-            if (ModelState.IsValid)
-            {
                 try
                 {
                     ClaimsIdentity claimsIdentity = (ClaimsIdentity)User?.Identity;
                     int userId = int.Parse(claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
 
+                    Order orderModel =await _orderServices.GetOrderByIdAsync(id);
+                    Mapper.Map(manageOrderViewModel, orderModel);
+                    await _orderServices._UpdateAsync(orderModel);
 
 
-                    TempData["success"] = "تم تحديث الطلب بنجاح!";
+                    Shipping shippingModel = await _shippingServices.FindByOrderIdAsync(id);
+                    Mapper.Map(manageOrderViewModel, shippingModel);
+                    await _shippingServices.UpdateAsync(shippingModel);
 
-                    return RedirectToAction(nameof(Index));
+
+                //Payment paymentModel = await _paymentServices.GetPaymentByOrderIdAsync(id);
+                //Mapper.Map(manageOrderViewModel, paymentModel);
+                //await _paymentServices.UpdateAsync(paymentModel);
+
+
+                TempData["success"] = "تم تحديث الطلب بنجاح!";
+                    return RedirectToAction(nameof(Edit), new {id =id });
+
                 }
                 catch
                 {
 
                     TempData["error"] = " حدث خطأ أثناء تعديل الطلب";
-                    return View("Error");
+                    return RedirectToAction(nameof(Edit), manageOrderViewModel);
                 }
-            }
-            else
-            {
-                // Take the viewModel from db
-                orderViewModel = new ManageOrderViewModel();
-
-                orderViewModel.OrderItems = (await _orderItmeServices.GetOrderItemViewModelAsync()).ToList();
-                return View(orderViewModel);
-            }
 
         }
 
-
-        /*
-         
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		[Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
-		public async Task<IActionResult> UpdateOrderDetails()
+		public async Task<IActionResult> StartProcessing(ManageOrderViewModel manageOrderViewModel)
 		{
 			try
 			{
-				TbOrder? orderFromDb = await _unitOfWork.Order.GetByIdAsync(OrderViewModel.Order.Id);
+                await _orderServices.UpdateStatus(manageOrderViewModel.Id, OrderServices.enOrderStatus.Process);
+                manageOrderViewModel.Status = _SetOrderStatus((await _orderServices.GetOrderByIdAsync(manageOrderViewModel.Id)).Status); // 
 
-				Mapper.Map(OrderViewModel, orderFromDb);
-
-				_unitOfWork.Order.Update(orderFromDb);
-				await _unitOfWork.SaveAsync();
-
-				TempData["Success"] = "Order details updated successfully!";
-				return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.Order.Id });
-			}
-			catch (Exception ex)
+                TempData["success"] = "تم تحديث الطلب بنجاح!";
+                return RedirectToAction(nameof(Edit), manageOrderViewModel);
+            }
+            catch (Exception ex)
 			{
-				TempData["Error"] = "An error occurred while updating order details. Please try again.";
-				return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.Order.Id });
-			}
-		}
+                TempData["error"] = " حدث خطأ أثناء تعديل الطلب";
+                return RedirectToAction(nameof(Edit), manageOrderViewModel);
+            }
+        }
 
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		[Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
-		public async Task<IActionResult> StartProccessing()
-		{
-			try
-			{
-				_unitOfWork.Order.UpdateStatus(OrderViewModel.Order.Id, SD.StatusInProcess);
-				await _unitOfWork.SaveAsync();
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ShipOrder( ManageOrderViewModel manageOrderViewModel)
+        {
+            try
+            {
+                await _orderServices.UpdateStatus(manageOrderViewModel.Id, OrderServices.enOrderStatus.Shipped);
+                manageOrderViewModel.Status = _SetOrderStatus((await _orderServices.GetOrderByIdAsync(manageOrderViewModel.Id)).Status); 
 
-				TempData["Success"] = "Order status updated successfully!";
-				return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.Order.Id });
-			}
-			catch (Exception ex)
-			{
-				TempData["Error"] = "An error occurred while starting order processing. Please try again.";
-				return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.Order.Id });
-			}
-		}
+                TempData["success"] = "تم تحديث الطلب بنجاح!";
+                //return View("Edit", new { orderId = manageOrderViewModel.Id });
+                return RedirectToAction(nameof(Edit), manageOrderViewModel);
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = " حدث خطأ أثناء تعديل الطلب";
+                return RedirectToAction(nameof(Edit), manageOrderViewModel);
+            }
+        }
 
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		[Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
-		public async Task<IActionResult> ShipOrder()
-		{
-			try
-			{
-				var orderFromDb = await _unitOfWork.Order.GetByIdAsync(OrderViewModel.Order.Id);
-				orderFromDb.TrackingNumber = OrderViewModel.Order.TrackingNumber;
-				orderFromDb.Carrier = OrderViewModel.Order.Carrier;
-				orderFromDb.OrderStatus = SD.StatusShipped;
-				orderFromDb.ShippingDate = DateTime.Now;
+        private static string _SetOrderStatus(byte Status)
+        {
+            switch (Status)
+            {
+                case 1:
+                    return SessionHelper.StatusApproved;
+                case 2:
+                    return SessionHelper.StatusInProcess;
+                case 3:
+                    return SessionHelper.StatusShipped;
+                case 4:
+                    return SessionHelper.StatusCanceled;
+                default:
+                    return "غير معروف";
+            }
 
-				if (orderFromDb.PaymentStatus == SD.PaymentStatusDelayedPayment)
-				{
-					orderFromDb.PaymentDueDate = DateOnly.FromDateTime(DateTime.Now.AddDays(30));
-				}
-
-				_unitOfWork.Order.Update(orderFromDb);
-				await _unitOfWork.SaveAsync();
-
-				TempData["Success"] = "Order shipped successfully!";
-				return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.Order.Id });
-			}
-			catch (Exception ex)
-			{
-				TempData["Error"] = "An error occurred while shipping the order. Please try again.";
-				return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.Order.Id });
-			}
-		}
-
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		[Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
-		public async Task<IActionResult> CancelOrder()
-		{
-			try
-			{
-				var orderFromDb = await _unitOfWork.Order.GetByIdAsync(OrderViewModel.Order.Id);
-
-				if (orderFromDb.PaymentStatus == SD.PaymentStatusApproved)
-				{
-					var options = new RefundCreateOptions
-					{
-						Reason = RefundReasons.RequestedByCustomer,
-						PaymentIntent = orderFromDb.PaymentIntentId,
-					};
-
-					var service = new RefundService();
-					Refund refund = await service.CreateAsync(options);
-
-					_unitOfWork.Order.UpdateStatus(orderFromDb.Id, SD.StatusCanceled, SD.StatusRefunded);
-				}
-				else
-				{
-					_unitOfWork.Order.UpdateStatus(orderFromDb.Id, SD.StatusCanceled, SD.StatusCanceled);
-				}
-
-				await _unitOfWork.SaveAsync();
-				TempData["Success"] = "Order canceled successfully!";
-				return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.Order.Id });
-			}
-			catch (Exception ex)
-			{
-				TempData["Error"] = "An error occurred while canceling the order. Please try again.";
-				return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.Order.Id });
-			}
-		}
-         
-         
-         
-         */
-
-
+        }
     }
 }
