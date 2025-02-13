@@ -114,6 +114,13 @@ namespace BookStore.BusinessLogic.Services
             if (userId <= 0) return false;
 
             return await _paymentRepository.DeletePaymentByUserIdAsync(userId);
+        }   
+        
+        public async Task<bool> DeletePaymentByOrderIDAsync(int orderId)
+        {
+            if (orderId <= 0) return false;
+
+            return await _paymentRepository.DeletePaymentByOrderIDAsync(orderId);
         }
     }
 }
