@@ -183,7 +183,7 @@ namespace BookStore.DataAccess.Repositories
                             CreatedDate = reader.GetDateTime(reader.GetOrdinal("OrderDate")),
                             Status = Global.SetOrderStatus(reader.GetByte(reader.GetOrdinal("Status"))),
                             TotalAmoumt = reader.GetDecimal(reader.GetOrdinal("TotalAmoumt")),
-                            TrackingNumber = reader.GetString(reader.GetOrdinal("TrackingNumber")),
+                            TrackingNumber = reader.IsDBNull(reader.GetOrdinal("TrackingNumber")) ? null : reader.GetString(reader.GetOrdinal("TrackingNumber")),
                             Carrier = reader.IsDBNull(reader.GetOrdinal("Carrier")) ? null : reader.GetString(reader.GetOrdinal("Carrier"))
                         });
                     }

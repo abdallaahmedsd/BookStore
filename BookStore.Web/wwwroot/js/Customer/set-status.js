@@ -1,24 +1,27 @@
-﻿const StatusCells = document.querySelectorAll(".status");
+﻿const StatusApproved = "تم الموافقة";
+const StatusInProcess = "قيد الانتظار";
+const StatusShipped = "تم شحنه";
+const StatusCanceled = "تم إلغائه";
+
+const StatusCells = document.querySelectorAll(".status");
 
 StatusCells.forEach(cell => {
     const status = cell.dataset.status;
 
     switch (status) {
-        case SessionHelper.StatusApproved:
+        case StatusApproved:
             cell.classList.add("color-second");
             break;
-        case SessionHelper.StatusInProcess:
+        case StatusInProcess:
             cell.classList.add("color-gray");
             break;
-        case SessionHelper.StatusShipped:
+        case StatusShipped:
             cell.classList.add("color-main");
             break;
-        case SessionHelper.StatusCanceled:
+        case StatusCanceled:
             cell.classList.add("color-red");
             break;
         default:
             cell.classList.add("bg-gray");
-
     }
-})
-
+});

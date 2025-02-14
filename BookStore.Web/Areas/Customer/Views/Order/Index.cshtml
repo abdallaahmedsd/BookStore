@@ -13,12 +13,12 @@
 
 <div class="container  h-page flex-center">
     <div class="h-page w-100 row m-0 py-4 p-md-0 text-center text-md-end">
-        <form class=" d-flex flex-column justify-content-between rounded-second bg-opacity shadow my-4 p-4" method="get" asp-area="Customer" asp-controller="Cart" asp-action="Summary">
+        <form class=" d-flex flex-column rounded-second bg-opacity shadow my-4 p-4" method="get" asp-area="Customer" asp-controller="Cart" asp-action="Summary">
 
             @* <input type="hidden" name="bookId" value="@Model.id" />  *@
             @* <input type="hidden" name="Price" value="@Model.Price" /> *@
 
-            <div class="row m-0 mb-4">
+            <div class="row m-0 mb-5">
                 <div class="col flex-between">
                     <h4>إدارة المشتريات</h4>
                     <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn shadow">
@@ -29,7 +29,7 @@
                 </div>
             </div>
 
-            <div class="row m-0  align-content-center justify-content-center  gy-5 gy-md-0">
+            <div class="row m-0 flex-center  gy-5 gy-md-0">
 
                 <table>
                     <thead>
@@ -53,7 +53,7 @@
                                     <td>@order.Id</td>
                                     <td>@order.CreatedDate</td>
                                     <td>@order.TotalAmoumt</td>
-                                    <td id="status" data-status="@order.Status">@order.Status</td>
+                                    <td class="status" data-status="@order.Status">@order.Status</td>
                                     <td>@order.TrackingNumber</td>
                                     <td>@order.Carrier</td>
                                 </tr>
