@@ -1,4 +1,4 @@
-﻿@model CartListViewModel
+﻿@model List<OrderListForCustomerViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,7 +7,7 @@
 
 @section Styles
 {
-    @* <link rel="stylesheet" href="~/css/Customer/order.css" /> *@
+    <link rel="stylesheet" href="~/css/Customer/cart.css" />
 }
 
 
@@ -20,7 +20,7 @@
 
             <div class="row m-0 mb-4">
                 <div class="col flex-between">
-                    <h4>سلة المشتريات</h4>
+                    <h4>إدارة المشتريات</h4>
                     <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn shadow">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M14.9998 19.92L8.47984 13.4C7.70984 12.63 7.70984 11.37 8.47984 10.6L14.9998 4.08" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
@@ -34,47 +34,28 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>صورة الكتاب</th>
-                            <th>عنوان الكتاب</th>
-                            <th>السعر</th>
-                            <th>الكمية</th>
+                            <th>معرف الطلب</th>
+                            <th>تاريخ الطلب</th>
                             <th>الإجمالي</th>
-                            <th>حذف</th>
+                            <th>حالة الطلب</th>
+                            <th>رقم الشحنة</th>
+                            <th>شركة الشحن</th>
                         </tr>
                     </thead>
                     <tbody>
 
-                        @if (Model.CartItems.Count > 0)
+                        @if (Model.Count > 0)
                         {
 
-                            @foreach (var item in Model.CartItems)
+                            @foreach (var order in Model)
                             {
                                 <tr>
-                                    <td>
-                                        @if (!string.IsNullOrWhiteSpace(item.BookCoverImage))
-                                        {
-                                            <img src="@item.BookCoverImage">
-                                        }
-                                        else
-                                        {
-                                            <img src="https://placehold.co/500x600/png" class="card-img-top rounded" />
-                                        }
-                                    </td>
-                                    <td>@item.BookTitle</td>
-                                    <td>@item.BookPrice</td>
-                                    <td>@item.Quantity</td>
-                                    <td>@item.SubTotal</td>
-                                    <td>
-                                        <a data-id="@item.Id" class="btn btn-icon btn-red delete-button">
-                                            <svg width="24" height="24" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M14.387 4.42172C12.1312 4.19817 9.86187 4.08301 7.59929 4.08301C6.258 4.08301 4.91671 4.15075 3.57542 4.28623L2.19348 4.42172" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M5.91931 3.73752L6.06834 2.8501C6.17673 2.20655 6.25802 1.72559 7.40286 1.72559H9.1777C10.3225 1.72559 10.4106 2.23365 10.5122 2.85688L10.6612 3.73752" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M12.9307 6.5625L12.4903 13.3841C12.4158 14.4477 12.3549 15.2741 10.4649 15.2741H6.11583C4.22583 15.2741 4.16486 14.4477 4.09035 13.3841L3.65002 6.5625" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M7.15894 11.5483H9.41474" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M6.59668 8.83862H9.98378" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                            </svg>
-                                        </a>
-                                    </td>
+                                    <td>@order.Id</td>
+                                    <td>@order.CreatedDate</td>
+                                    <td>@order.TotalAmoumt</td>
+                                    <td id="status" data-status="@order.Status">@order.Status</td>
+                                    <td>@order.TrackingNumber</td>
+                                    <td>@order.Carrier</td>
                                 </tr>
                             }
                         }
@@ -82,7 +63,7 @@
                         {
                             <tr>
                                 <td colspan="6" class="text-center">
-                                    لا توجد عناصر في السلة حتى الآن.
+                                    لاتوجد طلبات لك حتى الان
                                 </td>
                             </tr>
                         }
@@ -91,25 +72,12 @@
                 </table>
             </div>
 
-            <hr class="mt-4" />
-            <div class="row m-0 ">
-                @if (Model.CartItems.Count > 0)
-                {
-                    <div class="col flex-start gap-5">
-                        <a id="delete-cart" class="btn btn-sm btn-red-open">
-                            مسح السلة
-                        </a>
-                    </div>
-
-                }
-                <div class="col flex-end gap-5">
-                    <div class="fw-bold"> الإجمالي</div>
-                    <div>@Model.OrderTotalAmount $</div>
+            @if (Model.Count == 0)
+            {
+                <div class="row m-0 flex-center mt-4">
+                    <button asp-area="Customer" asp-controller="Book" asp-action="Index" class="btn btn-input btn-main">تابع تسوقك</button>
                 </div>
-            </div>
-            <div class="row m-0 flex-center mt-4">
-                <button class="btn btn-input btn-main" type="submit" @(Model.CartItems.Count <= 0 ? "disabled" : "")> اشتري الآن </button>
-            </div>
+            }
 
 
         </form>
@@ -118,5 +86,5 @@
 
 
 @section Scripts {
-    <script type="module" src="~/js/Customer/delete-cart.js" asp-append-version="true"></script>
+    <script type="module" src="~/js/Customer/set-status.js" asp-append-version="true"></script>
 }
