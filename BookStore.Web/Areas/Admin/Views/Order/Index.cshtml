@@ -1,5 +1,4 @@
-﻿@using BookstoreBackend.BLL.Services
-@model List<OrderListViewModel>
+﻿@model List<OrderListViewModel>
 @{
     ViewData["Title"] = "Index";
     ViewData["Section"] = "الطلبات";
@@ -11,7 +10,7 @@
 
 <div class="row-col-2 gap-5 flex-grow-6 flex-between mx-0 px-3">
 
-    <partial name="_SearchPartial" />
+    <partial name="_SerachPartial" />
 
 </div>
 <div class="row mx-0 flex-grow-1 bg-text pt-2">
@@ -66,6 +65,7 @@
 
 @section Scripts {
     <script type="module" src="~/js/Admin/order.js" asp-append-version="true"></script>
+    <script type="module" src="~/js/Admin/set-status.js" asp-append-version="true"></script>
 }
 
 

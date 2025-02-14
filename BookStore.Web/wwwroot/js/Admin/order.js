@@ -1,27 +1,4 @@
 ﻿
-const StatusCells = document.querySelectorAll(".status");
-
-StatusCells.forEach(cell => {
-    const status = cell.dataset.status;
-    switch (status) {
-        case SessionHelper.StatusApproved:
-            cell.classList.add("bg-second");
-
-        case SessionHelper.StatusInProcess:
-            cell.classList.add("bg-main");
-
-        case SessionHelper.StatusShipped:
-            cell.classList.add("bg-text");
-
-        case SessionHelper.StatusCanceled:
-            cell.classList.add("bg-red");
-        default:
-            cell.classList.add("bg-gray");
-
-    }
-})
-
-
 const cancelBtns = document.querySelectorAll(".cancel-button");
 
 cancelBtns.forEach(btn => {
@@ -40,17 +17,17 @@ cancelBtns.forEach(btn => {
 
 export function confirmOrderAction(operationType, id) {
     Swal.fire({
-        title: "?? ??? ??????",
-        text: "?? ????? ?? ??????? ?? ???!",
+        title: "هل أنت متأكد؟",
+        text: "لن تتمكن من التراجع عن هذا!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "???? ?????!",
-        cancelButtonText: "?????",
+        confirmButtonText: "نعم، إلغيه!",
+        cancelButtonText: "تراجع",
         customClass: {
             confirmButton: "btn btn-red-open",
-            cancelButton: "btn btn-red"
+            cancelButton: "btn btn-second"
         }
     }).then((result) => {
         if (result.isConfirmed) {
@@ -70,7 +47,7 @@ export function confirmOrderAction(operationType, id) {
                         window.location.href = '/admin/Order/index';
                     } else {
                         // Handle case where success is false but not a server error
-                        toastr.error(response.message || "??? ??? ??? ?????.");
+                        toastr.error(response.message || "حدث خطأ غير متوقع.");
                     }
                 },
                 error: function (xhr, status, error) {
@@ -79,7 +56,7 @@ export function confirmOrderAction(operationType, id) {
                     if (response && response.message) {
                         toastr.error(response.message); // Display the error message using toastr
                     } else {
-                        toastr.error("??? ??? ??? ?????."); // Fallback message
+                        toastr.error("حدث خطأ غير معروف."); // Fallback message
                     }
                 }
             });

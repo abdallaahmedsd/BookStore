@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BookStore.BusinessLogic.Services;
+using BookStore.Models.ViewModels.Customer.OrderVM;
+using BookstoreBackend.BLL.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.Web.Areas.Customer.Controllers
@@ -6,79 +9,23 @@ namespace BookStore.Web.Areas.Customer.Controllers
     [Area("Customer")]
     public class OrderController : Controller
     {
-        // GET: OrderController
+        private readonly OrderServices _orderService;
+
+        public OrderController( OrderServices orderService)
+        {
+            _orderService = orderService;
+        }
+
         public ActionResult Index()
         {
-            return View();
-        }
-
-        // GET: OrderController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: OrderController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: OrderController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+            if (!User.Identity.IsAuthenticated)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToPage("/Account/Login", new { area = "Identity" });
             }
-            catch
-            {
-                return View();
-            }
-        }
 
-        // GET: OrderController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+            List<OrderListForCustomerViewModel> userOrderList = new List<OrderListForCustomerViewModel>();
 
-        // POST: OrderController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: OrderController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: OrderController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View(userOrderList);
         }
     }
 }
