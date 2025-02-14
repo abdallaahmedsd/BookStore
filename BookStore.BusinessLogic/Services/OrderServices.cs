@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BookStore.DataAccess.Repositories;
 using BookStore.Models.Entities;
 using BookStore.Models.ViewModels.Admin.Order;
+using BookStore.Models.ViewModels.Customer.OrderVM;
 using BookStore.Utilties.BusinessHelpers;
 using static BookStore.BusinessLogic.Services.ShippingServices;
 
@@ -85,6 +86,13 @@ namespace BookstoreBackend.BLL.Services
         {
             if (OrderID <= 0) return null;
             return await _orderrepo.GetOrderDetailsViewModleByOrderId(OrderID);
+        }     
+        
+        
+        public async Task<IEnumerable<OrderListForCustomerViewModel>> GetOrderListForCustomerViewModelByUserId(int userId)
+        {
+            if (userId <= 0) return null;
+            return await _orderrepo.GetOrderListForCustomerViewModelByUserId(userId);
         }
 
 

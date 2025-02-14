@@ -10,6 +10,7 @@ using BookStore.Models.Entities;
 using System.Data;
 using BookStore.Models.ViewModels.Customer.OrderVM;
 using BookStore.Models.ViewModels.Admin.Order;
+using BookStore.Utilties;
 
 namespace BookStore.DataAccess.Repositories
 {
@@ -113,7 +114,7 @@ namespace BookStore.DataAccess.Repositories
                                     Id = reader.GetInt32(0),
                                     CreatedDate = reader.GetDateTime(1),
                                     TotalAmoumt = reader.GetDecimal(2),
-                                    Status = (reader.GetByte(3) == 1) ? "تم الموافقة" : (reader.GetByte(3) == 2) ? "قيد الانتظار" : (reader.GetByte(3) == 3) ? "تم شحنه" : "تم إلغائه"
+                                    Status = Global.SetOrderStatus(reader.GetByte(3))
                                 };
 
                                 collection.Add(orderListViewmodel);
@@ -162,6 +163,34 @@ namespace BookStore.DataAccess.Repositories
             return null;
         }
 
+        public async Task<IEnumerable<OrderListForCustomerViewModel>> GetOrderListForCustomerViewModelByUserId(int userId)
+        {
+            var orders = new List<OrderListForCustomerViewModel>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (SqlCommand cmd = new SqlCommand("Sales.SP_GetOrderListForCustomerViewModelByUserId", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Id", userId);
+
+                await conn.OpenAsync();
+                using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        orders.Add(new OrderListForCustomerViewModel
+                        {
+                            CreatedDate = reader.GetDateTime(reader.GetOrdinal("OrderDate")),
+                            Status = Global.SetOrderStatus(reader.GetByte(reader.GetOrdinal("Status"))),
+                            TotalAmoumt = reader.GetDecimal(reader.GetOrdinal("TotalAmoumt")),
+                            TrackingNumber = reader.GetString(reader.GetOrdinal("TrackingNumber")),
+                            Carrier = reader.IsDBNull(reader.GetOrdinal("Carrier")) ? null : reader.GetString(reader.GetOrdinal("Carrier"))
+                        });
+                    }
+                }
+            }
+            return orders;
+        }
 
     }
 }
