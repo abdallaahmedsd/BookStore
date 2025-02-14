@@ -21,7 +21,7 @@ namespace BookStore.Models.ViewModels.Customer.OrderVM
         public decimal TotalAmoumt { get; set; } // Typo: Should be "TotalAmount"
 
         [DisplayName("رقم التتبع")]
-        public string TrackingNumber { get; set; }
+        public string? TrackingNumber { get; set; }
 
         [DisplayName("شركة النقل")]
         public string? Carrier { get; set; }

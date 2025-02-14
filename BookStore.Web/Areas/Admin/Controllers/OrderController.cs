@@ -173,12 +173,12 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
                 TempData["success"] = "تم تحديث الطلب بنجاح!";
                 //return View("Edit", new { orderId = manageOrderViewModel.Id });
-                return RedirectToAction(nameof(Details), manageOrderViewModel.Id);
+                return RedirectToAction(nameof(Edit), manageOrderViewModel);
             }
             catch (Exception ex)
             {
                 TempData["error"] = " حدث خطأ أثناء تعديل الطلب";
-                return RedirectToAction(nameof(Edit), manageOrderViewModel.Id);
+                return RedirectToAction(nameof(Edit), manageOrderViewModel);
             }
         }
 

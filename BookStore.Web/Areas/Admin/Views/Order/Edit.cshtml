@@ -238,7 +238,9 @@
                     }
                     else if (Model.Status == SessionHelper.StatusInProcess)
                     {
-                        <button onclick="ValidateInput()" asp-action="ShipOrder" class="btn btn-main">اشحن الطلب</button>
+                        <button type="submit" asp-action="ShipOrder" class="btn btn-main">اشحن الطلب</button>
+                        @* <a data-id="@Model.Id" id="ship-button" class="btn btn-main">اشحن الطلب</a> *@
+
                     }
 
                     @if (Model.Status != SessionHelper.StatusCanceled && Model.Status != SessionHelper.StatusShipped)

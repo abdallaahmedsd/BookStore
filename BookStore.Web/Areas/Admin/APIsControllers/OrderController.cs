@@ -1,5 +1,8 @@
 ﻿using BookStore.BusinessLogic.Services;
 using BookStore.Models.Entities;
+using BookStore.Models.ViewModels.Admin.Order;
+using BookStore.Utilties;
+using BookStore.Web.Mappers;
 using BookstoreBackend.BLL.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -60,6 +63,48 @@ namespace BookStore.Web.Areas.Admin.APIsControllers
             {
                 return StatusCode(500, new { success = false, message = "حدث خطأ أثناء معالجة طلبك.", error = ex.Message });
             }
+        }
+
+        [HttpPost("ship/{id:int}")]
+        public async Task<ActionResult> Ship(int id)
+        {
+            try
+            {
+                OrderDetailsViewModel orderDetailsViewModel = await _orderServices.GetOrderDetailsViewModleByOrderId(id);
+
+                ManageOrderViewModel manageOrderViewModel = new ManageOrderViewModel();
+                manageOrderViewModel.OrderItems = (await _orderItmeServices.GetOrderItemViewModelAsync()).ToList();
+                Mapper.Map(orderDetailsViewModel, manageOrderViewModel);
+
+                await _orderServices.UpdateStatus(manageOrderViewModel.Id, OrderServices.enOrderStatus.Shipped);
+                manageOrderViewModel.Status = _SetOrderStatus((await _orderServices.GetOrderByIdAsync(manageOrderViewModel.Id)).Status);
+
+
+                return Ok(new { success = true, message = "تم تحديث الطلب بنجاح!" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "حدث خطأ أثناء معالجة طلبك.", error = ex.Message });
+
+            }
+        }
+
+        private static string _SetOrderStatus(byte Status)
+        {
+            switch (Status)
+            {
+                case 1:
+                    return SessionHelper.StatusApproved;
+                case 2:
+                    return SessionHelper.StatusInProcess;
+                case 3:
+                    return SessionHelper.StatusShipped;
+                case 4:
+                    return SessionHelper.StatusCanceled;
+                default:
+                    return "غير معروف";
+            }
+
         }
     }
 }

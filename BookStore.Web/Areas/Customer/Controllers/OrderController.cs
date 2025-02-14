@@ -1,8 +1,10 @@
 ﻿using BookStore.BusinessLogic.Services;
+using BookStore.Models.ViewModels.Customer.Cart;
 using BookStore.Models.ViewModels.Customer.OrderVM;
 using BookstoreBackend.BLL.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BookStore.Web.Areas.Customer.Controllers
 {
@@ -16,16 +18,28 @@ namespace BookStore.Web.Areas.Customer.Controllers
             _orderService = orderService;
         }
 
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
             if (!User.Identity.IsAuthenticated)
             {
                 return RedirectToPage("/Account/Login", new { area = "Identity" });
             }
+            try
+            {
 
-            List<OrderListForCustomerViewModel> userOrderList = new List<OrderListForCustomerViewModel>();
+                ClaimsIdentity claimsIdentity = (ClaimsIdentity)User?.Identity;
+                int userId = int.Parse(claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            return View(userOrderList);
+                List<OrderListForCustomerViewModel> userOrderList = (await _orderService.GetOrderListForCustomerViewModelByUserId(userId)).ToList();
+
+                return View(userOrderList);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "An error occurred while retrieve the orders for user. Please try again.";
+                return View("Error");
+
+            }
         }
     }
 }

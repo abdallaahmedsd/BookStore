@@ -95,9 +95,8 @@ namespace BookStore.Web.Areas.Identity.Pages.Account
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
 
-            [Required]
             [Display(Name = "User Role")]
-            public string Role { get; set; }
+            public string? Role { get; set; } 
 
             [ValidateNever]
             public IEnumerable<SelectListItem> RolesList { get; set; }
