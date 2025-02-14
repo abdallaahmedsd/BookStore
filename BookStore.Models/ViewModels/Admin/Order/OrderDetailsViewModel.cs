@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Models.ViewModels.Admin.Order
 {
-    public class OrderDetailsViewModel
+    public class OrderDetailsViewModel 
     {
 
         //Order Info:
